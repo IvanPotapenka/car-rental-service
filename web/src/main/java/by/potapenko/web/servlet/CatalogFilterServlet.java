@@ -21,18 +21,19 @@ public final class CatalogFilterServlet extends HttpServlet {
 
     @Override
     protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
-        Map<String, String> parameters = new HashMap<>();
+
         int page = req.getParameter("page") != null ? Integer.parseInt(req.getParameter("page")) : 1;
         int limit = req.getParameter("limit") != null ? Integer.parseInt(req.getParameter("limit")) : 3;
 
-            for (Map.Entry<String, String[]> entry : req.getParameterMap().entrySet()) {
+        Map<String, String> parameters = new HashMap<>();
+        for (Map.Entry<String, String[]> entry : req.getParameterMap().entrySet()) {
                 String name = "&" + entry.getKey();
                 String value = entry.getValue()[0];
                 parameters.put(name, value);
             }
             String params = String.valueOf(parameters).replaceAll("\s|,", "")
-                    .replace("}", "")
-                    .replace("{", "");
+                                                      .replace("}", "")
+                                                      .replace("{", "");
             if (!parameters.isEmpty()) {
             CarFilter carFilter = CarFilter.builder()
                     .brand(req.getParameter("brand"))
@@ -42,7 +43,7 @@ public final class CatalogFilterServlet extends HttpServlet {
                     .transmission(req.getParameter("transmission"))
                     .fuelConsumption(Double.parseDouble(req.getParameter("fuel_consumption")))
                     .limit(limit)
-                    .page(limit)
+                    .page(page)
                     .build();
 
                 req.setAttribute("limit", limit);
@@ -53,7 +54,6 @@ public final class CatalogFilterServlet extends HttpServlet {
                 req.setAttribute("parameters", params);
                 req.setAttribute("cars", carService.findByFilter(carFilter));
                 req.getRequestDispatcher(CATALOG_FILTER).forward(req, resp);
-
             } else {
                 req.setAttribute("find_car_error", true);
                 req.getRequestDispatcher(CATALOG_FILTER).forward(req, resp);
