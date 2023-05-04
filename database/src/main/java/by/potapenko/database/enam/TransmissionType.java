@@ -1,8 +1,7 @@
-package by.potapenko.database.enums;
+package by.potapenko.database.enam;
 
 public enum TransmissionType {
     AUTOMATIC,
     MANUAL,
-    HYBRID;
-
+    HYBRID
 }

@@ -3,22 +3,32 @@ package by.potapenko.database.connection;
 import by.potapenko.database.util.PropertiesApi;
 import lombok.SneakyThrows;
 import lombok.experimental.UtilityClass;
+import org.apache.tomcat.jdbc.pool.DataSource;
+import org.apache.tomcat.jdbc.pool.PoolProperties;
 
 import java.sql.Connection;
-import java.sql.DriverManager;
 
 @UtilityClass
-public class ConnectionManager {
-    private String user_key = "db_user";
-    private String password_key = "db_password";
-    private String url_key = "db_url";
+public class ConnectionPool {
 
+    private final DataSource DATA_SOURCE;
+    private final String USER_KEY = "db.user";
+    private final String PASSWORD_KEY = "db.password";
+    private final String URL_KEY = "db.url";
+    private final String DRIVER_KEY = "db.driver";
+    private final String POOL_SIZE_KEY = "db.pool.size";
+
+    static {
+        PoolProperties poolProperties = new PoolProperties();
+        poolProperties.setUsername(PropertiesApi.get(USER_KEY));
+        poolProperties.setPassword(PropertiesApi.get(PASSWORD_KEY));
+        poolProperties.setUrl(PropertiesApi.get(URL_KEY));
+        poolProperties.setDriverClassName(PropertiesApi.get(DRIVER_KEY));
+        poolProperties.setMaxActive(Integer.parseInt(PropertiesApi.get(POOL_SIZE_KEY)));
+        DATA_SOURCE = new DataSource(poolProperties);
+    }
     @SneakyThrows
     public Connection open() {
-        Class.forName("org.postgresql.Driver");
-        return DriverManager.getConnection(
-                PropertiesApi.get(url_key),
-                PropertiesApi.get(user_key),
-                PropertiesApi.get(password_key));
+        return DATA_SOURCE.getConnection();
     }
 }

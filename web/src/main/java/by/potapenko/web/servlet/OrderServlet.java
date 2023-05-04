@@ -18,14 +18,8 @@ public final class OrderServlet extends HttpServlet {
     @Override
     protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
         String id = req.getParameter("id");
-        req.setAttribute("car", carService.findById(Long.parseLong(id)));
+        req.setAttribute("car", carService.findById(Long.parseLong(id)).get());
         req.getRequestDispatcher(ORDER).forward(req, resp);
-    }
-
-    @Override
-    protected void doPost(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
-        double priceRent = Double.parseDouble(req.getParameter("name"));
-
     }
 }
 

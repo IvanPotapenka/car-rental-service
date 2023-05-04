@@ -9,22 +9,32 @@ import jakarta.servlet.http.HttpServletResponse;
 
 import java.io.IOException;
 
+import static by.potapenko.web.util.PagesUtil.USERS;
 import static by.potapenko.web.util.PagesUtil.USER_ADMIN;
 
-@WebServlet("/admin/users/user")
-public class UserServlet extends HttpServlet {
+@WebServlet("/admin/users")
+public final class UsersServlet extends HttpServlet {
     private final UserService userService = UserService.getInstance();
 
     @Override
     protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
         String id = req.getParameter("id");
+        int page = req.getParameter("page") != null ? Integer.parseInt(req.getParameter("page")) : 1;
+        int limit = req.getParameter("limit") != null ? Integer.parseInt(req.getParameter("limit")) : 3;
+
         if (id == null) {
-            req.setAttribute("user_id", false);
-            req.getRequestDispatcher(USER_ADMIN).forward(req, resp);
+            req.setAttribute("users", userService.findAll(limit, page));
+            req.setAttribute("limit", limit);
+            req.setAttribute("page", page);
+            req.setAttribute("count", (int) Math.ceil(userService.getSizeUserTable() / (limit * 1.0)));
+
+            req.getRequestDispatcher(USERS).forward(req, resp);
         } else {
-            req.setAttribute("user_id", true);
             req.setAttribute("user", userService.findById(Long.parseLong(id)).get());
             req.getRequestDispatcher(USER_ADMIN).forward(req, resp);
         }
     }
 }
+
+
+

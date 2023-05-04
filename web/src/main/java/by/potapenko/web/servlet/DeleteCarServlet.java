@@ -1,6 +1,6 @@
 package by.potapenko.web.servlet;
 
-import by.potapenko.service.UserService;
+import by.potapenko.service.CarService;
 import jakarta.servlet.ServletException;
 import jakarta.servlet.annotation.WebServlet;
 import jakarta.servlet.http.HttpServlet;
@@ -9,12 +9,12 @@ import jakarta.servlet.http.HttpServletResponse;
 
 import java.io.IOException;
 
+import static by.potapenko.web.util.PagesUtil.CARS;
 import static by.potapenko.web.util.PagesUtil.CAR_ADMIN;
-import static by.potapenko.web.util.PagesUtil.USERS;
 
-@WebServlet("/admin/users/user/delete_user")
-public class DeleteUserServlet extends HttpServlet {
-    private final UserService userService = UserService.getInstance();
+@WebServlet("/admin/cars/car/delete_car")
+public class DeleteCarServlet extends HttpServlet {
+    private final CarService carService = CarService.getInstance();
 
     @Override
     protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
@@ -22,9 +22,9 @@ public class DeleteUserServlet extends HttpServlet {
         if (id == null) {
             req.getRequestDispatcher(CAR_ADMIN).forward(req, resp);
         } else {
-            userService.deleteById(Long.parseLong(id));
-            req.setAttribute("user_delete_success", true);
-            req.getRequestDispatcher(USERS).forward(req, resp);
+            carService.deleteById(Long.parseLong(id));
+            req.setAttribute("car_delete_success", true);
+            req.getRequestDispatcher(CARS).forward(req, resp);
         }
     }
 }

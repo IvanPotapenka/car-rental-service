@@ -18,7 +18,7 @@ public class BookingServlet extends HttpServlet {
     @Override
     protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
         String id = req.getParameter("id");
-        req.setAttribute("car", carService.findById(Long.parseLong(id)));
+        req.setAttribute("car", carService.findById(Long.parseLong(id)).get());
         req.getRequestDispatcher(BOOKING).forward(req, resp);
     }
 }

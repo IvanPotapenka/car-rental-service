@@ -1,4 +1,4 @@
-package by.potapenko.database.enums;
+package by.potapenko.database.enam;
 
 public enum Role {
     USER,

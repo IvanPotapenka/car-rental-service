@@ -84,12 +84,9 @@
 <div><a href="/">Home </a><a href="${pageContext.request.contextPath}/catalog">/ catalog</a></div>
 </nav1>
 <nav1>
-    <form>
+    <form action="/catalog/filter">
         <flex class="w3-border w3-round-large w3-padding" style="width: 100%">
-            <p style="font-size: 16px">
             <h6>Filter</h6>
-            <%--            <input hidden name="limit" value="${limit}"/>--%>
-            <%--            <input hidden name="page" value="${page}"/>--%>
             <label for="brand_id"></label>
             <select class="w3-round-large"
                     id="brand_id"
@@ -158,8 +155,8 @@
     </form>
 </nav1>
 <c:if test="${find_car_error==false}">
-
     <c:forEach var="car" items="${cars}">
+
         <box class="w3-container ">
             <box class="w3-card-4 w3-round-large w3-padding" style="width: 50%"><br>
                 <h2><a href=${pageContext.request.contextPath}/catalog/car?id=${car.id}
@@ -193,46 +190,43 @@
 <c:if test="${find_car_error==true}">
 <flex class="w3-container w3-padding">
     <p>
-    <h2>Nothing found, change the search parameters!</h2></p></br>
+    <h2>We are sorry((</h2></p>
+    <p>
+    <h2>Cars are coming soon...</h2></p></br>
     </c:if>
     <form>
         <box>
             <div2 class="d-flex flex-justify-center">
                 <nav2 class="paginate-container">
                     <div2 class="pagination">
-
                         <c:if test="${page > 1 }">
-                            <a href="${pageContext.request.contextPath}/catalog/filter?limit=${limit}&page=${page-1}${parameters}"
+                            <a href="${pageContext.request.contextPath}/catalog?limit=${limit}&page=${page-1}"
                                class="previous_page" aria-disabled="false">Previous</a>
-                            <a href="${pageContext.request.contextPath}/catalog/filter?limit=${limit}&page=1${parameters}">
-                                1 </a>
+                            <a href="${pageContext.request.contextPath}/catalog?limit=${limit}&page=1"> 1 </a>
                             <span class="gap"> … </span>
                         </c:if>
-
                         <c:if test="${page == 1}">
                             <span class="previous_page" aria-disabled="true">Previous</span>
                         </c:if>
-
                         <c:forEach begin="${page}" end="${page+2}" var="i">
                             <c:if test="${page == i}">
                                 <em aria-current="${i}"> ${i} </em>
                             </c:if>
                             <c:if test="${i < count }">
                                 <c:if test="${page != i }">
-                                    <a href="/catalog/filter?limit=${limit}&page=${i}${parameters}"> ${i} </a>
+                                    <a href="/catalog?limit=${limit}&page=${i}"> ${i} </a>
                                 </c:if>
                             </c:if>
                         </c:forEach>
-
                         <c:if test="${count == page}">
                             <span class="next_page" aria-disabled="true">Next</span>
                         </c:if>
 
                         <c:if test="${count != page}">
                             <span class="gap"> … </span>
-                            <a href="${pageContext.request.contextPath}/catalog/filter?limit=${limit}&page=${count}${parameters}"> ${count} </a>
+                            <a href="${pageContext.request.contextPath}/catalog?limit=${limit}&page=${count}"> ${count} </a>
                             <a class="next_page"
-                               href="${pageContext.request.contextPath}/catalog/filter?limit=${limit}&page=${page+1}${parameters}"
+                               href="${pageContext.request.contextPath}/catalog?limit=${limit}&page=${page+1}"
                                aria-label="Next">Next</a>
                         </c:if>
                     </div2>

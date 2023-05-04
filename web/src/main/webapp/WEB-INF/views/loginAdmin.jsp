@@ -37,22 +37,24 @@
 </head>
 <body>
 <%@include file="header.jsp" %>
-<div><a href="/">Home </a>/ login</div>
+<div><a href="/">Home </a><a href="${pageContext.request.contextPath}/login_admin">/ admin</a></div>
 <box>
     <form method="post" class="w3-card-4 w3-blue-grey w3-round-large w3-padding" style="width: 20%">
         <flex>
             <p style="font-size: 16px">
-            <h1>Sing in</h1>
-            <c:if test="${find_user_error == true}">
-                <p class="w3-text-red"> Incorrect email or password!</p>
+            <h1>Admin</h1>
+
+            <c:if test="${find_admin_error==true}">
+                <p class="w3-text-red"> Incorrect login or password!</p>
+                <p><a href="/login_admin" class="w3-text-blue">try again</a></p>
             </c:if>
-            <label for="email"></label>
+            <label for="login"></label>
             <input class="w3-round-large"
-                   type="email"
+                   type="text"
                    maxlength="20"
-                   placeholder="Enter your email"
-                   name="email"
-                   id="email"
+                   placeholder="Enter your login"
+                   name="login"
+                   id="login"
                    required/><br>
             <label for="pwd"></label>
             <input class="w3-round-large"
@@ -62,16 +64,14 @@
                    name="password"
                    id="pwd"
                    required/></p>
-            <button class="w3-btn w3-white w3-round-large" type="submit">Sing in</button>
+            <button class="w3-btn w3-white w3-round-large" type="submit">Log in</button>
             </br>
             <p style="font-size: 12px">Forgot password? <a href="${pageContext.request.contextPath}/recover">Recover
                 password</a></p>
-            <p style="font-size: 12px">Don't have an account? <a href="${pageContext.request.contextPath}/registration">Registration</a>
-            </p>
-            <p style="font-size: 12px">Enter for admin <a
-                    href="${pageContext.request.contextPath}/login_admin">login</a></p>
+
         </flex>
     </form>
+    <p style="font-size: 16px"><a href="/login">Back</a></p><br>
 </box>
 </body>
 </html>
