@@ -1,6 +1,6 @@
 package by.potapenko.web.servlet;
 
-import by.potapenko.database.entites.User;
+import by.potapenko.database.entity.User;
 import by.potapenko.service.UserService;
 import jakarta.servlet.ServletException;
 import jakarta.servlet.annotation.WebServlet;

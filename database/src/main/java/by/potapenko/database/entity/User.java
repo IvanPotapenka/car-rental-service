@@ -1,6 +1,7 @@
 package by.potapenko.database.entites;
 
 
+import by.potapenko.database.enums.Role;
 import lombok.Builder;
 import lombok.Data;
 import lombok.EqualsAndHashCode;
@@ -13,10 +14,9 @@ import lombok.Setter;
 public class User {
     private Long id;
     private String name;
-    private String surname;
     private String email;
-    private String phoneNumber;
     private String password;
-
+    private Role role;
+    private Contact contact;
 }
 

@@ -1,12 +1,13 @@
 package by.potapenko.web.servlet;
 
-import by.potapenko.database.entites.User;
+import by.potapenko.database.entity.User;
 import by.potapenko.service.UserService;
 import jakarta.servlet.ServletException;
 import jakarta.servlet.annotation.WebServlet;
 import jakarta.servlet.http.HttpServlet;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
+import lombok.SneakyThrows;
 
 import java.io.IOException;
 
@@ -21,6 +22,7 @@ public class RegistrationServlet extends HttpServlet {
         req.getRequestDispatcher(REGISTRATION).forward(req, resp);
     }
 
+    @SneakyThrows
     @Override
     protected void doPost(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
         if (userService.getByEmail(req.getParameter("email")).isEmpty()) {
@@ -28,7 +30,7 @@ public class RegistrationServlet extends HttpServlet {
                     .name(req.getParameter("name"))
                     .surname(req.getParameter("surname"))
                     .email(req.getParameter("email"))
-                    .phoneNumber(req.getParameter("phone"))
+
                     .password(req.getParameter("password"))
                     .build());
             resp.sendRedirect("/login");

@@ -9,7 +9,7 @@
 <%@taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <html>
 <head>
-    <title>${car.model}</title>
+    <title>${car.brand} ${car.model}</title>
     <style>
         box {
             display: flex;
@@ -24,11 +24,10 @@
 <%@include file="header.jsp" %> <br>
         <box>
             <box class="w3-container">
-                <h2 class="w3-text-blue"> ${car.model} ${car.year}</h2></br>
-                <h4>Transmission: ${car.transmission}</h4></br>
-                <h4>Fuel: ${car.fuel}</h4></br>
-                <h4>Engine: ${car.engineCapacity}</h4></br>
-                <h2 class="w3-text-red">Price: ${car.price}$</h2></br>
+                <h2 class="w3-text-blue"> ${car.brand} ${car.model} ${car.yearOfRelease}</h2></br>
+                <h4>VIN code ${car.vinCode}</h4></br>
+                <h4>Engine capacity ${car.engine}l</h4></br>
+                <h2 class="w3-text-red">Price ${car.price}$</h2></br>
                 <c:if test="${sessionScope.user == null}">
                 <h4 class="w3-text-blue w3-round-large"> To place an order, please <a href=/login>Sing in </a></h4>
                 </c:if>
