@@ -1,12 +1,12 @@
 package by.potapenko.service;
 
 import by.potapenko.database.dao.CarDao;
-import by.potapenko.database.entites.Car;
-import by.potapenko.database.enums.FuelType;
-import by.potapenko.database.enums.TransmissionType;
+import by.potapenko.database.dto.CarFilter;
+import by.potapenko.database.entity.Car;
 import lombok.NoArgsConstructor;
 
 import java.util.List;
+import java.util.Optional;
 
 import static lombok.AccessLevel.PRIVATE;
 
@@ -17,20 +17,40 @@ public final class CarService {
 
     private final CarDao carDao = CarDao.getInstance();
 
-    public List<Car> getAll() {
-        return carDao.getAll();
+    public Optional<Car> create(Car car) {
+        return carDao.create(car);
     }
 
-    public Car getById(Long id) {
-        int year = 2000;
-        return carDao.getById(id).orElse(Car.builder()
-                .id(id)
-                .model("Citroen C5")
-                .fuel(FuelType.DIESEL)
-                .engineCapacity(0.0)
-                .transmission(TransmissionType.MANUAL)
-                .year(year)
-                .price(0.0).build());
+    public List<Car> findAll(int limit, int page) {
+
+        return carDao.findAll(limit, page);
+    }
+
+    public Optional<Car> update(Car car) {
+        return carDao.update(car);
+    }
+
+    public void deleteById(Long id) {
+        carDao.deleteById(id);
+    }
+
+    public List<Car> findByFilter(CarFilter filter) {
+
+        return carDao.findByFilter(filter);
+    }
+
+    public Optional<Car> findById(Long id) {
+        return carDao.findById(id);
+    }
+
+    public int getSizeCarFilter(CarFilter carFilter) {
+
+        return carDao.getSizeCarFilter(carFilter);
+    }
+
+    public int getSizeCarTable() {
+
+        return carDao.getSizeCarTable();
     }
 
     public static CarService getInstance() {

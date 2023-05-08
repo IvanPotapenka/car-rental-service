@@ -22,12 +22,14 @@
             align-items: center;
             margin-top: 100px;
         }
+
         flex {
             display: flex;
             flex-direction: column;
             align-items: center;
         }
-        div{
+
+        div {
             padding-top: 80px;
             padding-left: 20px;
         }
@@ -35,38 +37,39 @@
 </head>
 <body>
 <%@include file="header.jsp" %>
-    <div><a href="/">Home </a><a href="${pageContext.request.contextPath}/login">/ login</a></div>
-        <box>
-            <form method="post" class="w3-card-4 w3-blue-grey w3-round-large w3-padding" style="width: 20%">
-                <flex>
-                    <p style="font-size: 16px">
-                    <h1>Sing in</h1>
-
-                    <c:if test="${param.error == true}">
-                        <p class="w3-text-red"> Incorrect email or password!</p>
-                        <p><a href="/login" class="w3-text-blue" >try again</a></p>
-                    </c:if>
-                    <c:if test="${param.error == null}">
-                        <label for="email"></label>
-                        <input class="w3-round-large"
-                               type="email"
-                               maxlength="20"
-                               placeholder="Enter your email"
-                               name="email"
-                               id="email"
-                               required /><br>
-                    <label for="pwd"></label>
-                    <input class="w3-round-large"
-                            maxlength="20"
-                            type="password"
-                            placeholder="Enter your password"
-                            name="password"
-                            id="pwd"
-                            required  /></p>
-            <button class="w3-btn w3-white w3-round-large" type="submit">Sing in</button></br>
-                    </c:if>
-            <p style="font-size: 12px">Forgot password? <a href="${pageContext.request.contextPath}/recover">Recover password</a></p>
-            <p style="font-size: 12px">Don't have an account? <a href="${pageContext.request.contextPath}/registration">Registration</a></p>
+<div><a href="/">Home </a>/ login</div>
+<box>
+    <form method="post" class="w3-card-4 w3-blue-grey w3-round-large w3-padding" style="width: 20%">
+        <flex>
+            <p style="font-size: 16px">
+            <h1>Sing in</h1>
+            <c:if test="${find_user_error == true}">
+                <p class="w3-text-red"> Incorrect email or password!</p>
+            </c:if>
+            <label for="email"></label>
+            <input class="w3-round-large"
+                   type="email"
+                   maxlength="20"
+                   placeholder="Enter your email"
+                   name="email"
+                   id="email"
+                   required/><br>
+            <label for="pwd"></label>
+            <input class="w3-round-large"
+                   maxlength="20"
+                   type="password"
+                   placeholder="Enter your password"
+                   name="password"
+                   id="pwd"
+                   required/></p>
+            <button class="w3-btn w3-white w3-round-large" type="submit">Sing in</button>
+            </br>
+            <p style="font-size: 12px">Forgot password? <a href="${pageContext.request.contextPath}/recover">Recover
+                password</a></p>
+            <p style="font-size: 12px">Don't have an account? <a href="${pageContext.request.contextPath}/registration">Registration</a>
+            </p>
+            <p style="font-size: 12px">Enter for admin <a
+                    href="${pageContext.request.contextPath}/login_admin">login</a></p>
         </flex>
     </form>
 </box>

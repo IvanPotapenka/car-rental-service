@@ -9,25 +9,22 @@ import jakarta.servlet.http.HttpServletResponse;
 
 import java.io.IOException;
 
-import static by.potapenko.web.util.PagesUtil.CAR;
-import static by.potapenko.web.util.PagesUtil.CARS;
+import static by.potapenko.web.util.PagesUtil.CAR_ADMIN;
 
-@WebServlet("/cars")
-public final class CarServlet extends HttpServlet {
+@WebServlet("/admin/cars/car")
+public class CarServlet extends HttpServlet {
     private final CarService carService = CarService.getInstance();
 
     @Override
     protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
         String id = req.getParameter("id");
         if (id == null) {
-            req.setAttribute("cars", carService.getAll());
-            req.getRequestDispatcher(CARS).forward(req, resp);
+            req.setAttribute("car_id", false);
+            req.getRequestDispatcher(CAR_ADMIN).forward(req, resp);
         } else {
-            req.setAttribute("car", carService.getById(Long.parseLong(id)));
-            req.getRequestDispatcher(CAR).forward(req, resp);
+            req.setAttribute("car_id", true);
+            req.setAttribute("car", carService.findById(Long.parseLong(id)).get());
+            req.getRequestDispatcher(CAR_ADMIN).forward(req, resp);
         }
     }
 }
-
-
-

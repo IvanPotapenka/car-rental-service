@@ -1,1 +1,1 @@
-Rental car Maven Project
+Rental car Maven Project for it-Academy
