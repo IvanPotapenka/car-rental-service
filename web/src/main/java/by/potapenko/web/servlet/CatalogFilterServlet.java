@@ -21,10 +21,6 @@ public final class CatalogFilterServlet extends HttpServlet {
 
     @Override
     protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
-
-        int page = req.getParameter("page") != null ? Integer.parseInt(req.getParameter("page")) : 1;
-        int limit = req.getParameter("limit") != null ? Integer.parseInt(req.getParameter("limit")) : 3;
-
         Map<String, String> parameters = new HashMap<>();
         for (Map.Entry<String, String[]> entry : req.getParameterMap().entrySet()) {
                 String name = "&" + entry.getKey();
@@ -42,17 +38,17 @@ public final class CatalogFilterServlet extends HttpServlet {
                     .fuelType(req.getParameter("fuel_type"))
                     .transmission(req.getParameter("transmission"))
                     .fuelConsumption(Double.parseDouble(req.getParameter("fuel_consumption")))
-                    .limit(limit)
-                    .page(page)
+                    .limit(req.getParameter("limit"))
+                    .page(req.getParameter("page"))
                     .build();
 
-                req.setAttribute("limit", limit);
-                req.setAttribute("page", page);
-                req.setAttribute("count", (int) Math.ceil(carService.getSizeCarFilter(carFilter) / (limit * 1.0)));
+                req.setAttribute("limit", carFilter.getLimit());
+                req.setAttribute("page", carFilter.getPage());
+                req.setAttribute("count",carService.getCount(Double.valueOf(carFilter.getLimit())));
 
                 req.setAttribute("find_car_error", false);
                 req.setAttribute("parameters", params);
-                req.setAttribute("cars", carService.findByFilter(carFilter));
+  //              req.setAttribute("cars", carService.findByFilter(carFilter));
                 req.getRequestDispatcher(CATALOG_FILTER).forward(req, resp);
             } else {
                 req.setAttribute("find_car_error", true);

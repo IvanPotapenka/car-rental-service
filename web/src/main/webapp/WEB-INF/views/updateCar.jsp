@@ -1,4 +1,4 @@
-<%@ page import="by.potapenko.database.entity.Car" %>
+<%@ page import="by.potapenko.database.entity.CarEntity" %>
 <%@ page import="java.util.Optional" %>
 <%--
   Created by IntelliJ IDEA.
@@ -197,6 +197,7 @@
                         <th>Trunk,l</th>
                         <th>VIN code</th>
                         <th>Car number</th>
+                        <th>Date of creation</th>
                         <th>Price,$</th>
                     </tr>
 
@@ -264,8 +265,15 @@
                                name="number"
                                id="number_id"
                                value="${car.body.number}"
-                               required/>
-                        </input><br></td>
+                               required/><br></td>
+
+                    <td><label for="date_of_creation_id"></label>
+                        <input class="w3-round-large"
+                               type="text"
+                               name="date_of_creation"
+                               id="date_of_creation_id"
+                               value="${car.dateOfCreation}"
+                               readonly/><br></td>
 
                     <td><label for="price"></label>
                         <input class="w3-round-large"

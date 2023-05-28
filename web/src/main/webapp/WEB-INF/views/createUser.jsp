@@ -1,4 +1,4 @@
-<%@ page import="by.potapenko.database.entity.Car" %>
+<%@ page import="by.potapenko.database.entity.CarEntity" %>
 <%@ page import="java.util.Optional" %>
 <%--
   Created by IntelliJ IDEA.
@@ -75,6 +75,14 @@
                        name="surname"
                        id="surname"
                        required/><br>
+                <label for="phone">Phone No.</label>
+                <input class="w3-round-large"
+                       type="text"
+                       maxlength="13"
+                       placeholder="Enter your phone"
+                       name="phone"
+                       id="phone"
+                       required/><br>
 
                 <label for="email">Email</label>
                 <input class="w3-round-large"
@@ -92,6 +100,14 @@
                        name="password"
                        id="pwd"
                        required/></p><br>
+                <label for="role"></label>
+                    <select class="w3-round-large"
+                            id="role"
+                            name="role"
+                            required>
+                        <option value="USER">USER</option>
+                        <option value="MANAGER">MANAGER</option>
+                    </select><br>
                 <button class="w3-btn w3-white w3-round-large" type="submit">Create</button>
                 </br>
                 <p style="font-size: 16px"><a href="/admin/users">Back</a></p>

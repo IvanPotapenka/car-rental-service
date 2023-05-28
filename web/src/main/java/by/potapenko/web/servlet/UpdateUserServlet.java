@@ -1,6 +1,6 @@
 package by.potapenko.web.servlet;
 
-import by.potapenko.database.entity.User;
+import by.potapenko.database.entity.UserEntity;
 import by.potapenko.service.UserService;
 import jakarta.servlet.ServletException;
 import jakarta.servlet.annotation.WebServlet;
@@ -10,6 +10,7 @@ import jakarta.servlet.http.HttpServletResponse;
 import lombok.SneakyThrows;
 
 import java.io.IOException;
+import java.time.LocalDateTime;
 
 import static by.potapenko.web.util.PagesUtil.UPDATE_USER;
 
@@ -26,20 +27,20 @@ public class UpdateUserServlet extends HttpServlet {
 
     @Override
     protected void doPost(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
-        User updateUser = User.builder()
-                .name(req.getParameter("name"))
-                .surname(req.getParameter("surname"))
+        UserEntity updateUser = UserEntity.builder()
+                .login(req.getParameter("name"))
                 .email(req.getParameter("email"))
                 .password(req.getParameter("password"))
                 .id(Long.parseLong(req.getParameter("id")))
                 .build();
+        updateUser.setDateOfCreation(LocalDateTime.parse(req.getParameter("date_of_creation")));
         userService.update(updateUser).ifPresentOrElse(
                 user -> successCreateUser(req, resp, user),
                 () -> faultCreateCar(req, resp));
     }
 
     @SneakyThrows
-    private static void successCreateUser(HttpServletRequest req, HttpServletResponse resp, User user) {
+    private static void successCreateUser(HttpServletRequest req, HttpServletResponse resp, UserEntity user) {
         req.setAttribute("update_user_error", false);
         req.setAttribute("user", user);
         req.getRequestDispatcher(UPDATE_USER).forward(req, resp);

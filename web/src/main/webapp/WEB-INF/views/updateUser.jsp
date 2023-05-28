@@ -1,4 +1,4 @@
-<%@ page import="by.potapenko.database.entity.Car" %>
+<%@ page import="by.potapenko.database.entity.CarEntity" %>
 <%@ page import="java.util.Optional" %>
 <%--
   Created by IntelliJ IDEA.
@@ -62,24 +62,16 @@
                 <p style="font-size: 16px"><a href="/admin/users/user?id=${user.id}">Back</a></p>
             </c:if><br>
             <c:if test="${update_user_error == null}">
-                <label for="name">Name</label>
+                <label for="name">Login</label>
                 <input class="w3-round-large"
                        type="text"
                        maxlength="20"
                        placeholder="Enter your name"
                        name="name"
-                       value="${user.name}"
+                       value="${user.login}"
                        id="name"
                        required/><br>
-                <label for="surname">Surname</label>
-                <input class="w3-round-large"
-                       type="text"
-                       maxlength="20"
-                       placeholder="Enter your surname"
-                       name="surname"
-                       value="${user.surname}"
-                       id="surname"
-                       required/><br>
+
                 <label for="email">Email</label>
                 <input class="w3-round-large"
                        type="email"
@@ -97,6 +89,23 @@
                        name="password"
                        id="pwd"
                        required/></p><br>
+                <label for="role">Role</label>
+                    <select class="w3-round-large"
+                            id="role"
+                            name="role"
+                            required>
+                        <option value="USER">USER</option>
+                        <option value="MANAGER">MANAGER</option>
+                    </select><br>
+
+                <label for="date_of_creation_id">Date of creation</label>
+                    <input class="w3-round-large"
+                           type="text"
+                           name="date_of_creation"
+                           id="date_of_creation_id"
+                           value="${user.dateOfCreation}"
+                           readonly/><br>
+
                 <input hidden type="number" name="id" value="${user.id}"/>
                 <button class="w3-btn w3-white w3-round-large" type="submit">Update</button>
                 </br>

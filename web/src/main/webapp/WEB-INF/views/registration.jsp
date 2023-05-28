@@ -45,26 +45,19 @@
 
                 <c:if test="${create_user == null}">
             <h1>Registration</h1><br>
-            <label for="name"></label>
+            <label for="name">Login</label>
             <input class="w3-round-large"
                    type="text"
                    maxlength="20"
-                   placeholder="Enter your name"
+                   placeholder="Enter your login"
                    name="name"
                    id="name"
                    required/><br>
-            <label for="surname"></label>
-            <input class="w3-round-large"
-                   type="text"
-                   maxlength="20"
-                   placeholder="Enter your surname"
-                   name="surname"
-                   id="surname"
-                   required/><br>
+
             <c:if test="${email_error == true}">
                 <p class="w3-text-red"> User with this email already exists!</p>
             </c:if>
-            <label for="email"></label>
+            <label for="email">Email</label>
             <input class="w3-round-large"
                    type="email"
                    maxlength="20"
@@ -72,7 +65,8 @@
                    name="email"
                    id="email"
                    required/><br>
-            <label for="pwd"></label>
+
+            <label for="pwd">Password</label>
             <input class="w3-round-large"
                    maxlength="20"
                    type="password"

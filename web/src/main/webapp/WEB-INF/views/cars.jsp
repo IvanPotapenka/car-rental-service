@@ -64,7 +64,7 @@
         <flex>
             <c:if test="${car_delete_success==true}">
                 <p style="font-size: 20px" class="w3-text-green"> The car was successfully deleted</p>
-                <p style="font-size: 16px"><a href="/admin/cars">Back</a></p>
+                <p style="font-size: 12px"><a href="/admin/cars">Back</a></p><br></box>
             </c:if>
             <c:if test="${car_delete_success==null}">
 
@@ -86,6 +86,7 @@
                     <th>Trunk, l</th>
                     <th>VIN code</th>
                     <th>Number</th>
+                    <th>Date of creation</th>
                     <th>Price, $</th>
                     <th>Edit</th>
                 </tr>
@@ -106,6 +107,7 @@
                         <td>${car.body.trunkVolume}</td>
                         <td>${car.body.vinCode}</td>
                         <td>${car.body.number}</td>
+                        <td>${car.dateOfCreation}</td>
                         <td>${car.price}</td>
                         <td><b><a href="${pageContext.request.contextPath}/admin/cars/car?id=${car.id}"
                                   class="w3-text-blue">EDIT</a></b></td>

@@ -1,5 +1,7 @@
 package by.potapenko.web.servlet;
 
+import by.potapenko.database.dto.CarFilter;
+import by.potapenko.database.entity.CarEntity;
 import by.potapenko.service.CarService;
 import jakarta.servlet.ServletException;
 import jakarta.servlet.annotation.WebServlet;
@@ -8,6 +10,7 @@ import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
 
 import java.io.IOException;
+import java.util.List;
 
 import static by.potapenko.web.util.PagesUtil.CARS;
 import static by.potapenko.web.util.PagesUtil.CAR_ADMIN;
@@ -19,13 +22,19 @@ public final class CarsServlet extends HttpServlet {
     @Override
     protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
         String id = req.getParameter("id");
-        int page = req.getParameter("page") != null ? Integer.parseInt(req.getParameter("page")) : 1;
-        int limit = req.getParameter("limit") != null ? Integer.parseInt(req.getParameter("limit")) : 3;
+        CarFilter filter = CarFilter.builder()
+                .limit(req.getParameter("limit"))
+                .page(req.getParameter("page"))
+                .build();
+
+        Integer limit = filter.getLimit();
+        Integer page = filter.getPage();
+
+        req.setAttribute("limit", limit);
+        req.setAttribute("page", page);
+        req.setAttribute("count", carService.getCount(Double.valueOf(limit)));
 
         if (id == null) {
-            req.setAttribute("limit", limit);
-            req.setAttribute("page", page);
-            req.setAttribute("count", (int) Math.ceil(carService.getSizeCarTable() / (limit * 1.0)));
             req.setAttribute("cars", carService.findAll(limit, page));
             req.getRequestDispatcher(CARS).forward(req, resp);
         } else {
@@ -34,6 +43,7 @@ public final class CarsServlet extends HttpServlet {
         }
     }
 }
+
 
 
 

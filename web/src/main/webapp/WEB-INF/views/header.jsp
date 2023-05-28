@@ -20,6 +20,32 @@
             width: 100%;
         }
 
+        .topmenu {
+            float: right;
+            position: relative;
+        }
+ .submenu {
+            background: cadetblue;
+            border-radius: 5px;
+            position: absolute;
+            left: 0;
+            top: 100%;
+            z-index: 5;
+            width: 180px;
+            opacity: 0;
+            transform: scaleY(0);
+            transform-origin: 0 0;
+            transition: .5s ease-in-out;
+        }
+        li {
+            list-style-type: none
+
+        }
+        .topmenu > li:hover .submenu {
+            opacity: 1;
+            transform: scaleY(1);
+        }
+
     </style>
 </head>
 <body>
@@ -36,6 +62,17 @@
             <button class="w3-btn  w3-round-large w3-right  " style="text-shadow:1px 1px 0 #444"
                     onclick="location.href='/logout'">Sing out
             </button>
+            <ul class="topmenu">
+                    <li><button class="w3-btn  w3-round-large w3-right" style="text-shadow:1px 1px 0 #444"onclick="location.href='/account/profile'">Account</button>
+                        <ul class="submenu"><br>
+                            <li class="w3-padding"><a href="/account/profile">Profile</a></li><br>
+                            <li class="w3-padding"><a href="/account/orders">Orders</a></li><br>
+                            <li class="w3-padding"><a href="#">Message</a></li>
+                        </ul>
+                    </li>
+                </ul>
+
+
         </c:if>
         <button class="w3-btn w3-round-large w3-right" style="text-shadow:1px 1px 0 #444"
                 onclick="location.href='/'">Contact

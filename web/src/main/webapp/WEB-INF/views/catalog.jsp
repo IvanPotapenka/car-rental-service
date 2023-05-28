@@ -1,4 +1,4 @@
-<%@ page import="by.potapenko.database.entity.Car" %>
+<%@ page import="by.potapenko.database.entity.CarEntity" %>
 <%@ page import="java.util.List" %><%--
   Created by IntelliJ IDEA.
   User: Professional
@@ -25,6 +25,11 @@
 
         th {
             font-size: 12px;
+            padding: 10px;
+            border: 1px solid lightblue;
+        }
+        td {
+            font-size: 16px;
             padding: 10px;
             border: 1px solid lightblue;
         }
@@ -164,18 +169,20 @@
                 <h6> &#9989; ${car.body.placeQuantity} places &#9989; ${car.engine.transmission}
                     &#9989;${car.body.doorQuantity} doors &#9989;fuel consumption ${car.engine.fuelConsumption} on 100
                     km</h6><br>
+                </table><br>
                 <table>
+                    <p style="font-size: 18px">The cost of booking</p>
                     <tr>
-                        <th>1-3 days</th>
-                        <th>4-7 days</th>
-                        <th>7-15 days</th>
-                        <th>15-30 days</th>
+                        <th> <span style="font-size: 10px">1-3 days </span></th>
+                        <th> <span style="font-size: 10px">4-7 days </span></th>
+                        <th> <span style="font-size: 10px">8-15 days </span></th>
+                        <th> <span style="font-size: 10px">16-30 days </span></th>
                     </tr>
                     <tr>
-                        <th>${car.price*1}$</th>
-                        <th>${car.price*0.9}$</th>
-                        <th>${car.price*0.8}$</th>
-                        <th>${car.price*0.7}$</th>
+                        <th style="font-size: 16px"><span style="color: crimson" aria-flowto=""> ${car.price*1.0}$</span></th>
+                        <th style="font-size: 16px"><span style="color: crimson" aria-flowto=""> ${car.price*0.9}$</span></th>
+                        <th style="font-size: 16px"><span style="color: crimson" aria-flowto=""> ${car.price*0.75}$</span></th>
+                        <th style="font-size: 16px"><span style="color: crimson" aria-flowto=""> ${car.price*0.6}$</span></th>
                     </tr>
                 </table>
                 <br>
@@ -205,9 +212,11 @@
                             <a href="${pageContext.request.contextPath}/catalog?limit=${limit}&page=1"> 1 </a>
                             <span class="gap"> … </span>
                         </c:if>
+
                         <c:if test="${page == 1}">
                             <span class="previous_page" aria-disabled="true">Previous</span>
                         </c:if>
+
                         <c:forEach begin="${page}" end="${page+2}" var="i">
                             <c:if test="${page == i}">
                                 <em aria-current="${i}"> ${i} </em>
@@ -218,6 +227,7 @@
                                 </c:if>
                             </c:if>
                         </c:forEach>
+
                         <c:if test="${count == page}">
                             <span class="next_page" aria-disabled="true">Next</span>
                         </c:if>
@@ -245,6 +255,7 @@
                     <option value="6">6</option>
                     <option value="9">9</option>
                 </select>
+<%--                <input name="page" value="${page}" hidden>--%>
                 <button class="w3-btn w3-white w3-round-large" type="submit">Show page</button>
                 </br>
             </div1>

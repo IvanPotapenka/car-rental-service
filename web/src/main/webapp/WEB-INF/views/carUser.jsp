@@ -87,7 +87,7 @@
         </button>
         </br>
     </box>
-    <p style="font-size: 16px"><a href="/catalog">Back</a></p><br>
+    <p style="font-size: 16px"><button class="w3-btn w3-round-large" onclick="history.go(-1);">Back</button></p><br></box>
 </box>
 <%@include file="footer.jsp" %>
 </body>

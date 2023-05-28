@@ -3,16 +3,23 @@ package by.potapenko.web.servlet;
 import by.potapenko.database.enam.ColorCar;
 import by.potapenko.database.enam.FuelType;
 import by.potapenko.database.enam.TransmissionType;
-import by.potapenko.database.entity.Car;
+import by.potapenko.database.entity.CarEntity;
+import by.potapenko.database.entity.ClientEntity;
+import by.potapenko.database.entity.UserEntity;
 import by.potapenko.service.CarService;
+import by.potapenko.service.ClientService;
 import jakarta.servlet.ServletException;
 import jakarta.servlet.annotation.WebServlet;
 import jakarta.servlet.http.HttpServlet;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
+import jakarta.servlet.http.HttpSession;
 import lombok.SneakyThrows;
 
 import java.io.IOException;
+import java.util.Collections;
+import java.util.List;
+import java.util.Optional;
 
 import static by.potapenko.web.util.PagesUtil.CAR_ADMIN;
 import static by.potapenko.web.util.PagesUtil.CREATE_CAR;
@@ -20,6 +27,7 @@ import static by.potapenko.web.util.PagesUtil.CREATE_CAR;
 @WebServlet("/admin/cars/create_car")
 public class CreateCarServlet extends HttpServlet {
     private final CarService carService = CarService.getInstance();
+    private final ClientService clientService = ClientService.getInstance();
 
     @Override
     protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
@@ -28,17 +36,18 @@ public class CreateCarServlet extends HttpServlet {
 
     @Override
     protected void doPost(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
-        Car carCreate = Car.builder()
+        HttpSession session = req.getSession();
+        CarEntity carCreate = CarEntity.builder()
                 .brand(req.getParameter("brand"))
                 .model(req.getParameter("model"))
                 .year(Integer.parseInt(req.getParameter("year_of_release")))
                 .price(Double.parseDouble(req.getParameter("price")))
-                .engine(Car.Engine.builder().fuelType(FuelType.valueOf(req.getParameter("fuel")))
+                .engine(CarEntity.Engine.builder().fuelType(FuelType.valueOf(req.getParameter("fuel")))
                         .engineCapacity(Double.parseDouble(req.getParameter("engine_capacity")))
                         .horsePower(Integer.parseInt(req.getParameter("horse_power")))
                         .transmission(TransmissionType.valueOf(req.getParameter("transmission")))
                         .fuelConsumption(Double.parseDouble(req.getParameter("fuel_consumption"))).build())
-                .body(Car.Body.builder().placeQuantity(Integer.parseInt(req.getParameter("quantity_places")))
+                .body(CarEntity.Body.builder().placeQuantity(Integer.parseInt(req.getParameter("quantity_places")))
                         .doorQuantity(Integer.parseInt(req.getParameter("quantity_doors")))
                         .trunkVolume(Integer.parseInt(req.getParameter("trunk_volume")))
                         .vinCode(req.getParameter("vin_code"))
@@ -51,7 +60,7 @@ public class CreateCarServlet extends HttpServlet {
     }
 
     @SneakyThrows
-    private static void successCreateCar(HttpServletRequest req, HttpServletResponse resp, Car car) {
+    private static void successCreateCar(HttpServletRequest req, HttpServletResponse resp, CarEntity car) {
         req.setAttribute("car", car);
         req.setAttribute("create_car", true);
         req.getRequestDispatcher(CAR_ADMIN).forward(req, resp);

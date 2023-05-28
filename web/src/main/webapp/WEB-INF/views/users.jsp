@@ -62,7 +62,7 @@
 </head>
 <body>
 <%@include file="headerAdmin.jsp" %>
-<div><a href="/admin">Home </a><a href="${pageContext.request.contextPath}/admin/users">/ users</a></div>
+<div><a href="/admin">Home </a> / users </div>
 <box>
     <form method="post" class="w3-card-4 w3-blue-grey w3-round-large w3-padding" style="width: 70%">
         <a style="font-size: 12px" href="${pageContext.request.contextPath}/admin/users/create_user">Create new user</a>
@@ -77,21 +77,23 @@
             <table>
                 <tr>
                     <th>User_id</th>
-                    <th>Username</th>
-                    <th>Surname</th>
+                    <th>Login</th>
                     <th>Email</th>
                     <th>Password</th>
+                    <th>Date of creation</th>
+                    <th>Role</th>
                     <th>Edit</th>
                 </tr>
                 <c:forEach var="user" items="${users}">
                     <tr>
                         <td>${user.id}</td>
-                        <td>${user.name}</td>
-                        <td>${user.surname}</td>
+                        <td>${user.login}</td>
                         <td>${user.email}</td>
                         <td>${user.password}</td>
+                        <td>${user.dateOfCreation}</td>
+                        <td>${user.role}</td>
                         <td><a href="${pageContext.request.contextPath}/admin/users/user?id=${user.id}"
-                               class="w3-text-red">EDIT</a></td>
+                               class="w3-text-blue">EDIT</a></td>
                     </tr>
                 </c:forEach>
             </table>

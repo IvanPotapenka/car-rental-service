@@ -6,6 +6,8 @@ import jakarta.servlet.annotation.WebServlet;
 import jakarta.servlet.http.HttpServlet;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
+import jakarta.servlet.http.HttpSession;
+import org.hibernate.Session;
 
 import java.io.IOException;
 
@@ -18,6 +20,8 @@ public final class OrderServlet extends HttpServlet {
     @Override
     protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
         String id = req.getParameter("id");
+        HttpSession session = req.getSession();
+        session.setAttribute("car", carService.findById(Long.parseLong(id)).get());
         req.setAttribute("car", carService.findById(Long.parseLong(id)).get());
         req.getRequestDispatcher(ORDER).forward(req, resp);
     }

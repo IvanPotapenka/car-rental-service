@@ -1,4 +1,4 @@
-<%@ page import="by.potapenko.database.entity.Car" %>
+<%@ page import="by.potapenko.database.entity.CarEntity" %>
 <%@ page import="java.util.Optional" %>
 <%--
   Created by IntelliJ IDEA.

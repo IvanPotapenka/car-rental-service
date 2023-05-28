@@ -16,7 +16,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
     <link rel="stylesheet" href=
             "https://unpkg.com/@primer/css@^18.0.0/dist/primer.css"/>
-    <title>Car current</title>
+    <title>Cars</title>
     <style>
         table {
             border-collapse: collapse;
@@ -110,7 +110,7 @@
                     </tr>
                 </table>
                 </br>
-                <p style="font-size: 16px"><a href="/admin/cars">Back</a></p>
+                <p style="font-size: 12px"><a href="/admin/cars">Back</a></p>
             </c:if>
         </flex>
     </form>

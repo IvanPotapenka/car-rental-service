@@ -1,13 +1,13 @@
 package by.potapenko.web.servlet;
 
-import by.potapenko.database.entity.User;
+import by.potapenko.database.enam.UserRole;
+import by.potapenko.database.entity.UserEntity;
 import by.potapenko.service.UserService;
 import jakarta.servlet.ServletException;
 import jakarta.servlet.annotation.WebServlet;
 import jakarta.servlet.http.HttpServlet;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
-import lombok.SneakyThrows;
 
 import java.io.IOException;
 
@@ -25,28 +25,23 @@ public class CreateUserServlet extends HttpServlet {
 
     @Override
     protected void doPost(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
-        User userCreate = User.builder()
-                .name(req.getParameter("name"))
-                .surname(req.getParameter("surname"))
-                .email(req.getParameter("email"))
-                .password(req.getParameter("password"))
-                .build();
-        userService.create(userCreate).ifPresentOrElse(
-                user -> successCreateUser(req, resp, user),
-                () -> faultCreateUser(req, resp));
-    }
-    @SneakyThrows
-    private static void successCreateUser(HttpServletRequest req, HttpServletResponse resp, User user) {
-        req.setAttribute("user", user);
-        req.setAttribute("create_user", true);
-        req.getRequestDispatcher(USER_ADMIN).forward(req, resp);
-    }
-
-    @SneakyThrows
-    private static void faultCreateUser(HttpServletRequest req, HttpServletResponse resp) {
-        req.setAttribute("create_user", false);
-        req.getRequestDispatcher(CREATE_USER).forward(req, resp);
+        if (userService.findByEmail(req.getParameter("email"))) {
+            UserEntity userCreate = UserEntity.builder()
+                    .login(req.getParameter("name"))
+                    .email(req.getParameter("email"))
+                    .password(req.getParameter("password"))
+                    .role(UserRole.valueOf(req.getParameter("role")))
+                    .build();
+            userService.create(userCreate);
+            req.setAttribute("user", userCreate);
+            req.setAttribute("create_user", true);
+            req.getRequestDispatcher(USER_ADMIN).forward(req, resp);
+        } else {
+            req.setAttribute("create_user", false);
+            req.getRequestDispatcher(CREATE_USER).forward(req, resp);
+        }
     }
 }
+
 
 

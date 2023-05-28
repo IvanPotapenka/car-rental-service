@@ -37,10 +37,16 @@
             </button>
         </c:if>
         <button class="w3-btn w3-front-arial w3-round-large w3-right " style="text-shadow:1px 1px 0 #444"
+                onclick="location.href='/admin/rentals'">Rentals
+        </button>
+        <button class="w3-btn w3-front-arial w3-round-large w3-right " style="text-shadow:1px 1px 0 #444"
                 onclick="location.href='/admin/users'">Users
         </button>
+        <button class="w3-btn w3-front-arial w3-round-large w3-right " style="text-shadow:1px 1px 0 #444"
+                onclick="location.href='/admin/clients'">Clients
+        </button>
         <button class="w3-btn  w3-round-large w3-right" style="text-shadow:1px 1px 0 #444"
-                onclick="location.href='/admin/admins'">Admins
+                onclick="location.href='/admin/managers'">Managers
         </button>
         <button class="w3-btn  w3-round-large w3-right" style="text-shadow:1px 1px 0 #444"
                 onclick="location.href='/admin/cars'">Cars

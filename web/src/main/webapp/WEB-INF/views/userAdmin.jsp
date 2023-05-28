@@ -16,7 +16,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
     <link rel="stylesheet" href=
             "https://unpkg.com/@primer/css@^18.0.0/dist/primer.css"/>
-    <title>Car current</title>
+    <title>Users</title>
     <style>
         table {
             border-collapse: collapse;
@@ -71,23 +71,23 @@
                 <table>
                     <tr>
                         <th>User_id</th>
-                        <th>Username</th>
-                        <th>Surname</th>
+                        <th>Login</th>
                         <th>Email</th>
                         <th>Password</th>
+                        <th>Role</th>
                         <th>Delete</th>
                         <th>Edit</th>
                     </tr>
                     <tr>
                         <td>${user.id}</td>
-                        <td>${user.name}</td>
-                        <td>${user.surname}</td>
+                        <td>${user.login}</td>
                         <td>${user.email}</td>
                         <td>${user.password}</td>
+                        <td>${user.role}</td>
                         <td><a href="${pageContext.request.contextPath}/admin/users/user/delete_user?id=${user.id}"
                                class="w3-text-red">DELETE</a></td>
                         <td><a href="${pageContext.request.contextPath}/admin/users/user/update_user?id=${user.id}"
-                               class="w3-text-red">EDIT</a></td>
+                               class="w3-text-blue">EDIT</a></td>
                     </tr>
                 </table>
                 </br>

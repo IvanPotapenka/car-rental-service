@@ -26,7 +26,7 @@ public final class UsersServlet extends HttpServlet {
             req.setAttribute("users", userService.findAll(limit, page));
             req.setAttribute("limit", limit);
             req.setAttribute("page", page);
-            req.setAttribute("count", (int) Math.ceil(userService.getSizeUserTable() / (limit * 1.0)));
+            req.setAttribute("count",userService.getCount(Double.valueOf(limit)));
 
             req.getRequestDispatcher(USERS).forward(req, resp);
         } else {

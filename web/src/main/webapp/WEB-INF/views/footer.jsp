@@ -78,11 +78,14 @@
         .footer-distributed p.footer-links a:hover {
             text-decoration: underline;
         }
+
     </style>
 </head>
 <body>
-<div class="w3-container w3-blue-grey w3-padding">
+
+<div style="height: 310px" class="w3-blue-grey w3-padding">
     <footer class="footer-distributed">
+        <p style="font-size: 16px"><button class="w3-btn w3-round-large" onclick="history.go(-1);">Back</button></p><br></box>
         <div class="footer-right">
             <a href="https://www.facebook.com"><i class="fa fa-facebook"></i></a>
             <a href="https://twitter.com"><i class="fa fa-twitter"></i></a>

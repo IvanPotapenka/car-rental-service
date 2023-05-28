@@ -1,6 +1,6 @@
 package by.potapenko.web.servlet;
 
-import by.potapenko.database.entity.User;
+import by.potapenko.database.entity.AdminEntity;
 import by.potapenko.service.UserService;
 import jakarta.servlet.ServletException;
 import jakarta.servlet.annotation.WebServlet;
@@ -28,13 +28,13 @@ public class LoginAdminServlet extends HttpServlet {
         String login = req.getParameter("login");
         String password = req.getParameter("password");
         userService.findByAdmin(login, password).ifPresentOrElse(
-                user -> successSingIn(req, resp, user),
+                admin -> successSingIn(req, resp, admin),
                 () -> faultSingIn(req, resp));
     }
 
     @SneakyThrows
-    private static void successSingIn(HttpServletRequest req, HttpServletResponse resp, User user) {
-        req.getSession().setAttribute("admin", user);
+    private static void successSingIn(HttpServletRequest req, HttpServletResponse resp, AdminEntity admin) {
+        req.getSession().setAttribute("admin", admin);
         req.getRequestDispatcher(ADMIN).forward(req, resp);
     }
 

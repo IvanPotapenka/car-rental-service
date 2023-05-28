@@ -1,5 +1,5 @@
 <%--@elvariable id="car" type=""--%>
-<%@ page import="by.potapenko.database.entity.Car" %>
+<%@ page import="by.potapenko.database.entity.CarEntity" %>
 <%@ page import="java.util.List" %><%--
   Created by IntelliJ IDEA.
   User: Professional
@@ -9,6 +9,7 @@
 --%>
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
 <%@taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
+<%@page import="java.time.LocalDate"%>
 
 <html>
 <head>
@@ -19,11 +20,17 @@
     <style>
         table {
             border-collapse: collapse;
-            width: 100%;
+            width: 80%;
+
         }
 
         th {
-            font-size: 12px;
+            font-size: 16px;
+            padding: 10px;
+            border: 1px solid lightblue;
+        }
+        td {
+            font-size: 16px;
             padding: 10px;
             border: 1px solid lightblue;
         }
@@ -39,11 +46,27 @@
             display: flex;
             flex-direction: column;
             align-items: flex-start;
+            margin-left: 10px;
         }
 
         div {
             padding-top: 80px;
             padding-left: 20px;
+        }
+        nav1 {
+            margin-top: 100px;
+            position: fixed;
+            scroll-margin-right: 10px;
+            width: 20%;
+        }
+        input {
+            text-align: center;
+            width: 200px;
+            height: 30px;
+            font-size: 10px;
+        }
+        .inp{
+            display:  flex;
         }
     </style>
 </head>
@@ -56,24 +79,39 @@
     <box class="w3-card-4 w3-round-large w3-padding" style="width: 50%">
         <h2><a href=${pageContext.request.contextPath}/catalog/car?id=${car.id}
                class="w3-text-blue"> ${car.brand} ${car.model} ${car.year}</a></h2>
-        <h6> &#9989; ${car.body.placeQuantity} places/ &#9989; ${car.engine.transmission}/
-            &#9989;${car.body.doorQuantity} doors/ &#9989;${car.engine.fuelConsumption} on 100 km</h6><br>
-        <form method="post">
+        <h6> &#9989; ${car.body.placeQuantity} places &#9989; ${car.engine.transmission}
+            &#9989;${car.body.doorQuantity} doors &#9989;fuel consumption ${car.engine.fuelConsumption} on 100 km</h6><br>
+        <table>
+            <tr>
+                <td><span style="font-size: 12px">Color</span></td>
+                <td><span style="font-size: 12px">Trunk volume</span></td>
+                <td><span style="font-size: 12px">Engine capacity</span></td>
+                <td><span style="font-size: 12px">Engine power</span></td>
+                <td><span style="font-size: 12px">Engine fuel type</span></td>
+            </tr>
+            <tr>
+                <td> ${car.body.color}</td>
+                <td> ${car.body.trunkVolume} L</td>
+                <td> ${car.engine.engineCapacity}L</td>
+                <td> ${car.engine.horsePower} h/p</td>
+                <td> ${car.engine.fuelType}</td>
+            </tr>
+        </table><br>
             <table>
+                <p style="font-size: 18px">The cost of booking</p>
                 <tr>
-                    <th>1-3 days <input type="radio" name="day"></th>
-                    <th>4-7 days <input type="radio" name="day"></th>
-                    <th>7-15 days <input type="radio" name="day"></th>
-                    <th>15-30 days <input type="radio" name="day"></th>
+                    <th> <span style="font-size: 10px">1-3 days </span></th>
+                    <th> <span style="font-size: 10px">4-7 days </span></th>
+                    <th> <span style="font-size: 10px">8-15 days </span></th>
+                    <th> <span style="font-size: 10px">16-30 days </span></th>
                 </tr>
                 <tr>
-                    <th>${car.price*1.0}$</th>
-                    <th>${car.price*0.9}$</th>
-                    <th>${car.price*0.8}$</th>
-                    <th>${car.price*0.7}$</th>
+                    <th><span style="color: crimson" aria-flowto=""> ${car.price*1.0}$</span></th>
+                    <th><span style="color: crimson" aria-flowto=""> ${car.price*0.9}$</span></th>
+                    <th><span style="color: crimson" aria-flowto=""> ${car.price*0.75}$</span></th>
+                    <th><span style="color: crimson" aria-flowto=""> ${car.price*0.6}$</span></th>
                 </tr>
             </table>
-        </form>
         <br>
         <flex>
             <h3 class="w3-padding w3-text-blue">Include:</h3>
@@ -85,37 +123,42 @@
                 issued
             </h7>
         </flex>
-        <form method="post">
-            <box>
-                <h5 class="w3-padding w3-text-blue">Additional equipment</h5>
-                <table>
-                    <tr>
-                        <th><input type="checkbox" name="gps">GPS</th>
-                        <th><input type="checkbox" name="child">Child car sea</th>
-                    </tr>
-                    <tr>
-                        <th>${car.price*0.1}$</th>
-                        <th>${car.price*0.2}$</th>
-                    </tr>
-                </table>
-                </br>
-            </box>
-        </form>
 
-        <h5 class="w3-text-red">Total price ${car.price}$</h5><br>
         <c:if test="${sessionScope.user == null}">
             <h4 class="w3-text-blue w3-round-large"> To place an order, please <a href=/login>Sing in </a></h4>
         </c:if>
         <c:if test="${sessionScope.user != null}">
-            <button class="w3-btn w3-round-large w3-right w3-red w3-padding"
-                    onclick="location.href='/booking?id=${car.id}'">Booking
-            </button>
-        </c:if>
+        <form action="/booking">
+            <div class="inp" style="width: 100%">
+                <h5 class="w3-padding w3-text-blue">When do you rent? </h5>
+                <label for="rental_date_id"></label>
+                <input class="w3-round-large"
+                       maxlength="20"
+                       type="date"
+                       min="${LocalDate.now()}"
+                       name="rental_date"
+                       id="rental_date_id"
+                       required/><br>
 
+                <h5 class="w3-padding w3-text-blue">When are you returning it? </h5>
+                <label for="return_date_id"></label>
+                <input class="w3-round-large"
+                       maxlength="20"
+                       type="date"
+                       min="${LocalDate.now()}"
+                       name="return_date"
+                       id="return_date_id"
+                       required/><br>
+
+                <input hidden name="id" value="${car.id}"/>
+            </div>
+            <button class="w3-btn w3-round-large w3-right w3-red w3-padding">Booking
+            </button>
+        </form>
+        </c:if>
         <br>
     </box>
     </br>
-    <p style="font-size: 16px"><a href="/catalog">Back</a></p><br>
 </box>
 <%@include file="footer.jsp" %>
 </body>
