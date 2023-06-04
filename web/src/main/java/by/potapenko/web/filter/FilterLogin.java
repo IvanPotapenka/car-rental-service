@@ -10,15 +10,15 @@ import jakarta.servlet.http.HttpServletRequest;
 
 import java.io.IOException;
 
-@WebFilter("/cars")
+@WebFilter(urlPatterns = {"/cars", "/users", "/admin"})
 public class FilterLogin implements Filter {
     @Override
     public void doFilter(ServletRequest servletRequest, ServletResponse servletResponse, FilterChain filterChain) throws IOException, ServletException {
-        Object user = ((HttpServletRequest) servletRequest).getSession().getAttribute("user");
+        Object user = ((HttpServletRequest) servletRequest).getSession().getAttribute("admin");
         if (user != null) {
             filterChain.doFilter(servletRequest, servletResponse);
         } else {
-            servletRequest.getRequestDispatcher("/login").forward(servletRequest, servletResponse);
+            servletRequest.getRequestDispatcher("/login_admin").forward(servletRequest, servletResponse);
         }
     }
 }

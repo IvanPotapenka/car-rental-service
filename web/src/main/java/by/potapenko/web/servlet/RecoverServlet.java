@@ -22,7 +22,7 @@ public class RecoverServlet extends HttpServlet {
 
     @Override
     protected void doPost(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
-        if (userService.getByEmail(req.getParameter("email")).isEmpty()) {
+        if (userService.findByEmail(req.getParameter("email"))) {
             resp.sendRedirect("/recover?email=false");
         } else {
             resp.sendRedirect("/recover?email=true");

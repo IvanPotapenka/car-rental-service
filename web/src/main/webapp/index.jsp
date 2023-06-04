@@ -15,14 +15,12 @@
     <link rel="stylesheet" href="https://www.w3schools.com/w3css/4/w3.css">
     <link rel="shortcut icon" type="image/x-icon"
           href="https://e7.pngegg.com/pngimages/330/810/png-clipart-car-dealership-graphics-sports-car-computer-icons-car-blue-driving.png">
-    <link rel="stylesheet" href="//maxcdn.bootstrapcdn.com/font-awesome/4.2.0/css/font-awesome.min.css">
+
     <style>
         section {
             height: 80vh;
-
         }
         .footer-distributed {
-
             padding: 45px 50px;
         }
         .footer-distributed .footer-left p {
@@ -73,10 +71,8 @@
 </head>
 
 <body>
-
         <nav>
             <div class="w3-container w3-blue-grey ">
-
                 <button class="w3-text-blue" style="text-shadow:1px 1px 0 #444" onclick="location.href=''">
                 <h2>Car rental service</h2></button>
 
@@ -88,13 +84,13 @@
                 <button class="w3-btn  w3-round-large w3-right  " style="text-shadow:1px 1px 0 #444"
                 onclick="location.href='/logout'">Sing out</button>
                 </c:if>
-
                 <button class="w3-btn w3-front-arial w3-round-large w3-right " style="text-shadow:1px 1px 0 #444"onclick="location.href=''">Contact</button>
-                <button class="w3-btn  w3-round-large w3-right" style="text-shadow:1px 1px 0 #444" onclick="location.href='/cars'">Cars</button>
+                <button class="w3-btn  w3-round-large w3-right" style="text-shadow:1px 1px 0 #444" onclick="location.href='/catalog'">Catalog</button>
                 <button class="w3-btn  w3-round-large w3-right" style="text-shadow:1px 1px 0 #444" onclick="location.href=''">About</button>
                 <button class="w3-btn  w3-round-large w3-right" style="text-shadow:1px 1px 0 #444" onclick="location.href=''">Home</button>
             </div>
         </nav>
+
 <section></section>
         <div class="w3-container w3-blue-grey  w3-padding">
             <footer class="footer-distributed">

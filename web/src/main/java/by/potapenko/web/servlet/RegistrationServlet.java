@@ -1,6 +1,6 @@
 package by.potapenko.web.servlet;
 
-import by.potapenko.database.entites.User;
+import by.potapenko.database.entity.UserEntity;
 import by.potapenko.service.UserService;
 import jakarta.servlet.ServletException;
 import jakarta.servlet.annotation.WebServlet;
@@ -23,17 +23,18 @@ public class RegistrationServlet extends HttpServlet {
 
     @Override
     protected void doPost(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
-        if (userService.getByEmail(req.getParameter("email")).isEmpty()) {
-            userService.create(User.builder()
-                    .name(req.getParameter("name"))
-                    .surname(req.getParameter("surname"))
+        if (userService.findByEmail(req.getParameter("email"))) {
+            UserEntity userCreate = UserEntity.builder()
+                    .login(req.getParameter("name"))
                     .email(req.getParameter("email"))
-                    .phoneNumber(req.getParameter("phone"))
                     .password(req.getParameter("password"))
-                    .build());
-            resp.sendRedirect("/login");
+                    .build();
+            userService.create(userCreate);
+            req.setAttribute("create_user", true);
+            req.getRequestDispatcher(REGISTRATION).forward(req, resp);
         } else {
-            resp.sendRedirect("/registration?email=true");
+            req.setAttribute("email_error", true);
+            req.getRequestDispatcher(REGISTRATION).forward(req, resp);
         }
     }
 }
