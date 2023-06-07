@@ -39,7 +39,7 @@ class RentalDaoTest {
 
         @Cleanup Session session = sessionFactory.getSession();
         int limit = 4;
-        int page = 1;
+        int page = 0;
         String[] actual = rentalDao.findAll(limit, page, session)
                 .stream()
                 .map(rental -> rental.getStatus().name())

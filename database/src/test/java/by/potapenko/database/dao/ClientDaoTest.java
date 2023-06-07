@@ -43,7 +43,7 @@ class ClientDaoTest {
 
         @Cleanup Session session = sessionFactory.getSession();
         int limit = 3;
-        int page = 1;
+        int page = 0;
         String[] actual = clientDao.findAll(limit, page, session)
                 .stream()
                 .map(ClientEntity::getFirstName)
