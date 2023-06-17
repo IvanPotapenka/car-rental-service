@@ -5,7 +5,6 @@ import by.potapenko.database.entity.enam.Status;
 import by.potapenko.database.entity.enam.UserRole;
 import by.potapenko.database.entity.ClientEntity;
 import by.potapenko.database.entity.RentalEntity;
-import by.potapenko.database.entity.UserEntity;
 import by.potapenko.service.RentalService;
 import jakarta.servlet.ServletException;
 import jakarta.servlet.annotation.WebServlet;
@@ -39,19 +38,17 @@ public class UpdateRentalServlet extends HttpServlet {
                         .model(req.getParameter("model"))
                         .build())
                 .client(ClientEntity.builder()
+//                        .role(UserRole.valueOf(req.getParameter("creator")))
                         .firstName(req.getParameter("client"))
-                        .build())
+                                .build())
                 .rentalDate(LocalDate.parse(req.getParameter("rental_date")))
                 .returnDate(LocalDate.parse(req.getParameter("return_date")))
                 .rentalDays(Integer.parseInt(req.getParameter("rental_days")))
                 .price(Double.parseDouble(req.getParameter("price")))
                 .status(Status.valueOf(req.getParameter("status")))
-                .client(ClientEntity.builder()
-                        .user(UserEntity.builder()
-                                .role(UserRole.valueOf(req.getParameter("creator")))
-                                .build())
-                        .build())
-                .build();
+
+                        .build();
+
         rentalService.update(updaterental).ifPresentOrElse(
                 rental -> successCreateCar(req, resp, rental),
                 () -> faultCreateCar(req, resp));

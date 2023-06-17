@@ -1,6 +1,6 @@
 package by.potapenko.web.servlet;
 
-import by.potapenko.database.entity.AdminEntity;
+import by.potapenko.database.entity.UserEntity;
 import by.potapenko.service.AdminService;
 import jakarta.servlet.ServletException;
 import jakarta.servlet.annotation.WebServlet;
@@ -34,7 +34,7 @@ public class LoginAdminServlet extends HttpServlet {
 
 
     @SneakyThrows
-    private static void successSingIn(HttpServletRequest req, HttpServletResponse resp, AdminEntity admin) {
+    private static void successSingIn(HttpServletRequest req, HttpServletResponse resp, UserEntity admin) {
         req.getSession().setAttribute("admin", admin);
         req.getRequestDispatcher(ADMIN).forward(req, resp);
     }

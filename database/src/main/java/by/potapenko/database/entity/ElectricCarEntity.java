@@ -21,8 +21,8 @@ public class ElectricCarEntity extends CarEntity {
     public Double batteryCapacity;
 
     @Builder
-    public ElectricCarEntity(Long id, String brand, String model, int year, double price, List<RentalEntity> orders, List<ClientEntity> clients, Engine engine, Body body, Integer rangeOfTravel, Double batteryCapacity) {
-        super(id, brand, model, year, price, orders, clients, engine, body);
+    public ElectricCarEntity(Long id, String brand, String model, int year, double price, List<RentalEntity> orders, List<ClientEntity> clients, EngineCar engine, BodyCar body, Integer rangeOfTravel, Double batteryCapacity) {
+        super(id, brand, model, year, price, orders, clients, body, engine);
         this.rangeOfTravel = rangeOfTravel;
         this.batteryCapacity = batteryCapacity;
     }

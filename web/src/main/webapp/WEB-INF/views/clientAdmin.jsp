@@ -77,7 +77,6 @@
                         <th>Phone number</th>
                         <th>Address</th>
                         <th>Passport</th>
-                        <th>Driver licence</th>
                         <th>Delete</th>
                         <th>Edit</th>
 
@@ -90,8 +89,7 @@
                         <td>${client.dateOfBirthday}</td>
                         <td>${client.contact.phone}</td>
                         <td>${client.contact.address}</td>
-                        <td>${client.document.passport}</td>
-                        <td>${client.document.driverLicense}</td>
+                        <td>${client.passport}</td>
                         <td><a href="${pageContext.request.contextPath}/admin/clients/client/delete_client?id=${client.user.id}"
                                class="w3-text-red">DELETE</a></td>
                         <td><a href="${pageContext.request.contextPath}/admin/clients/client/update_client?id=${client.user.id}"

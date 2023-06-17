@@ -1,9 +1,8 @@
 package by.potapenko.database.dao;
 
 import by.potapenko.database.entity.ClientEntity;
-import by.potapenko.database.entity.UserEntity;
 
-public class ClientDao extends Dao<UserEntity, ClientEntity> {
+public class ClientDao extends Dao<Long, ClientEntity> {
     private static final ClientDao INSTANCE = new ClientDao();
 
     private ClientDao() {

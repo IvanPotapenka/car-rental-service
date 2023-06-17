@@ -1,6 +1,8 @@
 package by.potapenko.database;
 
+import by.potapenko.database.entity.BodyCar;
 import by.potapenko.database.entity.CarEntity;
+import by.potapenko.database.entity.EngineCar;
 import by.potapenko.database.entity.NoElectricCarEntity;
 import by.potapenko.database.entity.enam.ColorCar;
 import by.potapenko.database.entity.enam.FuelType;
@@ -20,7 +22,7 @@ public class ImporterCarDataTest {
                 .model("A8")
                 .year(2020)
                 .price(100)
-                .body(CarEntity.Body.builder()
+                .body(BodyCar.builder()
                         .color(ColorCar.GREEN)
                         .doorQuantity(2)
                         .placeQuantity(4)
@@ -28,7 +30,7 @@ public class ImporterCarDataTest {
                         .vinCode("12345")
                         .number("54321")
                         .build())
-                .engine(CarEntity.Engine.builder()
+                .engine(EngineCar.builder()
                         .engineCapacity(2.0)
                         .horsePower(140)
                         .fuelType(FuelType.DIESEL)
@@ -43,7 +45,7 @@ public class ImporterCarDataTest {
                 .model("X6")
                 .year(2020)
                 .price(34)
-                .body(CarEntity.Body.builder()
+                .body(BodyCar.builder()
                         .color(ColorCar.WHITE)
                         .doorQuantity(5)
                         .placeQuantity(5)
@@ -51,7 +53,7 @@ public class ImporterCarDataTest {
                         .vinCode("67890")
                         .number("098765")
                         .build())
-                .engine(CarEntity.Engine.builder()
+                .engine(EngineCar.builder()
                         .engineCapacity(2.5)
                         .horsePower(170)
                         .fuelType(FuelType.DIESEL)
@@ -65,7 +67,7 @@ public class ImporterCarDataTest {
                 .model("F1")
                 .year(2020)
                 .price(90)
-                .body(CarEntity.Body.builder()
+                .body(BodyCar.builder()
                         .color(ColorCar.BLACK)
                         .doorQuantity(4)
                         .placeQuantity(5)
@@ -73,7 +75,7 @@ public class ImporterCarDataTest {
                         .vinCode("54321")
                         .number("67890")
                         .build())
-                .engine(CarEntity.Engine.builder()
+                .engine(EngineCar.builder()
                         .engineCapacity(1.8)
                         .horsePower(150)
                         .fuelType(FuelType.GASOLINE)

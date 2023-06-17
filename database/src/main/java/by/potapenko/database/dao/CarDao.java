@@ -2,6 +2,8 @@ package by.potapenko.database.dao;
 
 import by.potapenko.database.dto.CarFilter;
 import by.potapenko.database.entity.CarEntity;
+import by.potapenko.database.entity.CarEntity_;
+import by.potapenko.database.entity.NoElectricCarEntity_;
 import jakarta.persistence.criteria.Predicate;
 import org.hibernate.Session;
 import org.hibernate.query.criteria.HibernateCriteriaBuilder;
@@ -34,22 +36,22 @@ public final class CarDao extends Dao<Long, CarEntity> {
     private static List<Predicate> collectPredicates(CarFilter filter, HibernateCriteriaBuilder builder, JpaRoot<CarEntity> carRoot) {
         List<Predicate> predicates = new ArrayList<>();
         if (filter.getBrand() != null) {
-            predicates.add(builder.equal(carRoot.get("brand"), filter.getBrand()));
+            predicates.add(builder.equal(carRoot.get(CarEntity_.BRAND), filter.getBrand()));
         }
         if (filter.getModel() != null) {
-            predicates.add(builder.equal(carRoot.get("model"), filter.getModel()));
+            predicates.add(builder.equal(carRoot.get(CarEntity_.MODEL), filter.getModel()));
         }
         if (filter.getColor() != null) {
-            predicates.add(builder.equal(carRoot.get("color"), filter.getColor()));
+            predicates.add(builder.equal(carRoot.get(CarEntity_.BODY).get("color"), filter.getColor()));
         }
         if (filter.getFuelType() != null) {
-            predicates.add(builder.equal(carRoot.get("fuelType"), filter.getFuelType()));
+            predicates.add(builder.equal(carRoot.get(CarEntity_.ENGINE).get("fuelType"), filter.getFuelType()));
         }
         if (filter.getTransmission() != null) {
-            predicates.add(builder.equal(carRoot.get("transmission"), filter.getTransmission()));
+            predicates.add(builder.equal(carRoot.get(CarEntity_.ENGINE).get("transmission"), filter.getTransmission()));
         }
         if (filter.getFuelConsumption() != null) {
-            predicates.add(builder.equal(carRoot.get("fuelConsumption"), filter.getFuelConsumption()));
+            predicates.add(builder.equal(carRoot.get(NoElectricCarEntity_.FUEL_CONSUMPTION), filter.getFuelConsumption()));
         }
         return predicates;
     }

@@ -26,7 +26,6 @@ class RentalDaoTest {
         try (var session = sessionFactory.getSession()) {
             var transaction = session.beginTransaction();
             ImporterCarDataTest.carDataTestImport(session);
-            ImporterUserDataTest.userDataTestImport(session);
             ImporterClientDataTest.clientDataTestImport(session);
             ImporterRentalDataTest.rentalDataTestImport(session);
             transaction.commit();

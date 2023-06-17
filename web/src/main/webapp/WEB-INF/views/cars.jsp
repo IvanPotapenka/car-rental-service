@@ -80,7 +80,7 @@
                     <th>Engine, l</th>
                     <th>Horse power</th>
                     <th>Transmission</th>
-                    <th>Consumption 100 km</th>
+<%--                    <th>Consumption 100 km</th>--%>
                     <th>Places</th>
                     <th>Doors</th>
                     <th>Trunk, l</th>
@@ -100,7 +100,7 @@
                         <td>${car.engine.engineCapacity}</td>
                         <td>${car.engine.horsePower}</td>
                         <td>${car.engine.transmission}</td>
-                        <td>${car.fuelConsumption}</td>
+<%--                        <td>${car.fuelConsumption}</td>--%>
                         <td>${car.body.placeQuantity}</td>
                         <td>${car.body.doorQuantity}</td>
                         <td>${car.body.trunkVolume}</td>

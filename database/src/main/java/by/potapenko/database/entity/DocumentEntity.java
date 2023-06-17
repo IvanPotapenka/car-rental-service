@@ -18,31 +18,25 @@ import java.time.LocalDate;
 @NoArgsConstructor
 @AllArgsConstructor
 @Entity
-@Table(name = "passport")
-public class PassportEntity implements BaseIdEntity<Long> {
+@Table(name = "documents")
+public class DocumentEntity implements BaseIdEntity<Long> {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
-    @Column(name = "series", length = 2, nullable = false)
+    @Column(name = "passport_serial", length = 2, nullable = false)
     @Enumerated(EnumType.STRING)
     private SeriesPassport series;
 
-    @Column(name = "numbers", length = 7, nullable = false, unique = true)
+    @Column(name = "passport_No", nullable = false, unique = true)
     private Integer number;
 
-    @Column(name = "date_of_issue", nullable = false)
-    private LocalDate dateOfIssue;
-
-    @Column(name = "issued", length = 20, nullable = false)
-    private String issued;
-
-    @Column(name = "passport_id", length = 13, nullable = false, unique = true)
-    private String passportID;
+    @Column(name = "driver_license_No", nullable = false)
+    private String driverLicense;
 
     @OneToOne
-    @JoinColumn(name = "client_id", referencedColumnName = "user_id")
+    @JoinColumn(name = "client_id", referencedColumnName = "id")
     private ClientEntity client;
 
 }

@@ -1,8 +1,5 @@
 package by.potapenko.database.entity;
 
-import by.potapenko.database.entity.enam.ColorCar;
-import by.potapenko.database.entity.enam.FuelType;
-import by.potapenko.database.entity.enam.TransmissionType;
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
@@ -21,7 +18,7 @@ import java.util.List;
 @NoArgsConstructor
 @AllArgsConstructor
 @Inheritance(strategy = InheritanceType.SINGLE_TABLE)
-@DiscriminatorColumn(name = "type")
+@DiscriminatorColumn(name = "car_type")
 @Entity
 @SuperBuilder
 @Table(name = "car")
@@ -52,59 +49,23 @@ public abstract class CarEntity implements BaseIdEntity<Long> {
     private List<ClientEntity> clients = new ArrayList<>();
 
     @Embedded
-    private Engine engine;
+    @AttributeOverrides(
+            {@AttributeOverride(name = "placeQuantity", column = @Column(name = "quantity_places", nullable = false)),
+                    @AttributeOverride(name = "doorQuantity", column = @Column(name = "quantity_doors", nullable = false)),
+                    @AttributeOverride(name = "trunkVolume", column = @Column(name = "trunk_volume", nullable = false)),
+                    @AttributeOverride(name = "vinCode", column = @Column(name = "vin_code", length = 20, nullable = false, unique = true)),
+                    @AttributeOverride(name = "number", column = @Column(name = "numbers", length = 20, nullable = false, unique = true)),
+                    @AttributeOverride(name = "color", column = @Column(name = "color", length = 20, nullable = false))
+            })
+    public BodyCar body;
 
     @Embedded
-    private Body body;
-
-    @Data
-    @NoArgsConstructor
-    @AllArgsConstructor
-    @Builder
-    @Embeddable
-    public static class Engine {
-
-        @Column(name = "engine_capacity", nullable = false)
-        private double engineCapacity;
-
-        @Column(name = "horse_power", nullable = false)
-        private int horsePower;
-
-        @Column(name = "fuel", length = 20, nullable = false)
-        @Enumerated(EnumType.STRING)
-        private FuelType fuelType;
-
-        @Column(name = "transmission", length = 20, nullable = false)
-        @Enumerated(EnumType.STRING)
-        private TransmissionType transmission;
-
-    }
-
-    @Data
-    @NoArgsConstructor
-    @AllArgsConstructor
-    @Builder
-    @Embeddable
-    public static class Body {
-
-        @Column(name = "quantity_places", nullable = false)
-        private int placeQuantity;
-
-        @Column(name = "quantity_doors", nullable = false)
-        private int doorQuantity;
-
-        @Column(name = "trunk_volume", nullable = false)
-        private int trunkVolume;
-
-        @Column(name = "vin_code", length = 20, nullable = false, unique = true)
-        private String vinCode;
-
-        @Column(name = "numbers", length = 20, nullable = false, unique = true)
-        private String number;
-
-        @Column(name = "color", length = 20, nullable = false)
-        @Enumerated(EnumType.STRING)
-        private ColorCar color;
-    }
+    @AttributeOverrides(
+            {@AttributeOverride(name = "engineCapacity", column = @Column(name = "engine_capacity", nullable = false)),
+                    @AttributeOverride(name = "horsePower", column = @Column(name = "horse_power", nullable = false)),
+                    @AttributeOverride(name = "fuelType", column = @Column(name = "fuel", length = 20, nullable = false)),
+                    @AttributeOverride(name = "transmission", column = @Column(name = "transmission", length = 20, nullable = false)),
+            })
+    private EngineCar engine;
 }
 

@@ -62,6 +62,7 @@ class UserDaoTest {
         var userTest = UserEntity.builder()
                 .login("Jhon")
                 .email("jhon@mail.ru")
+                .phone("+3756789345")
                 .password("1234")
                 .role(UserRole.USER)
                 .build();

@@ -19,8 +19,8 @@ public class NoElectricCarEntity extends CarEntity {
     private Double fuelConsumption;
 
     @Builder
-    public NoElectricCarEntity(Long id, String brand, String model, int year, double price, List<RentalEntity> orders, List<ClientEntity> clients, Engine engine, Body body, Double fuelConsumption) {
-        super(id, brand, model, year, price, orders, clients, engine, body);
+    public NoElectricCarEntity(Long id, String brand, String model, int year, double price, List<RentalEntity> orders, List<ClientEntity> clients, EngineCar engine, BodyCar body, Double fuelConsumption) {
+        super(id, brand, model, year, price, orders, clients, body, engine);
         this.fuelConsumption = fuelConsumption;
     }
 }

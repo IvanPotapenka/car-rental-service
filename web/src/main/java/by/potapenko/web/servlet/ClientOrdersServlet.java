@@ -21,7 +21,7 @@ public class ClientOrdersServlet extends HttpServlet {
     protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
         HttpSession session = req.getSession();
         UserEntity user = (UserEntity) session.getAttribute("user");
-        if (user.getClient() == null) {
+        if (user == null) {
             req.getRequestDispatcher(CLIENT_ORDERS).forward(req, resp);
         } else {
             req.setAttribute("rentals", rentalService.findAllOrdersOfClient(user.getId()));

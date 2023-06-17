@@ -10,15 +10,17 @@
         <property name="connection.password">password</property>
         <property name="hibernate.dialect">org.hibernate.dialect.PostgresPlusDialect</property>
 
+        <property name="hbm2ddl.auto">validate</property>
+
         <property name="show_sql">true</property>
         <property name="format_sql">true</property>
 
         <mapping class="by.potapenko.database.entity.UserEntity"/>
-        <mapping class="by.potapenko.database.entity.AdminEntity"/>
+        <mapping class="by.potapenko.database.entity.UserEntity"/>
         <mapping class="by.potapenko.database.entity.ClientEntity"/>
         <mapping class="by.potapenko.database.entity.CarEntity"/>
         <mapping class="by.potapenko.database.entity.RentalEntity"/>
-        <mapping class="by.potapenko.database.entity.PassportEntity"/>
+        <mapping class="by.potapenko.database.entity.DocumentEntity"/>
         <mapping class="by.potapenko.database.entity.ElectricCarEntity"/>
         <mapping class="by.potapenko.database.entity.NoElectricCarEntity"/>
 

@@ -10,17 +10,18 @@
         <property name="connection.username"/>
         <property name="connection.password"/>
 
+
         <property name="show_sql">true</property>
         <property name="format_sql">true</property>
 
         <property name="hibernate.hbm2ddl.auto">create-drop</property>
 
         <mapping class="by.potapenko.database.entity.UserEntity"/>
-        <mapping class="by.potapenko.database.entity.AdminEntity"/>
+        <mapping class="by.potapenko.database.entity.UserEntity"/>
         <mapping class="by.potapenko.database.entity.ClientEntity"/>
         <mapping class="by.potapenko.database.entity.CarEntity"/>
         <mapping class="by.potapenko.database.entity.RentalEntity"/>
-        <mapping class="by.potapenko.database.entity.PassportEntity"/>
+        <mapping class="by.potapenko.database.entity.DocumentEntity"/>
         <mapping class="by.potapenko.database.entity.ElectricCarEntity"/>
         <mapping class="by.potapenko.database.entity.NoElectricCarEntity"/>
     </session-factory>

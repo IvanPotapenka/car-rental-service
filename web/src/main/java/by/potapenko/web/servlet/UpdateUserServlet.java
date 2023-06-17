@@ -10,7 +10,6 @@ import jakarta.servlet.http.HttpServletResponse;
 import lombok.SneakyThrows;
 
 import java.io.IOException;
-import java.time.LocalDateTime;
 
 import static by.potapenko.web.util.PagesUtil.UPDATE_USER;
 
@@ -33,7 +32,7 @@ public class UpdateUserServlet extends HttpServlet {
                 .password(req.getParameter("password"))
                 .id(Long.parseLong(req.getParameter("id")))
                 .build();
-        updateUser.setDateOfCreation(LocalDateTime.parse(req.getParameter("date_of_creation")));
+//        updateUser.setDateOfCreation(LocalDateTime.parse(req.getParameter("date_of_creation")));
         userService.update(updateUser).ifPresentOrElse(
                 user -> successCreateUser(req, resp, user),
                 () -> faultCreateCar(req, resp));

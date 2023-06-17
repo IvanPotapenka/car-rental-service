@@ -2,7 +2,9 @@ package by.potapenko.database.dao;
 
 import by.potapenko.database.ImporterCarDataTest;
 import by.potapenko.database.dto.CarFilter;
+import by.potapenko.database.entity.BodyCar;
 import by.potapenko.database.entity.CarEntity;
+import by.potapenko.database.entity.EngineCar;
 import by.potapenko.database.entity.NoElectricCarEntity;
 import by.potapenko.database.entity.enam.ColorCar;
 import by.potapenko.database.entity.enam.FuelType;
@@ -73,7 +75,7 @@ class CarDaoTest {
                 .model("C5")
                 .year(2022)
                 .price(105)
-                .body(CarEntity.Body.builder()
+                .body(BodyCar.builder()
                         .color(ColorCar.WHITE)
                         .doorQuantity(2)
                         .placeQuantity(4)
@@ -81,7 +83,7 @@ class CarDaoTest {
                         .vinCode("12090")
                         .number("54098")
                         .build())
-                .engine(CarEntity.Engine.builder()
+                .engine(EngineCar.builder()
                         .engineCapacity(2.0)
                         .horsePower(140)
                         .fuelType(FuelType.DIESEL)
@@ -130,13 +132,14 @@ class CarDaoTest {
     void whenFindAllByFilterContainsOnlyBrandsAndModelCarsInvoked_ThenAllTheFilteredByBrandsCarsAreReturned() {
         @Cleanup Session session = sessionFactory.getSession();
         CarFilter filter = CarFilter.builder()
+                .fuelType(FuelType.DIESEL)
                 .fuelConsumption(6.0)
                 .build();
         String[] actual = carDao.findByFilter(session, filter)
                 .stream()
                 .map(CarEntity::getBrand)
                 .toArray(String[]::new);
-        String[] expected = List.of("Audy", "BMW", "Mercedes")
+        String[] expected = List.of("Audy", "BMW")
                 .toArray(String[]::new);
         assertArrayEquals(expected, actual);
     }

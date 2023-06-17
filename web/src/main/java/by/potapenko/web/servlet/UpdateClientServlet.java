@@ -1,9 +1,9 @@
 package by.potapenko.web.servlet;
 
-import by.potapenko.database.entity.UserEntity;
-import by.potapenko.database.entity.enam.SeriesPassport;
 import by.potapenko.database.entity.ClientEntity;
-import by.potapenko.database.entity.PassportEntity;
+import by.potapenko.database.entity.ContactClient;
+import by.potapenko.database.entity.DocumentEntity;
+import by.potapenko.database.entity.enam.SeriesPassport;
 import by.potapenko.service.ClientService;
 import jakarta.servlet.ServletException;
 import jakarta.servlet.annotation.WebServlet;
@@ -14,7 +14,6 @@ import lombok.SneakyThrows;
 
 import java.io.IOException;
 import java.time.LocalDate;
-import java.time.LocalDateTime;
 
 import static by.potapenko.web.util.PagesUtil.UPDATE_CLIENT;
 
@@ -31,30 +30,22 @@ public class UpdateClientServlet extends HttpServlet {
 
     @Override
     protected void doPost(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
-        PassportEntity passport = PassportEntity.builder()
-                .passportID(req.getParameter("passportID"))
+        DocumentEntity passport = DocumentEntity.builder()
                 .series(SeriesPassport.valueOf(req.getParameter("series")))
                 .number(Integer.valueOf(req.getParameter("number")))
-                .dateOfIssue(LocalDate.parse(req.getParameter("date_of_issue")))
-                .issued(req.getParameter("issued"))
+                .driverLicense(req.getParameter("driverLicense"))
                 .build();
         ClientEntity updateClient = ClientEntity.builder()
-                .user(UserEntity.builder()
-                        .id(Long.valueOf(req.getParameter("client_id")))
-                        .build())
+                .id(Long.valueOf(req.getParameter("client_id")))
                 .firstName(req.getParameter("first_name"))
                 .lastName(req.getParameter("last_name"))
-                .middleName(req.getParameter("middle_name"))
                 .dateOfBirthday(LocalDate.parse(req.getParameter("date_of_birthday")))
-                .contact(ClientEntity.Contact.builder()
+                .contact(ContactClient.builder()
                         .phone(req.getParameter("phone"))
                         .address(req.getParameter("address"))
                         .build())
-                .document(ClientEntity.Document.builder()
-                        .driverLicense(req.getParameter("driver_license"))
-                        .build())
                 .build();
-        updateClient.setDateOfCreation(LocalDateTime.parse(req.getParameter("date_of_creation")));
+//        updateClient.setDateOfCreation(LocalDateTime.parse(req.getParameter("date_of_creation")));
         clientService.update(updateClient).ifPresentOrElse(
                 client -> successCreateCar(req, resp, client),
                 () -> faultCreateCar(req, resp));

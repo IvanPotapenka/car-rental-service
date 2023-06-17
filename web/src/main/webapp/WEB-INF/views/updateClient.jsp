@@ -140,7 +140,6 @@
           <tr>
             <th>Address</th>
             <th>Passport</th>
-            <th>Driver licence</th>
             <th>Date of creation</th>
           </tr>
 
@@ -170,7 +169,7 @@
                      type="text"
                      name="series"
                      id="serial_id"
-                     value="${client.document.passport.series}"
+                     value="${client.passport.series}"
                      required/><br></td>
 
             <td><label for="no_id"></label>
@@ -179,7 +178,7 @@
                      type="number"
                      name="number"
                      id="no_id"
-                     value="${client.document.passport.number}"
+                     value="${client.passport.number}"
                      required/><br></td>
 
             <td><label for="date_id"></label>
@@ -187,7 +186,7 @@
                      type="date"
                      name="date_of_issue"
                      id="date_id"
-                     value="${client.document.passport.dateOfIssue}"
+                     value="${client.passport.dateOfIssue}"
                      required/><br></td>
 
             <td><label for="issued_id"></label>
@@ -196,7 +195,7 @@
                      type="text"
                      name="issued"
                      id="issued_id"
-                     value="${client.document.passport.issued}"
+                     value="${client.passport.issued}"
                      required/><br></td>
 
             <td><label for="passport_id"></label>
@@ -205,21 +204,11 @@
                      type="text"
                      name="passportID"
                      id="passport_id"
-                     value="${client.document.passport.passportID}"
+                     value="${client.passport.passportID}"
                      required/><br></td>
           </table>
 
             <br></td>
-
-          <td><label for="driver_license_id"></label>
-            <input class="w3-round-large"
-                   maxlength="10"
-                   type="text"
-                   placeholder="Enter driver license"
-                   name="driver_license"
-                   id="driver_license_id"
-                   value="${client.document.driverLicense}"
-            /><br></td>
 
           <td><label for="date_of_creation_id"></label>
             <input class="w3-round-large"

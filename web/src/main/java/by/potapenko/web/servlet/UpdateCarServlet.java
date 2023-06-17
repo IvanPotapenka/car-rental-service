@@ -1,6 +1,8 @@
 package by.potapenko.web.servlet;
 
+import by.potapenko.database.entity.BodyCar;
 import by.potapenko.database.entity.CarEntity;
+import by.potapenko.database.entity.EngineCar;
 import by.potapenko.database.entity.NoElectricCarEntity;
 import by.potapenko.database.entity.enam.ColorCar;
 import by.potapenko.database.entity.enam.FuelType;
@@ -14,7 +16,6 @@ import jakarta.servlet.http.HttpServletResponse;
 import lombok.SneakyThrows;
 
 import java.io.IOException;
-import java.time.LocalDateTime;
 
 import static by.potapenko.web.util.PagesUtil.UPDATE_CAR;
 
@@ -37,22 +38,22 @@ public class UpdateCarServlet extends HttpServlet {
                 .model(req.getParameter("model"))
                 .year(Integer.parseInt(req.getParameter("year_of_release")))
                 .price(Double.parseDouble(req.getParameter("price")))
-                .engine(CarEntity.Engine.builder().fuelType(FuelType.valueOf(req.getParameter("fuel")))
+                .engine(EngineCar.builder().fuelType(FuelType.valueOf(req.getParameter("fuel")))
                         .engineCapacity(Double.parseDouble(req.getParameter("engine_capacity")))
                         .horsePower(Integer.parseInt(req.getParameter("horse_power")))
                         .transmission(TransmissionType.valueOf(req.getParameter("transmission")))
                         .build())
                 .fuelConsumption(Double.parseDouble(req.getParameter("fuel_consumption")))
-                .body(CarEntity.Body.builder().placeQuantity(Integer.parseInt(req.getParameter("quantity_places")))
+                .body(BodyCar.builder().placeQuantity(Integer.parseInt(req.getParameter("quantity_places")))
                         .doorQuantity(Integer.parseInt(req.getParameter("quantity_doors")))
                         .trunkVolume(Integer.parseInt(req.getParameter("trunk_volume")))
                         .vinCode(req.getParameter("vin_code"))
                         .number(req.getParameter("number"))
                         .color(ColorCar.valueOf(req.getParameter("color"))).build())
                 .build();
-          carService.update(updateCar).ifPresentOrElse(
-                    car -> successCreateCar(req, resp, car),
-                    () -> faultCreateCar(req, resp));
+        carService.update(updateCar).ifPresentOrElse(
+                car -> successCreateCar(req, resp, car),
+                () -> faultCreateCar(req, resp));
     }
 
     @SneakyThrows

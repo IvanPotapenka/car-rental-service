@@ -3,7 +3,6 @@ package by.potapenko.database;
 import by.potapenko.database.entity.ClientEntity;
 import by.potapenko.database.entity.NoElectricCarEntity;
 import by.potapenko.database.entity.RentalEntity;
-import by.potapenko.database.entity.UserEntity;
 import by.potapenko.database.entity.enam.Status;
 import lombok.experimental.UtilityClass;
 import org.hibernate.Session;
@@ -21,9 +20,7 @@ public class ImporterRentalDataTest {
                         .id(1L)
                         .build())
                 .client(ClientEntity.builder()
-                        .user(UserEntity.builder()
-                                .id(1L)
-                                .build())
+                        .id(1L)
                         .build())
                 .rentalDate(LocalDate.parse("2023-05-29"))
                 .returnDate(LocalDate.parse("2023-05-31"))
@@ -36,9 +33,7 @@ public class ImporterRentalDataTest {
                         .id(2L)
                         .build())
                 .client(ClientEntity.builder()
-                        .user(UserEntity.builder()
-                                .id(1L)
-                                .build())
+                        .id(1L)
                         .build())
                 .rentalDate(LocalDate.parse("2023-12-27"))
                 .returnDate(LocalDate.parse("2023-12-31"))
@@ -51,9 +46,7 @@ public class ImporterRentalDataTest {
                         .id(3L)
                         .build())
                 .client(ClientEntity.builder()
-                        .user(UserEntity.builder()
-                                .id(1L)
-                                .build())
+                        .id(1L)
                         .build())
                 .rentalDate(LocalDate.parse("2022-02-25"))
                 .returnDate(LocalDate.parse("2022-02-28"))

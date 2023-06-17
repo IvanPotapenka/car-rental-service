@@ -106,7 +106,6 @@
         </flex>
     </box>
     </br>
-<c:if test="${client == true}">
     <form method="post" class="w3-card-4  w3-round-large w3-padding" style="width: 90%">
         <flex>
 
@@ -159,7 +158,6 @@
                     <tr>
                         <th>*Phone number</th>
                         <th>Address</th>
-                        <th>*Driver licence</th>
                     </tr>
 
                     <td><label for="phone_id"></label>
@@ -178,15 +176,6 @@
                                placeholder="Enter city,street,No."
                                name="address"
                                id="address_id"
-                        /><br></td>
-
-                    <td><label for="driver_license_id"></label>
-                        <input class="w3-round-large"
-                               maxlength="10"
-                               type="text"
-                               placeholder="Enter driver license"
-                               name="driver_license"
-                               id="driver_license_id"
                         /><br></td>
                 </table>
             <input value="${car.price * rental_days}" name="total_price" hidden>
@@ -244,7 +233,6 @@
                                required/><br></td>
             </table>
                 <button class="w3-btn w3-white w3-round-large" type="submit">Send on check</button><br>
-            </c:if>
                 </c:if>
         </flex>
     </form><br>

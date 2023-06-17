@@ -2,9 +2,9 @@ package by.potapenko.web.servlet;
 
 import by.potapenko.database.entity.CarEntity;
 import by.potapenko.database.entity.ClientEntity;
-import by.potapenko.database.entity.PassportEntity;
+import by.potapenko.database.entity.ContactClient;
+import by.potapenko.database.entity.DocumentEntity;
 import by.potapenko.database.entity.RentalEntity;
-import by.potapenko.database.entity.UserEntity;
 import by.potapenko.database.entity.enam.SeriesPassport;
 import by.potapenko.service.ClientService;
 import by.potapenko.service.RentalService;
@@ -44,26 +44,20 @@ public class BookingServlet extends HttpServlet {
         HttpSession session = req.getSession();
 
         ClientEntity client = ClientEntity.builder()
-                .user((UserEntity) session.getAttribute("user"))
+//                .user((UserEntity) session.getAttribute("user"))
                 .firstName(req.getParameter("first_name"))
                 .lastName(req.getParameter("last_name"))
-                .middleName(req.getParameter("middle_name"))
                 .dateOfBirthday(LocalDate.parse(req.getParameter("date_of_birthday")))
-                .contact(ClientEntity.Contact.builder()
+                .contact(ContactClient.builder()
                         .phone(req.getParameter("phone"))
                         .address(req.getParameter("address"))
                         .build())
-                .document(ClientEntity.Document.builder()
-                        .driverLicense(req.getParameter("driver_license"))
-                        .build())
                 .build();
 
-        client.setPassport(PassportEntity.builder()
-                .passportID(req.getParameter("passportID"))
+        client.setDocument(DocumentEntity.builder()
                 .series(SeriesPassport.valueOf(req.getParameter("series")))
                 .number(Integer.valueOf(req.getParameter("number")))
-                .dateOfIssue(LocalDate.parse(req.getParameter("date_of_issue")))
-                .issued(req.getParameter("issued"))
+                .driverLicense(req.getParameter("driver_license"))
                 .build());
 
         client.addCar((CarEntity) session.getAttribute("car"));
@@ -87,13 +81,11 @@ public class BookingServlet extends HttpServlet {
     @SneakyThrows
     private static void successCreateRental(HttpServletRequest req, HttpServletResponse resp, RentalEntity rental) {
         req.setAttribute("rental", rental);
-        req.setAttribute("create_rental", true);
         req.getRequestDispatcher(CLIENT_ORDER).forward(req, resp);
     }
 
     @SneakyThrows
     private static void faultCreateRental(HttpServletRequest req, HttpServletResponse resp) {
-        req.setAttribute("create_rental", false);
         req.getRequestDispatcher(CLIENT_ORDER).forward(req, resp);
     }
 }

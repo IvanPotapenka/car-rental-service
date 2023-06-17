@@ -45,7 +45,6 @@ public class RentalEntity extends CreatableEntity<Long> {
     private CarEntity car;
 
     @ManyToOne(optional = false)
-    @JoinColumn(name = "client_id", referencedColumnName = "user_id")
+    @JoinColumn(name = "client_id", referencedColumnName = "id")
     private ClientEntity client;
-
 }

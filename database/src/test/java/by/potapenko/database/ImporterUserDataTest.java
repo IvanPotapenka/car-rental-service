@@ -15,6 +15,7 @@ public class ImporterUserDataTest {
         var Bob = UserEntity.builder()
                 .login("Bob")
                 .email("bob@mail.ru")
+                .phone("+3756789045")
                 .password("0000")
                 .role(UserRole.USER)
                 .build();
@@ -22,6 +23,7 @@ public class ImporterUserDataTest {
         var Tom = UserEntity.builder()
                 .login("Tom")
                 .email("tom@mail.ru")
+                .phone("+3756789745")
                 .password("0000")
                 .role(UserRole.USER)
                 .build();
@@ -29,6 +31,7 @@ public class ImporterUserDataTest {
         var Rick = UserEntity.builder()
                 .login("Rick")
                 .email("rick@mail.ru")
+                .phone("+3756989045")
                 .password("0000")
                 .role(UserRole.USER)
                 .build();

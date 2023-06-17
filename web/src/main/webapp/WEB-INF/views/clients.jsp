@@ -83,7 +83,6 @@
                     <th>Phone number</th>
                     <th>Address</th>
                     <th>Passport</th>
-                    <th>Driver licence</th>
                     <th>Date of creation</th>
                     <th>Edit</th>
                 </tr>
@@ -96,8 +95,7 @@
                         <td>${client.dateOfBirthday}</td>
                         <td>${client.contact.phone}</td>
                         <td>${client.contact.address}</td>
-                        <td>${client.document.passport}</td>
-                        <td>${client.document.driverLicense}</td>
+                        <td>${client.passport}</td>
                         <td>${client.dateOfCreation}</td>
                         <td><a href="${pageContext.request.contextPath}/admin/clients/client?id=${client.user.id}"
                                class="w3-text-blue">EDIT</a></td>

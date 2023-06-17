@@ -2,6 +2,9 @@
 package by.potapenko.web.servlet;
 
 import by.potapenko.database.dto.CarFilter;
+import by.potapenko.database.entity.enam.ColorCar;
+import by.potapenko.database.entity.enam.FuelType;
+import by.potapenko.database.entity.enam.TransmissionType;
 import by.potapenko.service.CarService;
 import jakarta.servlet.ServletException;
 import jakarta.servlet.annotation.WebServlet;
@@ -34,9 +37,9 @@ public final class CatalogFilterServlet extends HttpServlet {
             CarFilter carFilter = CarFilter.builder()
                     .brand(req.getParameter("brand"))
                     .model(req.getParameter("model"))
-                    .color(req.getParameter("color"))
-                    .fuelType(req.getParameter("fuel_type"))
-                    .transmission(req.getParameter("transmission"))
+                    .color(ColorCar.valueOf(req.getParameter("color")))
+                    .fuelType(FuelType.valueOf(req.getParameter("fuel_type")))
+                    .transmission(TransmissionType.valueOf(req.getParameter("transmission")))
                     .fuelConsumption(Double.parseDouble(req.getParameter("fuel_consumption")))
                     .limit(req.getParameter("limit"))
                     .page(req.getParameter("page"))
