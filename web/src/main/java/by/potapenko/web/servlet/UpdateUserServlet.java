@@ -13,9 +13,13 @@ import java.io.IOException;
 
 import static by.potapenko.web.util.PagesUtil.UPDATE_USER;
 
-@WebServlet("/admin/users/user/update_user")
+//@WebServlet("/admin/users/user/update_user")
 public class UpdateUserServlet extends HttpServlet {
-    private final UserService userService = UserService.getInstance();
+    private final UserService userService ;
+
+    public UpdateUserServlet(UserService userService) {
+        this.userService = userService;
+    }
 
     @Override
     protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
@@ -33,7 +37,7 @@ public class UpdateUserServlet extends HttpServlet {
                 .id(Long.parseLong(req.getParameter("id")))
                 .build();
 //        updateUser.setDateOfCreation(LocalDateTime.parse(req.getParameter("date_of_creation")));
-        userService.update(updateUser).ifPresentOrElse(
+        userService.create(updateUser).ifPresentOrElse(
                 user -> successCreateUser(req, resp, user),
                 () -> faultCreateCar(req, resp));
     }

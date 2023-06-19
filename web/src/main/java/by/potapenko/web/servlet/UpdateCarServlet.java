@@ -19,9 +19,13 @@ import java.io.IOException;
 
 import static by.potapenko.web.util.PagesUtil.UPDATE_CAR;
 
-@WebServlet("/admin/cars/car/update_car")
+//@WebServlet("/admin/cars/car/update_car")
 public class UpdateCarServlet extends HttpServlet {
-    private final CarService carService = CarService.getInstance();
+    private final CarService carService;
+
+    public UpdateCarServlet(CarService carService) {
+        this.carService = carService;
+    }
 
     @Override
     protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
@@ -51,7 +55,7 @@ public class UpdateCarServlet extends HttpServlet {
                         .number(req.getParameter("number"))
                         .color(ColorCar.valueOf(req.getParameter("color"))).build())
                 .build();
-        carService.update(updateCar).ifPresentOrElse(
+        carService.create(updateCar).ifPresentOrElse(
                 car -> successCreateCar(req, resp, car),
                 () -> faultCreateCar(req, resp));
     }

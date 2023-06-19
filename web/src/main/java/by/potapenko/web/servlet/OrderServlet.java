@@ -12,9 +12,14 @@ import java.io.IOException;
 
 import static by.potapenko.web.util.PagesUtil.ORDER;
 
-@WebServlet("/order")
+//@WebServlet("/order")
 public final class OrderServlet extends HttpServlet {
-    private final CarService carService = CarService.getInstance();
+    private final CarService carService;
+
+    public OrderServlet(CarService carService) {
+        this.carService = carService;
+    }
+
     @Override
     protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
         String id = req.getParameter("id");

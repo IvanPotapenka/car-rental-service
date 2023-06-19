@@ -12,7 +12,7 @@ import java.sql.DriverManager;
 
 import static by.potapenko.web.util.PagesUtil.ADMIN;
 
-@WebServlet("/admin")
+//@WebServlet("/admin")
 public class AdminServlet extends HttpServlet {
     @Override
     protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {

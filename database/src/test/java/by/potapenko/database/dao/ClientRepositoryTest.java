@@ -1,16 +1,20 @@
 package by.potapenko.database.dao;
 
-import by.potapenko.database.ImporterClientDataTest;
+import by.potapenko.database.config.DataBaseConfig;
 import by.potapenko.database.entity.ClientEntity;
 import by.potapenko.database.entity.ContactClient;
 import by.potapenko.database.entity.DocumentEntity;
 import by.potapenko.database.entity.enam.SeriesPassport;
-import by.potapenko.database.hibernate.SessionBuilding;
-import lombok.Cleanup;
-import org.hibernate.Session;
-import org.junit.jupiter.api.BeforeAll;
+import by.potapenko.database.repositpry.ClientRepository;
+import org.junit.jupiter.api.MethodOrderer;
 import org.junit.jupiter.api.Order;
 import org.junit.jupiter.api.Test;
+import org.junit.jupiter.api.TestMethodOrder;
+import org.junit.jupiter.api.extension.ExtendWith;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.test.context.ContextConfiguration;
+import org.springframework.test.context.jdbc.Sql;
+import org.springframework.test.context.junit.jupiter.SpringExtension;
 
 import java.time.LocalDate;
 import java.util.List;
@@ -19,28 +23,21 @@ import java.util.Optional;
 import static org.junit.jupiter.api.Assertions.assertArrayEquals;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertTrue;
+import static org.springframework.test.context.jdbc.Sql.ExecutionPhase.AFTER_TEST_METHOD;
 
-class ClientDaoTest {
-    private static final ClientDao clientDao = ClientDao.getInstance();
-    private static final SessionBuilding sessionFactory = SessionBuilding.getInstance();
-
-    @BeforeAll
-    static void beforeAll() {
-        try (var session = sessionFactory.getSession()) {
-            var transaction = session.beginTransaction();
-            ImporterClientDataTest.clientDataTestImport(session);
-            transaction.commit();
-        }
-    }
+@ExtendWith(SpringExtension.class)
+@ContextConfiguration(classes = DataBaseConfig.class)
+@TestMethodOrder(MethodOrderer.OrderAnnotation.class)
+@Sql("classpath:test-data-client.sql")
+@Sql(value = "classpath:purge-data-client.sql", executionPhase = AFTER_TEST_METHOD)
+class ClientRepositoryTest {
+    @Autowired
+    private ClientRepository clientRepository;
 
     @Test
     @Order(1)
     void whenFindAllInvoked_ThenAllTheClientsAreReturned() {
-
-        @Cleanup Session session = sessionFactory.getSession();
-        int limit = 3;
-        int page = 0;
-        String[] actual = clientDao.findAll(limit, page, session)
+        String[] actual = clientRepository.findAll()
                 .stream()
                 .map(ClientEntity::getFirstName)
                 .toArray(String[]::new);
@@ -52,9 +49,8 @@ class ClientDaoTest {
     @Test
     @Order(2)
     void whenFindById_ThenAllTheFilteredReturnsValidClient() {
-        Long id = 1L;
-        @Cleanup Session session = sessionFactory.getSession();
-        Optional<ClientEntity> actual = clientDao.findById(id, session);
+        Long id = 4L;
+        Optional<ClientEntity> actual = clientRepository.findById(id);
         assertTrue(actual.isPresent());
         assertEquals("Ivan", actual.get().getFirstName());
     }
@@ -76,15 +72,8 @@ class ClientDaoTest {
                         .driverLicense("347679")
                         .build())
                 .build();
-
-        @Cleanup Session session = sessionFactory.getSession();
-        var transaction = session.beginTransaction();
-        clientDao.create(clientTest, session);
-        transaction.commit();
-        int limit = 4;
-        int page = 1;
-
-        List<String> allBrand = clientDao.findAll(limit, page, session).stream()
+        clientRepository.save(clientTest);
+        List<String> allBrand = clientRepository.findAll().stream()
                 .map(ClientEntity::getFirstName)
                 .toList();
         assertTrue(allBrand.contains(clientTest.getFirstName()));
@@ -93,24 +82,22 @@ class ClientDaoTest {
     @Test
     @Order(4)
     void whenDeleteById_ThenNotFindById() {
-        Long id = 1L;
-        @Cleanup Session session = sessionFactory.getSession();
-        Optional<ClientEntity> client = clientDao.findById(id, session);
-        clientDao.delete(client.get().getId(), session);
-        Optional<ClientEntity> clientDeleted = clientDao.findById(client.get().getId(), session);
+        Long id = 11L;
+        Optional<ClientEntity> client = clientRepository.findById(id);
+        clientRepository.deleteById(client.get().getId());
+        Optional<ClientEntity> clientDeleted = clientRepository.findById(client.get().getId());
         assertTrue(clientDeleted.isEmpty());
     }
 
     @Test
     @Order(5)
     void whenUpdateById_ThenSavedClientUpdate() {
-        Long id = 1L;
-        @Cleanup Session session = sessionFactory.getSession();
-        Optional<ClientEntity> client = clientDao.findById(id, session);
+        Long id = 14L;
+        Optional<ClientEntity> client = clientRepository.findById(id);
         client.get()
                 .getContact()
                 .setAddress("Gomel, Markelova, 26");
-        clientDao.update(client.get(), session);
+        clientRepository.save(client.get());
         assertEquals("Gomel, Markelova, 26", client.get().getContact().getAddress());
     }
 }

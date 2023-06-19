@@ -14,9 +14,13 @@ import java.io.IOException;
 import static by.potapenko.web.util.PagesUtil.CREATE_USER;
 import static by.potapenko.web.util.PagesUtil.USER_ADMIN;
 
-@WebServlet("/admin/users/create_user")
+//@WebServlet("/admin/users/create_user")
 public class CreateUserServlet extends HttpServlet {
-    private final UserService userService = UserService.getInstance();
+    private final UserService userService;
+
+    public CreateUserServlet(UserService userService) {
+        this.userService = userService;
+    }
 
     @Override
     protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {

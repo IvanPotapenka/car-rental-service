@@ -15,6 +15,7 @@ import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
 import jakarta.servlet.http.HttpSession;
 import lombok.SneakyThrows;
+import org.springframework.beans.factory.annotation.Autowired;
 
 import java.io.IOException;
 import java.time.LocalDate;
@@ -22,10 +23,14 @@ import java.time.LocalDate;
 import static by.potapenko.web.util.PagesUtil.BOOKING;
 import static by.potapenko.web.util.PagesUtil.CLIENT_ORDER;
 
-@WebServlet("/booking")
+//@WebServlet("/booking")
 public class BookingServlet extends HttpServlet {
-    private final ClientService clientService = ClientService.getInstance();
-    private final RentalService rentalService = RentalService.getInstance();
+    private final ClientService clientService;
+    private final RentalService rentalService ;
+    public BookingServlet(ClientService clientService, RentalService rentalService) {
+        this.clientService = clientService;
+        this.rentalService = rentalService;
+    }
 
     @Override
     protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {

@@ -17,9 +17,13 @@ import java.time.LocalDate;
 
 import static by.potapenko.web.util.PagesUtil.UPDATE_CLIENT;
 
-@WebServlet("/admin/clients/client/update_client")
+//@WebServlet("/admin/clients/client/update_client")
 public class UpdateClientServlet extends HttpServlet {
-    private final ClientService clientService = ClientService.getInstance();
+    private final ClientService clientService ;
+
+    public UpdateClientServlet(ClientService clientService) {
+        this.clientService = clientService;
+    }
 
     @Override
     protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
@@ -46,7 +50,7 @@ public class UpdateClientServlet extends HttpServlet {
                         .build())
                 .build();
 //        updateClient.setDateOfCreation(LocalDateTime.parse(req.getParameter("date_of_creation")));
-        clientService.update(updateClient).ifPresentOrElse(
+        clientService.create(updateClient).ifPresentOrElse(
                 client -> successCreateCar(req, resp, client),
                 () -> faultCreateCar(req, resp));
     }

@@ -12,9 +12,13 @@ import java.io.IOException;
 import static by.potapenko.web.util.PagesUtil.CLIENTS;
 import static by.potapenko.web.util.PagesUtil.CLIENT_ADMIN;
 
-@WebServlet("/admin/clients/client/delete_client")
+//@WebServlet("/admin/clients/client/delete_client")
 public class DeleteClientServlet extends HttpServlet {
-    private final ClientService clientService = ClientService.getInstance();
+    private final ClientService clientService;
+
+    public DeleteClientServlet(ClientService clientService) {
+        this.clientService = clientService;
+    }
 
     @Override
     protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {

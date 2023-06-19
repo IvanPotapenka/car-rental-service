@@ -1,91 +1,53 @@
 package by.potapenko.service;
 
-import by.potapenko.database.dao.UserDao;
 import by.potapenko.database.entity.UserEntity;
-import by.potapenko.database.hibernate.SessionBuilding;
-import org.hibernate.Session;
+import by.potapenko.database.repositpry.UserRepository;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Pageable;
+import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import java.util.List;
 import java.util.Optional;
 
-public final class UserService {
-    private static final UserService INSTANCE = new UserService();
-    private final UserDao userDao = UserDao.getInstance();
-    private static final SessionBuilding sessionBuilding = SessionBuilding.getInstance();
+@Service
+@Transactional(readOnly = true)
+public class UserService {
+
+    private final UserRepository userRepository;
+
+    @Autowired
+    public UserService(UserRepository userRepository) {
+        this.userRepository = userRepository;
+    }
 
     public Optional<UserEntity> create(UserEntity user) {
-        try (Session session = sessionBuilding.getSession()) {
-            session.beginTransaction();
-            userDao.create(user, session);
-            session.getTransaction().commit();
-            return Optional.ofNullable(user);
-        }
+        userRepository.save(user);
+        return Optional.of(user);
     }
 
     public List<UserEntity> findAll(int limit, int page) {
-        try (Session session = sessionBuilding.getSession()) {
-            session.beginTransaction();
-            List<UserEntity> users = userDao.findAll(limit, page, session);
-            session.getTransaction().commit();
-            return users;
-        }
-    }
-
-    public Optional<UserEntity> update(UserEntity user) {
-        try (Session session = sessionBuilding.getSession()) {
-            session.beginTransaction();
-            userDao.update(user, session);
-            session.getTransaction().commit();
-            return Optional.ofNullable(user);
-        }
+        return (List<UserEntity>) userRepository.findAll(Pageable.ofSize(limit).withPage(page));
     }
 
     public void deleteById(Long id) {
-        try (Session session = sessionBuilding.getSession()) {
-            session.beginTransaction();
-            userDao.delete(id, session);
-            session.getTransaction().commit();
-        }
+        userRepository.deleteById(id);
     }
 
     public Optional<UserEntity> findById(Long id) {
-        try (Session session = sessionBuilding.getSession()) {
-            session.beginTransaction();
-            Optional<UserEntity> user = userDao.findById(id, session);
-            session.getTransaction().commit();
-            return user;
-        }
+        return userRepository.findById(id);
     }
 
     public boolean findByEmail(String email) {
-        try (Session session = sessionBuilding.getSession()) {
-            session.beginTransaction();
-            boolean user = userDao.findByEmail(email, session);
-            session.getTransaction().commit();
-            return user;
-        }
+        return userRepository.findByEmail(email);
     }
 
     public Optional<UserEntity> findByEmailAndPassword(String email, String password) {
-        try (Session session = sessionBuilding.getSession()) {
-            session.beginTransaction();
-            Optional<UserEntity> user = userDao.findByEmailAndPassword(email, password, session);
-            session.getTransaction().commit();
-            return user;
-        }
+        return userRepository.findByEmailAndPassword(email, password);
     }
 
     public Integer getCount(Double limit) {
-        try (Session session = sessionBuilding.getSession()) {
-            session.beginTransaction();
-            Integer count = (int) Math.ceil(userDao.getCount(session) / limit);
-            session.getTransaction().commit();
-            return count;
-        }
-    }
-
-    public static UserService getInstance() {
-        return INSTANCE;
+        return (Integer) (int) Math.ceil(userRepository.count() / limit);
     }
 }
 

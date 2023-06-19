@@ -11,9 +11,13 @@ import java.io.IOException;
 
 import static by.potapenko.web.util.PagesUtil.RECOVER;
 
-@WebServlet("/recover")
+//@WebServlet("/recover")
 public class RecoverServlet extends HttpServlet {
-    private final UserService userService = UserService.getInstance();
+    private final UserService userService;
+
+    public RecoverServlet(UserService userService) {
+        this.userService = userService;
+    }
 
     @Override
     protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {

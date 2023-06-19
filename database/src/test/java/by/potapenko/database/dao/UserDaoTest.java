@@ -1,14 +1,19 @@
 package by.potapenko.database.dao;
 
-import by.potapenko.database.ImporterUserDataTest;
+import by.potapenko.database.config.DataBaseConfig;
 import by.potapenko.database.entity.UserEntity;
 import by.potapenko.database.entity.enam.UserRole;
-import by.potapenko.database.hibernate.SessionBuilding;
-import lombok.Cleanup;
-import org.hibernate.Session;
-import org.junit.jupiter.api.BeforeAll;
+import by.potapenko.database.repositpry.UserRepository;
+import org.junit.jupiter.api.MethodOrderer;
 import org.junit.jupiter.api.Order;
 import org.junit.jupiter.api.Test;
+import org.junit.jupiter.api.TestMethodOrder;
+import org.junit.jupiter.api.extension.ExtendWith;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Pageable;
+import org.springframework.test.context.ContextConfiguration;
+import org.springframework.test.context.jdbc.Sql;
+import org.springframework.test.context.junit.jupiter.SpringExtension;
 
 import java.util.List;
 import java.util.Optional;
@@ -16,28 +21,21 @@ import java.util.Optional;
 import static org.junit.jupiter.api.Assertions.assertArrayEquals;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertTrue;
+import static org.springframework.test.context.jdbc.Sql.ExecutionPhase.AFTER_TEST_METHOD;
 
+@ExtendWith(SpringExtension.class)
+@ContextConfiguration(classes = DataBaseConfig.class)
+@TestMethodOrder(MethodOrderer.OrderAnnotation.class)
+@Sql("classpath:test-data-user.sql")
+@Sql(value = "classpath:purge-data-user.sql", executionPhase = AFTER_TEST_METHOD)
 class UserDaoTest {
-    private static final UserDao userDao = UserDao.getInstance();
-    private static final SessionBuilding sessionFactory = SessionBuilding.getInstance();
-
-    @BeforeAll
-    static void beforeAll() {
-        try (var session = sessionFactory.getSession()) {
-            var transaction = session.beginTransaction();
-            ImporterUserDataTest.userDataTestImport(session);
-            transaction.commit();
-        }
-    }
+    @Autowired
+    private UserRepository userRepository;
 
     @Test
     @Order(1)
     void whenFindAllInvoked_ThenAllTheClientsAreReturned() {
-
-        @Cleanup Session session = sessionFactory.getSession();
-        int limit = 3;
-        int page = 0;
-        String[] actual = userDao.findAll(limit, page, session)
+        String[] actual = userRepository.findAll()
                 .stream()
                 .map(UserEntity::getLogin)
                 .toArray(String[]::new);
@@ -49,9 +47,8 @@ class UserDaoTest {
     @Test
     @Order(2)
     void whenFindById_ThenAllTheFilteredReturnsValidUser() {
-        Long id = 1L;
-        @Cleanup Session session = sessionFactory.getSession();
-        Optional<UserEntity> actual = userDao.findById(id, session);
+        Long id = 4L;
+        Optional<UserEntity> actual = userRepository.findById(id);
         assertTrue(actual.isPresent());
         assertEquals("Bob", actual.get().getLogin());
     }
@@ -66,15 +63,8 @@ class UserDaoTest {
                 .password("1234")
                 .role(UserRole.USER)
                 .build();
-
-        @Cleanup Session session = sessionFactory.getSession();
-        var transaction = session.beginTransaction();
-        userDao.create(userTest, session);
-        transaction.commit();
-        int limit = 4;
-        int page = 1;
-
-        List<String> allUserLogin = userDao.findAll(limit, page, session).stream()
+        userRepository.save(userTest);
+        List<String> allUserLogin = userRepository.findAll().stream()
                 .map(UserEntity::getLogin)
                 .toList();
         assertTrue(allUserLogin.contains(userTest.getLogin()));
@@ -83,22 +73,20 @@ class UserDaoTest {
     @Test
     @Order(4)
     void whenDeleteById_ThenNotFindById() {
-        Long id = 1L;
-        @Cleanup Session session = sessionFactory.getSession();
-        Optional<UserEntity> user = userDao.findById(id, session);
-        userDao.delete(user.get().getId(), session);
-        Optional<UserEntity> userDeleted = userDao.findById(user.get().getId(), session);
+        Long id = 11L;
+        Optional<UserEntity> user = userRepository.findById(id);
+        userRepository.deleteById(user.get().getId());
+        Optional<UserEntity> userDeleted = userRepository.findById(user.get().getId());
         assertTrue(userDeleted.isEmpty());
     }
 
     @Test
     @Order(5)
     void whenUpdateById_ThenSavedUserUpdate() {
-        Long id = 1L;
-        @Cleanup Session session = sessionFactory.getSession();
-        Optional<UserEntity> user = userDao.findById(id, session);
+        Long id = 14L;
+        Optional<UserEntity> user = userRepository.findById(id);
         user.get().setLogin("Jhonny86");
-        userDao.update(user.get(), session);
+        userRepository.save(user.get());
         assertEquals("Jhonny86", user.get().getLogin());
     }
 }

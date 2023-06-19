@@ -2,7 +2,6 @@ package by.potapenko.web.servlet;
 
 import by.potapenko.database.entity.NoElectricCarEntity;
 import by.potapenko.database.entity.enam.Status;
-import by.potapenko.database.entity.enam.UserRole;
 import by.potapenko.database.entity.ClientEntity;
 import by.potapenko.database.entity.RentalEntity;
 import by.potapenko.service.RentalService;
@@ -18,9 +17,13 @@ import java.time.LocalDate;
 
 import static by.potapenko.web.util.PagesUtil.UPDATE_RENTAL;
 
-@WebServlet("/admin/rentals/rental/update_rental")
+//@WebServlet("/admin/rentals/rental/update_rental")
 public class UpdateRentalServlet extends HttpServlet {
-    private final RentalService rentalService = RentalService.getInstance();
+    private final RentalService rentalService;
+
+    public UpdateRentalServlet(RentalService rentalService) {
+        this.rentalService = rentalService;
+    }
 
     @Override
     protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
@@ -49,7 +52,7 @@ public class UpdateRentalServlet extends HttpServlet {
 
                         .build();
 
-        rentalService.update(updaterental).ifPresentOrElse(
+        rentalService.create(updaterental).ifPresentOrElse(
                 rental -> successCreateCar(req, resp, rental),
                 () -> faultCreateCar(req, resp));
     }

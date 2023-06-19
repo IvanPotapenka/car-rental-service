@@ -11,9 +11,13 @@ import java.io.IOException;
 
 import static by.potapenko.web.util.PagesUtil.CLIENT_ORDERS_ADMIN;
 
-@WebServlet("/admin/orders/client")
+//@WebServlet("/admin/orders/client")
 public class ClientOrdersAdminServlet extends HttpServlet {
-    RentalService rentalService = RentalService.getInstance();
+    private final RentalService rentalService;
+
+    public ClientOrdersAdminServlet(RentalService rentalService) {
+        this.rentalService = rentalService;
+    }
 
     @Override
     protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {

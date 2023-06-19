@@ -21,10 +21,15 @@ import java.io.IOException;
 import static by.potapenko.web.util.PagesUtil.CAR_ADMIN;
 import static by.potapenko.web.util.PagesUtil.CREATE_CAR;
 
-@WebServlet("/admin/cars/create_car")
+//@WebServlet("/admin/cars/create_car")
 public class CreateCarServlet extends HttpServlet {
-    private final CarService carService = CarService.getInstance();
-    private final ClientService clientService = ClientService.getInstance();
+    private final CarService carService ;
+    private final ClientService clientService;
+
+    public CreateCarServlet(CarService carService, ClientService clientService) {
+        this.carService = carService;
+        this.clientService = clientService;
+    }
 
     @Override
     protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {

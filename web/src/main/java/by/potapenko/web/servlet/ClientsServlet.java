@@ -13,9 +13,13 @@ import java.io.IOException;
 import static by.potapenko.web.util.PagesUtil.CLIENTS;
 import static by.potapenko.web.util.PagesUtil.USER_ADMIN;
 
-@WebServlet("/admin/clients")
+//@WebServlet("/admin/clients")
 public final class ClientsServlet extends HttpServlet {
-    private final ClientService clientService = ClientService.getInstance();
+    private final ClientService clientService;
+
+    public ClientsServlet(ClientService clientService) {
+        this.clientService = clientService;
+    }
 
     @Override
     protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {

@@ -1,39 +1,40 @@
-package by.potapenko.database.dao;
+package by.potapenko.database.repositpry;
 
 import by.potapenko.database.dto.CarFilter;
 import by.potapenko.database.entity.CarEntity;
 import by.potapenko.database.entity.CarEntity_;
 import by.potapenko.database.entity.NoElectricCarEntity_;
+import jakarta.persistence.EntityManager;
+import jakarta.persistence.PersistenceContext;
+import jakarta.persistence.criteria.CriteriaBuilder;
+import jakarta.persistence.criteria.CriteriaQuery;
 import jakarta.persistence.criteria.Predicate;
-import org.hibernate.Session;
-import org.hibernate.query.criteria.HibernateCriteriaBuilder;
-import org.hibernate.query.criteria.JpaCriteriaQuery;
-import org.hibernate.query.criteria.JpaRoot;
+import jakarta.persistence.criteria.Root;
+import lombok.RequiredArgsConstructor;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Repository;
 
 import java.util.ArrayList;
 import java.util.List;
 
+@Repository
+@RequiredArgsConstructor
+public class CarRepositoryExtensionImpl implements CarRepositoryExtension {
+    private final EntityManager entityManager;
 
-public final class CarDao extends Dao<Long, CarEntity> {
-    private static final CarDao INSTANCE = new CarDao();
-
-    private CarDao() {
-        super(CarEntity.class);
-    }
-
-    public List<CarEntity> findByFilter(Session session, CarFilter filter) {
-        HibernateCriteriaBuilder builder = session.getCriteriaBuilder();
-        JpaCriteriaQuery<CarEntity> query = builder.createQuery(CarEntity.class);
-        JpaRoot<CarEntity> carRoot = query.from(CarEntity.class);
+    public List<CarEntity> findByFilter(CarFilter filter) {
+        CriteriaBuilder builder = entityManager.getCriteriaBuilder();
+        CriteriaQuery<CarEntity> query = builder.createQuery(CarEntity.class);
+        Root<CarEntity> carRoot = query.from(CarEntity.class);
         query.select(carRoot);
         query.where(collectPredicates(filter, builder, carRoot).toArray(Predicate[]::new));
-        return session.createQuery(query)
+        return entityManager.createQuery(query)
                 .setMaxResults(filter.getLimit())
                 .setFirstResult(filter.getPage())
                 .getResultList();
     }
 
-    private static List<Predicate> collectPredicates(CarFilter filter, HibernateCriteriaBuilder builder, JpaRoot<CarEntity> carRoot) {
+    private static List<Predicate> collectPredicates(CarFilter filter, CriteriaBuilder builder, Root<CarEntity> carRoot) {
         List<Predicate> predicates = new ArrayList<>();
         if (filter.getBrand() != null) {
             predicates.add(builder.equal(carRoot.get(CarEntity_.BRAND), filter.getBrand()));
@@ -54,10 +55,5 @@ public final class CarDao extends Dao<Long, CarEntity> {
             predicates.add(builder.equal(carRoot.get(NoElectricCarEntity_.FUEL_CONSUMPTION), filter.getFuelConsumption()));
         }
         return predicates;
-    }
-
-
-    public static CarDao getInstance() {
-        return INSTANCE;
     }
 }

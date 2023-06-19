@@ -1,83 +1,51 @@
 package by.potapenko.service;
 
-import by.potapenko.database.dao.CarDao;
 import by.potapenko.database.dto.CarFilter;
 import by.potapenko.database.entity.CarEntity;
-import by.potapenko.database.hibernate.SessionBuilding;
-import org.hibernate.Session;
+import by.potapenko.database.repositpry.CarRepository;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Pageable;
+import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import java.util.List;
 import java.util.Optional;
 
-public final class CarService {
+@Service
+@Transactional(readOnly = true)
+public class CarService {
 
-    private static final CarService INSTANCE = new CarService();
-    private static final SessionBuilding sessionBuilding = SessionBuilding.getInstance();
-    private final CarDao carDao = CarDao.getInstance();
+    private final CarRepository carRepository;
 
+    @Autowired
+    public CarService(CarRepository carRepository) {
+        this.carRepository = carRepository;
+    }
+
+    @Transactional
     public Optional<CarEntity> create(CarEntity car) {
-        try (Session session = sessionBuilding.getSession()) {
-            session.beginTransaction();
-            carDao.create(car, session);
-            session.getTransaction().commit();
-            return Optional.ofNullable(car);
-        }
+        carRepository.save(car);
+        return Optional.of(car);
     }
 
     public List<CarEntity> findAll(int limit, int page) {
-        try (Session session = sessionBuilding.getSession()) {
-            session.beginTransaction();
-            List<CarEntity> cars = carDao.findAll(limit, page, session);
-            session.getTransaction().commit();
-            return cars;
-        }
-    }
-
-    public Optional<CarEntity> update(CarEntity car) {
-        try (Session session = sessionBuilding.getSession()) {
-            session.beginTransaction();
-            carDao.update(car, session);
-            session.getTransaction().commit();
-            return Optional.ofNullable(car);
-        }
+        return (List<CarEntity>) carRepository.findAll(Pageable.ofSize(limit).withPage(page));
     }
 
     public void deleteById(Long id) {
-        try (Session session = sessionBuilding.getSession()) {
-            session.beginTransaction();
-            carDao.delete(id, session);
-            session.getTransaction().commit();
-        }
+        carRepository.deleteById(id);
     }
 
     public List<CarEntity> findByFilter(CarFilter filter) {
-        try (Session session = sessionBuilding.getSession()) {
-            session.beginTransaction();
-            List<CarEntity> byFilter = carDao.findByFilter(session, filter);
-            session.getTransaction().commit();
-            return byFilter;
-        }
+        return carRepository.findByFilter(filter);
     }
 
     public Optional<CarEntity> findById(Long id) {
-        try (Session session = sessionBuilding.getSession()) {
-            session.beginTransaction();
-            Optional<CarEntity> car = carDao.findById(id, session);
-            session.getTransaction().commit();
-            return car;
-        }
+        return carRepository.findById(id);
     }
 
     public Integer getCount(Double limit) {
-        try (Session session = sessionBuilding.getSession()) {
-            session.beginTransaction();
-            Integer count = (int) Math.ceil(carDao.getCount(session) / limit);
-            session.getTransaction().commit();
-            return count;
-        }
-    }
-
-    public static CarService getInstance() {
-        return INSTANCE;
+        return(Integer) (int) Math.ceil(carRepository.count() / limit);
     }
 }
+

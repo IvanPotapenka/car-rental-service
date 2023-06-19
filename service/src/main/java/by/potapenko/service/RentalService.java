@@ -1,92 +1,54 @@
 package by.potapenko.service;
 
-import by.potapenko.database.dao.RentalDao;
 import by.potapenko.database.entity.RentalEntity;
-import by.potapenko.database.hibernate.SessionBuilding;
-import org.hibernate.Session;
+import by.potapenko.database.repositpry.RentalRepository;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Pageable;
+import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import java.util.List;
 import java.util.Optional;
 
+@Service
+@Transactional(readOnly = true)
 public class RentalService {
-    private static final RentalService INSTANCE = new RentalService();
-    private final RentalDao rentalDao = RentalDao.getInstance();
-    private static final SessionBuilding sessionBuilding = SessionBuilding.getInstance();
+    private final RentalRepository rentalRepository;
 
+    @Autowired
+    public RentalService(RentalRepository rentalRepository) {
+        this.rentalRepository = rentalRepository;
+    }
+
+    @Transactional
     public Optional<RentalEntity> create(RentalEntity rental) {
-        try (Session session = sessionBuilding.getSession()) {
-            session.beginTransaction();
-            rental.setPrice(rental.getPrice() * rental.getRentalDays());
-            rentalDao.create(rental, session);
-            session.getTransaction().commit();
-            return Optional.of(rental);
-        }
+        rental.setPrice(rental.getPrice() * rental.getRentalDays());
+        rentalRepository.save(rental);
+        return Optional.of(rental);
     }
 
     public List<RentalEntity> findAll(int limit, int page) {
-        try (Session session = sessionBuilding.getSession()) {
-            session.beginTransaction();
-            List<RentalEntity> rentals = rentalDao.findAll(limit, page, session);
-            session.getTransaction().commit();
-            return rentals;
-        }
-    }
-
-    public Optional<RentalEntity> update(RentalEntity rental) {
-        try (Session session = sessionBuilding.getSession()) {
-            session.beginTransaction();
-            rentalDao.update(rental, session);
-            session.getTransaction().commit();
-            return Optional.ofNullable(rental);
-        }
+        return (List<RentalEntity>) rentalRepository.findAll(Pageable.ofSize(limit).withPage(page));
     }
 
     public void deleteById(Long id) {
-        try (Session session = sessionBuilding.getSession()) {
-            session.beginTransaction();
-            rentalDao.delete(id, session);
-            session.getTransaction().commit();
-        }
+        rentalRepository.deleteById(id);
     }
 
     public Optional<RentalEntity> findById(Long id) {
-        try (Session session = sessionBuilding.getSession()) {
-            session.beginTransaction();
-            Optional<RentalEntity> rental = rentalDao.findById(id, session);
-            session.getTransaction().commit();
-            return rental;
-        }
+        return rentalRepository.findById(id);
     }
 
     public Integer getCount(Double limit) {
-        try (Session session = sessionBuilding.getSession()) {
-            session.beginTransaction();
-            Integer count = (int) Math.ceil(rentalDao.getCount(session) / limit);
-            session.getTransaction().commit();
-            return count;
-        }
+        return (Integer) (int) Math.ceil(rentalRepository.count() / limit);
     }
 
     public List<RentalEntity> findAllOrdersOfClient(Long id) {
-        try (Session session = sessionBuilding.getSession()) {
-            session.beginTransaction();
-            List<RentalEntity> rental = rentalDao.findOrdersOfClient(id, session);
-            session.getTransaction().commit();
-            return rental;
-        }
+        return rentalRepository.findByClient_Orders(id);
     }
 
     public List<RentalEntity> findAllOrdersOfCar(Long id) {
-        try (Session session = sessionBuilding.getSession()) {
-            session.beginTransaction();
-            List<RentalEntity> rental = rentalDao.findOrdersOfCar(id, session);
-            session.getTransaction().commit();
-            return rental;
-        }
-    }
-
-    public static RentalService getInstance() {
-        return INSTANCE;
+        return rentalRepository.findByCar_Orders(id);
     }
 }
 

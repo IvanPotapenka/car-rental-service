@@ -18,9 +18,13 @@ import java.util.Map;
 
 import static by.potapenko.web.util.PagesUtil.CATALOG_FILTER;
 
-@WebServlet("/catalog/filter")
+//@WebServlet("/catalog/filter")
 public final class CatalogFilterServlet extends HttpServlet {
-    private final CarService carService = CarService.getInstance();
+    private final CarService carService;
+
+    public CatalogFilterServlet(CarService carService) {
+        this.carService = carService;
+    }
 
     @Override
     protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {

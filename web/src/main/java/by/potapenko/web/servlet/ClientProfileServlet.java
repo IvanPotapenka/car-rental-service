@@ -10,7 +10,7 @@ import java.io.IOException;
 
 import static by.potapenko.web.util.PagesUtil.CLIENT_PROFILE;
 
-@WebServlet("/account/profile")
+//@WebServlet("/account/profile")
 public class ClientProfileServlet extends HttpServlet {
 
 
