@@ -104,14 +104,20 @@
                 <option value="Renault">Renault</option>
                 <option value="Hyundai">Hyundai</option>
             </select><br>
-            <label for="model"></label>
-            <input class="w3-round-large"
-                   maxlength="20"
-                   type="text"
-                   value=""
-                   placeholder="--Model--"
-                   name="model"
-                   id="model"><br>
+
+            <label for="model_id"></label>
+            <select class="w3-round-large"
+                    id="model_id"
+                    name="mark">
+                <option value="">--Model--</option>
+                <option value="Audy">A8</option>
+                <option value="BMW">X6</option>
+                <option value="Citroen">C5</option>
+                <option value="Ford">F1</option>
+                <option value="Renault">A6</option>
+                <option value="Hyundai">C8</option>
+            </select><br>
+
             <label for="color_id"></label>
             <select class="w3-round-large"
                     id="color_id"
@@ -147,7 +153,7 @@
             <select class="w3-round-large"
                     id="consumption_id"
                     name="fuel_consumption">
-                <option value="0">--Fuel consumption--</option>
+                <option value="">--Fuel consumption--</option>
                 <c:forEach var="i" items="${[6.4,6.5,6.6,6.7,6.8,6.9,7.0,7.1,7.2,7.3,7.5]}">
                     <option value="${i}">${i}</option>
                 </c:forEach>
@@ -164,10 +170,10 @@
 
         <box class="w3-container ">
             <box class="w3-card-4 w3-round-large w3-padding" style="width: 50%"><br>
-                <h2><a href=${pageContext.request.contextPath}/catalog/car?id=${car.id}
+                <h2><a href=${pageContext.request.contextPath}/catalog/car/${car.id}
                        class="w3-text-blue"> ${car.brand} ${car.model} ${car.year}</a></h2>
-                <h6> &#9989; ${car.body.placeQuantity} places &#9989; ${car.engine.transmission}
-                    &#9989;${car.body.doorQuantity} doors &#9989; ${car.engine.fuelType}
+                <h6> &#9989; ${car.placeQuantity} places &#9989; ${car.transmission}
+                    &#9989;${car.doorQuantity} doors &#9989; ${car.fuelType}
                 </h6><br>
                 </table><br>
                 <table>
@@ -187,7 +193,7 @@
                 </table>
                 <br>
                 <h2 class="w3-text-red">Price ${car.price}$</h2><br>
-                <button class="w3-btn w3-round-large w3-red" onclick="location.href='/order?id=${car.id}'">Order
+                <button class="w3-btn w3-round-large w3-red" onclick="location.href='/order/${car.id}'">Order
                 </button>
                 </br>
             </box>

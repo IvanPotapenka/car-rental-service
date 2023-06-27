@@ -1,10 +1,11 @@
 package by.potapenko.service;
 
+import by.potapenko.database.dto.CarDto;
 import by.potapenko.database.dto.CarFilter;
 import by.potapenko.database.entity.CarEntity;
-import by.potapenko.database.repositpry.CarRepository;
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.data.domain.Pageable;
+import by.potapenko.database.repository.CarRepository;
+import lombok.RequiredArgsConstructor;
+import org.modelmapper.ModelMapper;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -13,39 +14,64 @@ import java.util.Optional;
 
 @Service
 @Transactional(readOnly = true)
+@RequiredArgsConstructor
 public class CarService {
 
     private final CarRepository carRepository;
+    private final ModelMapper modelMapper;
 
-    @Autowired
-    public CarService(CarRepository carRepository) {
-        this.carRepository = carRepository;
+    @Transactional
+    public Long create(CarDto car) {
+        return carRepository.save(convertToCarEntity(car)).getId();
     }
 
     @Transactional
-    public Optional<CarEntity> create(CarEntity car) {
-        carRepository.save(car);
-        return Optional.of(car);
+    public Optional<CarDto> update(Long id, CarDto update) {
+        Optional<CarEntity> existedCar = carRepository.findById(id);
+        if (existedCar.isPresent()) {
+            CarEntity car = existedCar.get();
+            modelMapper.map(update, car);
+            return Optional.of(convertToCarDto(carRepository.save(car)));
+        }
+        return Optional.empty();
     }
 
-    public List<CarEntity> findAll(int limit, int page) {
-        return (List<CarEntity>) carRepository.findAll(Pageable.ofSize(limit).withPage(page));
+    public List<CarDto> getAll() {
+        return carRepository.findAll()
+                .stream()
+                .map(this::convertToCarDto)
+                .toList();
     }
 
+    @Transactional
     public void deleteById(Long id) {
-        carRepository.deleteById(id);
+        carRepository.findById(id)
+                .ifPresent(carRepository::delete);
     }
 
-    public List<CarEntity> findByFilter(CarFilter filter) {
-        return carRepository.findByFilter(filter);
+    public List<CarDto> getByFilter(CarFilter filter) {
+        return carRepository.findByFilter(filter)
+                .stream()
+                .map(this::convertToCarDto)
+                .toList();
     }
 
-    public Optional<CarEntity> findById(Long id) {
-        return carRepository.findById(id);
+    public Optional<CarDto> getById(Long id) {
+        return carRepository.findById(id)
+                .map(this::convertToCarDto);
     }
 
     public Integer getCount(Double limit) {
-        return(Integer) (int) Math.ceil(carRepository.count() / limit);
+        return (Integer) (int) Math.ceil(carRepository.count() / limit);
+    }
+
+    private CarDto convertToCarDto(CarEntity car) {
+        return modelMapper.map(car, CarDto.class);
+    }
+
+    private CarEntity convertToCarEntity(CarDto car) {
+        return modelMapper.map(car, CarEntity.class);
     }
 }
+
 

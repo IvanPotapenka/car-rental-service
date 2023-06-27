@@ -69,7 +69,7 @@
         <flex>
             <c:if test="${user_delete_success==true}">
                 <p style="font-size: 20px" class="w3-text-green"> User was successfully deleted</p>
-                <p style="font-size: 16px"><a href="/admin/users">Back</a></p>
+                <p style="font-size: 16px"><a href="${pageContext.request.contextPath}/admin/users">Back</a></p>
             </c:if>
             <c:if test="${user_delete_success==null}">
             <p style="font-size: 16px">
@@ -79,7 +79,7 @@
                     <th>User_id</th>
                     <th>Login</th>
                     <th>Email</th>
-                    <th>Password</th>
+                    <th>Phone</th>
                     <th>Date of creation</th>
                     <th>Role</th>
                     <th>Edit</th>
@@ -89,10 +89,10 @@
                         <td>${user.id}</td>
                         <td>${user.login}</td>
                         <td>${user.email}</td>
-                        <td>${user.password}</td>
+                        <td>${user.phone}</td>
                         <td>${user.dateOfCreation}</td>
                         <td>${user.role}</td>
-                        <td><a href="${pageContext.request.contextPath}/admin/users/user?id=${user.id}"
+                        <td><a href="${pageContext.request.contextPath}/admin/users/user/${user.id}"
                                class="w3-text-blue">EDIT</a></td>
                     </tr>
                 </c:forEach>

@@ -52,24 +52,25 @@
 </head>
 <body>
 <div><a href="/admin">Home </a>
-    <a href="${pageContext.request.contextPath}/admin/users/user/update_user?id=${user.id}">/ edit user</a></div>
+    <a href="${pageContext.request.contextPath}/admin/users/user/update_user/${user.id}">/ edit user</a></div>
 <box>
     <form method="post" class="w3-card-4 w3-blue-grey w3-round-large w3-padding" style="width: 30%">
         <flex>
             <h1>${user.login}</h1><br>
-            <c:if test="${update_user_error == false}">
+            <c:if test="${update_user == true}">
                 <p style="font-size: 20px" class="w3-text-green"> User update successfully!</p>
-                <p style="font-size: 16px"><a href="/admin/users/user?id=${user.id}">Back</a></p>
+                <p style="font-size: 16px"><a href="/admin/users/user/${user.id}">Back</a></p>
             </c:if><br>
-            <c:if test="${update_user_error == null}">
-                <label for="name">Login</label>
+            <c:if test="${update_user == null}">
+
+                <label for="loginId">Login</label>
                 <input class="w3-round-large"
                        type="text"
                        maxlength="20"
-                       placeholder="Enter your name"
-                       name="name"
+                       placeholder="Enter your login"
+                       name="login"
                        value="${user.login}"
-                       id="name"
+                       id="loginId"
                        required/><br>
 
                 <label for="email">Email</label>
@@ -81,41 +82,41 @@
                        value="${user.email}"
                        id="email"
                        required/><br>
-                <label for="pwd">Password</label>
+
+                <label for="phone">Phone No.</label>
                 <input class="w3-round-large"
-                       maxlength="20"
-                       type="password"
-                       placeholder="Enter your password"
-                       name="password"
-                       id="pwd"
-                       required/></p><br>
+                       type="text"
+                       maxlength="13"
+                       placeholder="Enter your phone"
+                       name="phone"
+                       value="${user.phone}"
+                       id="phone"
+                       required/><br>
+
                 <label for="role">Role</label>
                     <select class="w3-round-large"
                             id="role"
-                            name="role"
-                            required>
-                        <option value="USER">USER</option>
-                        <option value="MANAGER">MANAGER</option>
+                            name="role">
+                        <option selected> ${user.role}</option>
                     </select><br>
 
                 <label for="date_of_creation_id">Date of creation</label>
                     <input class="w3-round-large"
                            type="text"
-                           name="date_of_creation"
+                           name="dateOfCreation"
                            id="date_of_creation_id"
                            value="${user.dateOfCreation}"
                            readonly/><br>
 
-                <input hidden type="number" name="id" value="${user.id}"/>
                 <button class="w3-btn w3-white w3-round-large" type="submit">Update</button>
                 </br>
                 </br>
-                <p style="font-size: 16px"><a href="/admin/users/user?id=${user.id}">Back</a></p>
+                <p style="font-size: 16px"><a href="/admin/users/user/${user.id}">Back</a></p>
             </c:if>
-            <c:if test="${update_user_error == true}">
+            <c:if test="${update_user == false}">
                 <p style="font-size: 20px" class="w3-text-red"> User wasn't updated!Try again later!</p>
 
-                <p style="font-size: 16px"><a href="/admin/users/user/update_user?id=${user.id}">Back</a></p>
+                <p style="font-size: 16px"><a href="/admin/users/user/update_user/${user.id}">Back</a></p>
             </c:if><br>
         </flex>
     </form>

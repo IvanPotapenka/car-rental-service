@@ -67,16 +67,16 @@
 <body>
 <%@include file="headerAdmin.jsp" %>
 <div><a href="/admin">Home </a>
-    <a href="${pageContext.request.contextPath}/admin/cars/car/update_car?id=${car.id}">/ edit car</a></div>
+    <a href="${pageContext.request.contextPath}/admin/cars/car/update_car/${car.id}">/ edit car</a></div>
 <box>
     <form method="post" class="w3-card-4 w3-blue-grey w3-round-large w3-padding" style="width: 90%">
         <flex>
             <h1>${car.brand} ${car.model}</h1><br>
-            <c:if test="${update_car_error == false}">
+            <c:if test="${update_car == true}">
                 <p style="font-size: 20px" class="w3-text-green"> Car save successfully!</p>
-                <p style="font-size: 16px"><a href="/admin/cars/car?id=${car.id}">Back</a></p>
+                <p style="font-size: 16px"><a href="/admin/cars/car/${car.id}">Back</a></p>
             </c:if><br>
-            <c:if test="${update_car_error == null}">
+            <c:if test="${update_car == null}">
 
                 <table style="font-size: 10px">
                     <tr>
@@ -118,7 +118,7 @@
                     <td><label for="year_id"></label>
                         <select class="w3-round-large"
                                 id="year_id"
-                                name="year_of_release"
+                                name="year"
                                 required>
                             <option value="">--Choose year--</option>
                             <option selected>${car.year}</option>
@@ -140,31 +140,31 @@
                             <option value="GRAY">Grey</option>
                             <option value="RED">Red</option>
                             <option value="GREEN">Green</option>
-                            <option selected>${car.body.color}</option>
+                            <option selected>${car.color}</option>
                         </select><br></td>
 
                     <td><label for="fuel_id"></label>
                         <select class="w3-round-large"
                                 id="fuel_id"
-                                name="fuel"
+                                name="fuelType"
                                 required>
                             <option value="">--Fuel type--</option>
                             <option value="GASOLINE">Gasoline</option>
                             <option value="GAS">Gas</option>
                             <option value="DIESEL">Diesel</option>
-                            <option selected>${car.engine.fuelType}</option>
+                            <option selected>${car.fuelType}</option>
                         </select><br></td>
 
                     <td><label for="engine_id"></label>
                         <select class="w3-round-large"
                                 id="engine_id"
-                                name="engine_capacity"
+                                name="engineCapacity"
                                 required>
                             <option value="">--Engine capacity--</option>
                             <c:forEach var="i" items="${[1.4,1.5,1.6,1.7,1.8,1.9,2.0,2.1,2.2,2.3,2.5]}">
                                 <option value="${i}">${i}l</option>
                             </c:forEach>
-                            <option selected>${car.engine.engineCapacity}</option>
+                            <option selected>${car.engineCapacity}</option>
                         </select><br></td>
 
                     <td><label for="power_id"></label>
@@ -172,9 +172,9 @@
                                maxlength="4"
                                type="number"
                                placeholder="Enter horse power"
-                               name="horse_power"
+                               name="horsePower"
                                id="power_id"
-                               value="${car.engine.horsePower}"
+                               value="${car.horsePower}"
                                required/><br></td>
 
                     <td><label for="transmission_id"></label>
@@ -186,7 +186,7 @@
                             <option value="AUTOMATIC">Automatic</option>
                             <option value="MANUAL">Manual</option>
                             <option value="HYBRID">Hybrid</option>
-                            <option selected>${car.engine.transmission}</option>
+                            <option selected>${car.transmission}</option>
                         </select><br></td>
                 </table>
                 <table style="font-size: 10px">
@@ -203,7 +203,7 @@
                     <td><label for="consumption_id"></label>
                         <select class="w3-round-large"
                                 id="consumption_id"
-                                name="fuel_consumption"
+                                name="fuelConsumption"
                                 required>
                             <option value="">--Fuel consumption--</option>
                             <c:forEach var="i" items="${[6.4,6.5,6.6,6.7,6.8,6.9,7.0,7.1,7.2,7.3,7.5]}">
@@ -215,24 +215,24 @@
                     <td><label for="places_id"></label>
                         <select class="w3-round-large"
                                 id="places_id"
-                                name="quantity_places"
+                                name="placeQuantity"
                                 required>
                             <option value="">--Places quantity--</option>
                             <option value="4">4</option>
                             <option value="5">5</option>
-                            <option selected>${car.body.placeQuantity}</option>
+                            <option selected>${car.placeQuantity}</option>
                         </select><br></td>
 
                     <td><label for="doors_id"></label>
                         <select class="w3-round-large"
                                 id="doors_id"
-                                name="quantity_doors"
+                                name="doorQuantity"
                                 required>
                             <option value="">--Doors quantity--</option>
                             <option value="3">3</option>
                             <option value="4">4</option>
                             <option value="5">5</option>
-                            <option selected> ${car.body.doorQuantity}</option>
+                            <option selected> ${car.doorQuantity}</option>
                         </select><br></td>
 
                     <td><label for="trunk_id"></label>
@@ -240,9 +240,9 @@
                                maxlength="3"
                                type="number"
                                placeholder="Enter trunk volume"
-                               name="trunk_volume"
+                               name="trunkVolume"
                                id="trunk_id"
-                               value="${car.body.trunkVolume}"
+                               value="${car.trunkVolume}"
                                required/><br></td>
 
                     <td><label for="vin_code_id"></label>
@@ -250,9 +250,9 @@
                                maxlength="17"
                                type="text"
                                placeholder="Enter VIN-code"
-                               name="vin_code"
+                               name="vinCode"
                                id="vin_code_id"
-                               value="${car.body.vinCode}"
+                               value="${car.vinCode}"
                                required/>
                         </input><br></td>
 
@@ -263,7 +263,7 @@
                                placeholder="Enter VIN-code"
                                name="number"
                                id="number_id"
-                               value="${car.body.number}"
+                               value="${car.number}"
                                required/><br></td>
 
 
@@ -280,10 +280,10 @@
                 <input hidden type="number" name="car_id" value="${car.id}"/><br>
                 <button class="w3-btn w3-white w3-round-large" type="submit">Save</button>
                 </br>
-                <p style="font-size: 12px"><a href="/admin/cars/car?id=${car.id}">Back</a></p>
+                <p style="font-size: 12px"><a href="/admin/cars/car/${car.id}">Back</a></p>
             </c:if>
-            <c:if test="${update_car_error == true}">
-                <p class="w3-text-red"> Car wasn't saved!</p>
+            <c:if test="${update_car == false}">
+                <p style="font-size: 20px" class="w3-text-red"> Car wasn't saved!</p>
                 <a href="/admin/cars/car" class="w3-text-blue">Try again</a></p>
             </c:if><br>
         </flex>

@@ -7,7 +7,6 @@ import lombok.Data;
 import lombok.EqualsAndHashCode;
 import lombok.NoArgsConstructor;
 import lombok.ToString;
-import lombok.experimental.SuperBuilder;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -17,12 +16,10 @@ import java.util.List;
 @EqualsAndHashCode(callSuper = false)
 @NoArgsConstructor
 @AllArgsConstructor
-@Inheritance(strategy = InheritanceType.SINGLE_TABLE)
-@DiscriminatorColumn(name = "car_type")
 @Entity
-@SuperBuilder
+@Builder
 @Table(name = "car")
-public abstract class CarEntity implements BaseIdEntity<Long> {
+public class CarEntity implements BaseIdEntity<Long> {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -40,13 +37,12 @@ public abstract class CarEntity implements BaseIdEntity<Long> {
     @Column(name = "price", nullable = false)
     private double price;
 
-    @Builder.Default
-    @OneToMany(mappedBy = "car", fetch = FetchType.EAGER)
-    private List<RentalEntity> orders = new ArrayList<>();
+    @Column(name = "fuel_consumption")
+    public double fuelConsumption;
 
     @Builder.Default
-    @ManyToMany(mappedBy = "cars")
-    private List<ClientEntity> clients = new ArrayList<>();
+    @OneToMany(mappedBy = "car")
+    private List<RentalEntity> orders = new ArrayList<>();
 
     @Embedded
     @AttributeOverrides(
@@ -57,7 +53,7 @@ public abstract class CarEntity implements BaseIdEntity<Long> {
                     @AttributeOverride(name = "number", column = @Column(name = "numbers", length = 20, nullable = false, unique = true)),
                     @AttributeOverride(name = "color", column = @Column(name = "color", length = 20, nullable = false))
             })
-    public BodyCar body;
+    private BodyCar body;
 
     @Embedded
     @AttributeOverrides(
@@ -67,5 +63,6 @@ public abstract class CarEntity implements BaseIdEntity<Long> {
                     @AttributeOverride(name = "transmission", column = @Column(name = "transmission", length = 20, nullable = false)),
             })
     private EngineCar engine;
+
 }
 

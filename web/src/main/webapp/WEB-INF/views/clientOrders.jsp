@@ -108,8 +108,8 @@
             <c:forEach var="rental" items="${rentals}">
                 <tr>
                     <td>${rental.id}</td>
-                    <td>${rental.car.brand} ${rental.car.model} No. ${rental.car.body.number}</td>
-                    <td>${rental.client.firstName} ${rental.client.lastName} ${rental.client.middleName}</td>
+                    <td>${rental.carDto.brand} ${rental.carDto.model} No. ${rental.carDto.number}</td>
+                    <td>${rental.clientDto.firstName} ${rental.clientDto.lastName}</td>
                     <td>${rental.rentalDate}</td>
                     <td>${rental.returnDate}</td>
                     <td>${rental.rentalDays}</td>

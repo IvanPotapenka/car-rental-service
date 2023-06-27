@@ -56,16 +56,12 @@
 </head>
 <body>
 <%@include file="headerAdmin.jsp" %>
-<div><a href="/admin">Home </a><a href="${pageContext.request.contextPath}/admin/rentals/rental?id=${rental.id}">/ edit</a>
+<div><a href="/admin">Home </a><a href="${pageContext.request.contextPath}/admin/rentals/rental/${rental.id}">/ edit</a>
 </div>
 <box>
     <form method="post" class="w3-card-4 w3-blue-grey w3-round-large w3-padding" style="width: 90%">
         <a style="font-size: 12px" href="${pageContext.request.contextPath}/admin/rentals/create_rental">Create new rental</a>
         <flex>
-            <c:if test="${rental_id == false}">
-                <p class="w3-text-green"> This user ID doesn't exist</p>
-            </c:if>
-            <c:if test="${rental_id == true || create_rental == true}">
                 <p style="font-size: 16px">
                 <h1>Order No.${rental.id}</h1>
                 <table style="font-size: 10px">
@@ -85,23 +81,22 @@
                     </tr>
                     <tr>
                         <td>${rental.id}</td>
-                        <td>${rental.car.brand} ${rental.car.model} No. ${rental.car.body.number}</td>
-                        <td>${rental.client.firstName} ${rental.client.lastName} ${rental.client.middleName}</td>
+                        <td>${rental.carDto.brand} ${rental.carDto.model} No. ${rental.carDto.number}</td>
+                        <td>${rental.clientDto.firstName} ${rental.clientDto.lastName}</td>
                         <td>${rental.rentalDate}</td>
                         <td>${rental.returnDate}</td>
                         <td>${rental.rentalDays}</td>
                         <td>${rental.price}</td>
-                        <td>${rental.status}</td>
+                        <td><p style="color: crimson">${rental.status}</p> </td>
                         <td>${rental.dateOfCreation}</td>
-                        <td><a href="${pageContext.request.contextPath}/admin/rentals/rental/delete_rental?id=${rental.id}"
+                        <td><a href="${pageContext.request.contextPath}/admin/rentals/rental/delete_rental/${rental.id}"
                                class="w3-text-red">DELETE</a></td>
-                        <td><a href="${pageContext.request.contextPath}/admin/rentals/rental/update_rental?id=${rental.id}"
+                        <td><a href="${pageContext.request.contextPath}/admin/rentals/rental/update_rental/${rental.id}"
                                class="w3-text-blue">EDIT</a></td>
                     </tr>
                 </table>
                 </br>
-                <p style="font-size: 16px"><a href="/admin/rentals">Back</a></p>
-            </c:if>
+                <p style="font-size: 16px"><a href="${pageContext.request.contextPath}/admin/rentals">Back</a></p>
         </flex>
     </form>
 </box>

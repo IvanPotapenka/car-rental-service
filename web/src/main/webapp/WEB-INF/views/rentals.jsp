@@ -68,7 +68,7 @@
         <flex>
             <c:if test="${rental_delete_success==true}">
                 <p style="font-size: 20px" class="w3-text-green"> Rental was successfully deleted</p>
-                <p style="font-size: 16px"><a href="/admin/rentals">Back</a></p>
+                <p style="font-size: 16px"><a href="${pageContext.request.contextPath}/admin/rentals">Back</a></p>
             </c:if>
             <c:if test="${rental_delete_success==null}">
             <p style="font-size: 16px">
@@ -83,26 +83,26 @@
                     <th>Rental days</th>
                     <th>Price</th>
                     <th>Status</th>
-                    <th>Creator rental</th>
+<%--                    <th>Creator rental</th>--%>
                     <th>Date of creation</th>
                     <th>Edit</th>
                 </tr>
                 <c:forEach var="rental" items="${rentals}">
                     <tr>
                         <td>${rental.id}</td>
-                        <td><a href="${pageContext.request.contextPath}/admin/orders/car?id=${rental.car.id}" class="w3-text-blue">
-                                ID${rental.car.id}, ${rental.car.brand} ${rental.car.model}, No. ${rental.car.body.number}</a></td>
-                        <td><a href="${pageContext.request.contextPath}/admin/orders/client?id=${rental.client.user.id}" class="w3-text-blue">
-                                ID${rental.client.user.id}, ${rental.client.firstName} ${rental.client.lastName} ${rental.client.middleName}</a></td>
+                        <td><a href="${pageContext.request.contextPath}/admin/orders/car/${rental.carDto.id}" class="w3-text-blue">
+                                ID${rental.carDto.id}, ${rental.carDto.brand} ${rental.carDto.model}, No. ${rental.carDto.number}</a></td>
+                        <td><a href="${pageContext.request.contextPath}/admin/orders/client/${rental.clientDto.id}" class="w3-text-blue">
+                                ID${rental.clientDto.id}, ${rental.clientDto.firstName} ${rental.clientDto.lastName}</a></td>
                         <td>${rental.rentalDate}</td>
                         <td>${rental.returnDate}</td>
                         <td>${rental.rentalDays}</td>
                         <td>${rental.price}</td>
                         <td><p style="color: crimson"> ${rental.status}</p></td>
-                        <td>${rental.client.user.role} </td>
+<%--                        <td>${rental.client.role} </td>--%>
                         <td>${rental.dateOfCreation}</td>
 
-                        <td><a href="${pageContext.request.contextPath}/admin/rentals/rental?id=${rental.id}"
+                        <td><a href="${pageContext.request.contextPath}/admin/rentals/rental/${rental.id}"
                                class="w3-text-blue">EDIT</a></td>
                     </tr>
                 </c:forEach>

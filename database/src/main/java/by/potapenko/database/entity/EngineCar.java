@@ -17,8 +17,9 @@ import lombok.NoArgsConstructor;
 @Embeddable
 public class EngineCar {
 
-    private double engineCapacity;
+
     private int horsePower;
+    private double engineCapacity;
     @Enumerated(EnumType.STRING)
     private FuelType fuelType;
     @Enumerated(EnumType.STRING)

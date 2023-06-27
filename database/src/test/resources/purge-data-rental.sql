@@ -1,1 +1,0 @@
-DELETE FROM rental WHERE TRUE

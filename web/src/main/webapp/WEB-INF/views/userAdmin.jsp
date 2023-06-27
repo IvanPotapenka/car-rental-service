@@ -56,16 +56,12 @@
 </head>
 <body>
 <%@include file="headerAdmin.jsp" %>
-<div><a href="/admin">Home </a><a href="${pageContext.request.contextPath}/admin/users/user?id=${user.id}">/ edit</a>
+<div><a href="/admin">Home </a><a href="${pageContext.request.contextPath}/admin/users/user/${user.id}">/ edit</a>
 </div>
 <box>
     <form method="post" class="w3-card-4 w3-blue-grey w3-round-large w3-padding" style="width: 70%">
         <a style="font-size: 12px" href="${pageContext.request.contextPath}/admin/users/create_user">Create new user</a>
         <flex>
-            <c:if test="${user_id == false}">
-                <p class="w3-text-green"> This user ID doesn't exist</p>
-            </c:if>
-            <c:if test="${user_id == true || create_user == true}">
                 <p style="font-size: 16px">
                 <h1>${user.login}</h1>
                 <table>
@@ -73,7 +69,7 @@
                         <th>User_id</th>
                         <th>Login</th>
                         <th>Email</th>
-                        <th>Password</th>
+                        <th>Phone</th>
                         <th>Role</th>
                         <th>Delete</th>
                         <th>Edit</th>
@@ -82,17 +78,16 @@
                         <td>${user.id}</td>
                         <td>${user.login}</td>
                         <td>${user.email}</td>
-                        <td>${user.password}</td>
+                        <td>${user.phone}</td>
                         <td>${user.role}</td>
-                        <td><a href="${pageContext.request.contextPath}/admin/users/user/delete_user?id=${user.id}"
+                        <td><a href="${pageContext.request.contextPath}/admin/users/user/delete_user/${user.id}"
                                class="w3-text-red">DELETE</a></td>
-                        <td><a href="${pageContext.request.contextPath}/admin/users/user/update_user?id=${user.id}"
+                        <td><a href="${pageContext.request.contextPath}/admin/users/user/update_user/${user.id}"
                                class="w3-text-blue">EDIT</a></td>
                     </tr>
                 </table>
                 </br>
-                <p style="font-size: 16px"><a href="/admin/users">Back</a></p>
-            </c:if>
+                <p style="font-size: 16px"><a href="${pageContext.request.contextPath}/admin/users">Back</a></p>
         </flex>
     </form>
 </box>
