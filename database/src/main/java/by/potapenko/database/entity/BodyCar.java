@@ -2,7 +2,6 @@ package by.potapenko.database.entity;
 
 import by.potapenko.database.entity.enam.ColorCar;
 import jakarta.persistence.Embeddable;
-import jakarta.persistence.Entity;
 import jakarta.persistence.EnumType;
 import jakarta.persistence.Enumerated;
 import lombok.AllArgsConstructor;

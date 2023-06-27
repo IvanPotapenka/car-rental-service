@@ -56,7 +56,7 @@
 </head>
 <body>
 <%@include file="headerAdmin.jsp" %>
-<div><a href="/admin">Home </a><a href="${pageContext.request.contextPath}/admin/cars/car?id=${car.id}">/ edit</a></div>
+<div><a href="/admin">Home </a><a href="${pageContext.request.contextPath}/admin/cars/car/${car.id}">/ edit</a></div>
 <box>
     <form method="post" class="w3-card-4 w3-blue-grey w3-round-large w3-padding" style="width: 90%">
         <a style="font-size: 12px" href="${pageContext.request.contextPath}/admin/cars/create_car">Create new car</a>
@@ -65,7 +65,6 @@
                 <p class="w3-text-green"> This car ID doesn't exist</p>
             </c:if>
             <c:if test="${car_id == true || create_car == true}">
-
                 <h1>${car.brand} ${car.model}</h1>
                 <table style="font-size: 10px">
                     <tr>
@@ -93,24 +92,24 @@
                         <td>${car.brand}</td>
                         <td>${car.model}</td>
                         <td>${car.year}</td>
-                        <td>${car.body.color}</td>
-                        <td>${car.engine.fuelType}</td>
-                        <td>${car.engine.engineCapacity}</td>
-                        <td>${car.engine.horsePower}</td>
-                        <td>${car.engine.transmission}</td>
+                        <td>${car.color}</td>
+                        <td>${car.fuelType}</td>
+                        <td>${car.engineCapacity}</td>
+                        <td>${car.horsePower}</td>
+                        <td>${car.transmission}</td>
                         <td>${car.fuelConsumption}</td>
-                        <td>${car.body.placeQuantity}</td>
-                        <td>${car.body.doorQuantity}</td>
-                        <td>${car.body.trunkVolume}</td>
-                        <td>${car.body.vinCode}</td>
-                        <td>${car.body.number}</td>
+                        <td>${car.placeQuantity}</td>
+                        <td>${car.doorQuantity}</td>
+                        <td>${car.trunkVolume}</td>
+                        <td>${car.vinCode}</td>
+                        <td>${car.number}</td>
                         <td>${car.price}</td>
-                        <td><b><a href="/admin/cars/car/delete_car?id=${car.id}" class="w3-text-red">DELETE</a></b></td>
-                        <td><b><a href="/admin/cars/car/update_car?id=${car.id}" class="w3-text-blue">EDITE</a></b></td>
+                        <td><b><a href="/admin/cars/car/delete_car/${car.id}" class="w3-text-red">DELETE</a></b></td>
+                        <td><b><a href="/admin/cars/car/update_car/${car.id}" class="w3-text-blue">EDITE</a></b></td>
                     </tr>
                 </table>
                 </br>
-                <p style="font-size: 12px"><a href="/admin/cars">Back</a></p>
+                <p style="font-size: 12px"><a href="${pageContext.request.contextPath}/admin/cars">Back</a></p>
             </c:if>
         </flex>
     </form>

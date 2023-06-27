@@ -45,22 +45,22 @@
         <flex>
             <c:if test="${create_rental == true}">
                 <h5 class="w3-padding w3-text-black w3-opacity">Client: </h5><h5
-                    class="w3-padding ">${rental.client.firstName} ${rental.client.lastName} ${rental.client.middleName} </h5>
+                    class="w3-padding ">${rental.clientDto.firstName} ${rental.clientDto.lastName} </h5>
                 <h5 class="w3-padding w3-text-black w3-opacity">Phone No.</h5><h5
-                    class="w3-padding ">${rental.client.contact.phone} </h5>
+                    class="w3-padding ">${rental.clientDto.phone} </h5>
                 <h5 class="w3-padding w3-text-black w3-opacity">Car:</h5><h5
-                    class="w3-padding ">${rental.car.brand} ${rantal.car.model} ${rantal.car.year}</h5>
+                    class="w3-padding ">${rental.carDto.brand} ${rental.carDto.model} ${rental.carDto.year}</h5>
                 <h5 class="w3-padding w3-text-black w3-opacity">Car No. </h5><h5
-                    class="w3-padding "> ${rental.car.body.number} </h5>
+                    class="w3-padding "> ${rental.carDto.number} </h5>
 
-                <h5 class="w3-padding w3-text-black w3-opacity">Rental date:</h5><h5 class="w3-padding">${rental_date} at
+                <h5 class="w3-padding w3-text-black w3-opacity">Rental date:</h5><h5 class="w3-padding">${rental.rentalDate} at
                 12.00 PM</h5>
-                <h5 class="w3-padding w3-text-black w3-opacity">Return date:</h5><h5 class="w3-padding"> ${return_date} at
+                <h5 class="w3-padding w3-text-black w3-opacity">Return date:</h5><h5 class="w3-padding"> ${rental.returnDate} at
                 12.00 PM</h5>
-                <h5 class="w3-padding w3-text-black w3-opacity"> Rental: </h5><h5 class="w3-padding"> ${rental_days}
+                <h5 class="w3-padding w3-text-black w3-opacity"> Rental: </h5><h5 class="w3-padding"> ${rental.rentalDays}
                 days</h5>
                 <h5 class="w3-padding w3-text-black"> Where to pick up the car? 100 New Bridge Street, London, EC4V 6JA</h5>
-                <h3 class="w3-padding w3-text-red"> Amount to be paid ${car.price * rental_days}$</h3>
+                <h3 class="w3-padding w3-text-red"> Amount to be paid ${rental.price}$</h3>
             </c:if>
             <c:if test="${create_rental == false}">
                 <p style="font-size: 20px" class="w3-text-red"> Sorry! Creating doesn't possible now, please try

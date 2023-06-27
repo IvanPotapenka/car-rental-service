@@ -78,24 +78,24 @@
                     <th>Rental days</th>
                     <th>Price</th>
                     <th>Status</th>
-                    <th>Creator rental</th>
+<%--                    <th>Creator rental</th>--%>
                     <th>Date of creation</th>
                     <th>Edit</th>
                 </tr>
                 <c:forEach var="rental" items="${rentals}">
                     <tr>
                         <td>${rental.id}</td>
-                        <td>${rental.client.firstName} ${rental.client.lastName} ${rental.client.middleName}</td>
-                        <td>${rental.car.brand} ${rental.car.model} No. ${rental.car.body.number}</td>
+                        <td>${rental.clientDto.firstName} ${rental.clientDto.lastName}</td>
+                        <td>${rental.carDto.brand} ${rental.carDto.model} No. ${rental.carDto.number}</td>
                         <td>${rental.rentalDate}</td>
                         <td>${rental.returnDate}</td>
                         <td>${rental.rentalDays}</td>
                         <td>${rental.price}</td>
                         <td><p style="color: crimson"> ${rental.status}</p></td>
-                        <td>${rental.client.user.role}</td>
+<%--                        <td>${rental.client.user.role}</td>--%>
                         <td>${rental.dateOfCreation}</td>
 
-                        <td><a href="${pageContext.request.contextPath}/admin/rentals/rental?id=${rental.id}"
+                        <td><a href="${pageContext.request.contextPath}/admin/rentals/rental/${rental.id}"
                                class="w3-text-blue">EDIT</a></td>
                     </tr>
                 </c:forEach>

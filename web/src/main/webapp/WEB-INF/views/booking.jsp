@@ -84,13 +84,13 @@
     <box class="w3-card-4 w3-round-large w3-padding" style="width: 50%">
         <h2><a href=${pageContext.request.contextPath}/cars?id=${car.id}
                class="w3-text-blue"> ${car.brand} ${car.model} ${car.year}</a></h2>
-        <h6> &#9989; ${car.body.placeQuantity} places &#9989; ${car.engine.transmission}
-            &#9989;${car.body.doorQuantity} doors &#9989; ${car.engine.fuelType} </h6>
+        <h6> &#9989; ${car.placeQuantity} places &#9989; ${car.transmission}
+            &#9989;${car.doorQuantity} doors &#9989; ${car.fuelType} </h6>
         <flex>
-            <h5 class="w3-padding w3-text-black">Rental date:</h5><h5 class="w3-padding w3-text-red">${rental_date} at 12.00 PM</h5>
-            <h5 class="w3-padding w3-text-black">Return date:</h5><h5 class="w3-padding w3-text-red"> ${return_date} at 12.00 PM</h5>
-            <h4 class="w3-padding w3-text-black"> Rental ${rental_days} days</h4>
-
+            <h5 class="w3-padding w3-text-black">Rental date:</h5><h5 class="w3-padding w3-text-red">${rental.rentalDate} at 12.00 PM</h5>
+            <h5 class="w3-padding w3-text-black">Return date:</h5><h5 class="w3-padding w3-text-red"> ${rental.rentalDate} at 12.00 PM</h5>
+            <h4 class="w3-padding w3-text-red"> Rental ${rental.rentalDays} days</h4>
+            <h3 class="w3-padding w3-text-red"> Total price ${rental.price}$</h3>
             <h3 class="w3-padding w3-text-blue"> You confirm compliance with the minimum rental conditions:</h3>
 
             <h7 class="w3-padding w3-text-black ">&#9989; Driving experience of at least 2 years.</h7>
@@ -100,8 +100,6 @@
             <h7 class="w3-padding w3-text-black ">&#9989; Without the possibility of leaving the Republic of Belarus.</h7>
             <h7 class="w3-padding w3-text-black ">&#9989; The rental price includes CASCO insurance.</h7>
             <h7 class="w3-padding w3-text-black ">&#9989; Deposit (deposit) 500r.</h7>
-
-            <h3 class="w3-padding w3-text-red"> Total price ${car.price * rental_days}$</h3>
 
         </flex>
     </box>
@@ -114,8 +112,9 @@
                     <tr>
                         <th>*First name</th>
                         <th>*Last name</th>
-                        <th>Middle name</th>
                         <th>*Date of birthday</th>
+                        <th>*Phone number</th>
+                        <th>Address</th>
                     </tr>
 
                     <td><label for="first_name_id"></label>
@@ -123,7 +122,7 @@
                                maxlength="20"
                                type="text"
                                placeholder="Enter first name"
-                               name="first_name"
+                               name="firstName"
                                id="first_name_id"
                                required/><br></td>
 
@@ -132,33 +131,18 @@
                                maxlength="20"
                                type="text"
                                placeholder="Enter last name"
-                               name="last_name"
+                               name="lastName"
                                id="last_name_id"
                                required/><br></td>
-
-                    <td><label for="middle_name_id"></label>
-                        <input class="w3-round-large"
-                               maxlength="20"
-                               type="text"
-                               value=" "
-                               placeholder="Enter middle name"
-                               name="middle_name"
-                               id="middle_name_id"
-                        /><br></td>
 
                     <td><label for="date_of_birthday_id"></label>
                         <input class="w3-round-large"
                                type="date"
                                min="1950-01-01"
                                max="2003-01-01"
-                               name="date_of_birthday"
+                               name="dateOfBirthday"
                                id="date_of_birthday_id"
                                required/><br></td>
-
-                    <tr>
-                        <th>*Phone number</th>
-                        <th>Address</th>
-                    </tr>
 
                     <td><label for="phone_id"></label>
                         <input class="w3-round-large"
@@ -178,59 +162,32 @@
                                id="address_id"
                         /><br></td>
                 </table>
-            <input value="${car.price * rental_days}" name="total_price" hidden>
                 <br>
 
             <table>
-                <h1>Passport</h1><br>
+                <h1>Documents</h1><br>
                 <table style="font-size: 10px">
                     <tr>
-                        <th>*Serial No.</th>
-                        <th>*No.</th>
-                        <th>*Date of issue</th>
-                        <th>*Who issued the passport</th>
-                        <th>*Passport ID</th>
+                        <th>*PASSPORT No.</th>
+                        <th>*DRIVER LICENSE No.</th>
                     </tr>
 
-
-                <td><label for="serial_id"></label>
+                <td><label for="passport_id"></label>
                     <input class="w3-round-large"
-                           maxlength="2"
+                           maxlength="9"
                            type="text"
-                           name="series"
-                           id="serial_id"
+                           name="passport"
+                           id="passport_id"
                            required/><br></td>
 
-                    <td><label for="no_id"></label>
+                    <td><label for="driver_id"></label>
                         <input class="w3-round-large"
-                               maxlength="7"
-                               type="number"
-                               name="number"
-                               id="no_id"
-                               required/><br></td>
-
-                    <td><label for="date_id"></label>
-                        <input class="w3-round-large"
-                               type="date"
-                               name="date_of_issue"
-                               id="date_id"
-                               required/><br></td>
-
-                    <td><label for="issued_id"></label>
-                        <input class="w3-round-large"
-                               maxlength="20"
+                               maxlength="9"
                                type="text"
-                               name="issued"
-                               id="issued_id"
+                               name="driverLicense"
+                               id="driver_id"
                                required/><br></td>
 
-                    <td><label for="passport_id"></label>
-                        <input class="w3-round-large"
-                               maxlength="13"
-                               type="text"
-                               name="passportID"
-                               id="passport_id"
-                               required/><br></td>
             </table>
                 <button class="w3-btn w3-white w3-round-large" type="submit">Send on check</button><br>
                 </c:if>

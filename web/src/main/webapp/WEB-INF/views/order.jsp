@@ -79,8 +79,8 @@
     <box class="w3-card-4 w3-round-large w3-padding" style="width: 50%">
         <h2><a href=${pageContext.request.contextPath}/catalog/car?id=${car.id}
                class="w3-text-blue"> ${car.brand} ${car.model} ${car.year}</a></h2>
-        <h6> &#9989; ${car.body.placeQuantity} places &#9989; ${car.engine.transmission}
-            &#9989;${car.body.doorQuantity} doors &#9989;fuel consumption ${car.fuelConsumption} on 100 km</h6><br>
+        <h6> &#9989; ${car.placeQuantity} places &#9989; ${car.transmission}
+            &#9989;${car.doorQuantity} doors &#9989;${car.fuelType}</h6><br>
         <table>
             <tr>
                 <td><span style="font-size: 12px">Color</span></td>
@@ -90,11 +90,11 @@
                 <td><span style="font-size: 12px">Engine fuel type</span></td>
             </tr>
             <tr>
-                <td> ${car.body.color}</td>
-                <td> ${car.body.trunkVolume} L</td>
-                <td> ${car.engine.engineCapacity}L</td>
-                <td> ${car.engine.horsePower} h/p</td>
-                <td> ${car.engine.fuelType}</td>
+                <td> ${car.color}</td>
+                <td> ${car.trunkVolume} L</td>
+                <td> ${car.engineCapacity}L</td>
+                <td> ${car.horsePower} h/p</td>
+                <td> ${car.fuelType}</td>
             </tr>
         </table><br>
             <table>
@@ -109,7 +109,7 @@
                     <th><span style="color: crimson" aria-flowto=""> ${car.price*1.0}$</span></th>
                     <th><span style="color: crimson" aria-flowto=""> ${car.price*0.9}$</span></th>
                     <th><span style="color: crimson" aria-flowto=""> ${car.price*0.75}$</span></th>
-                    <th><span style="color: crimson" aria-flowto=""> ${car.price*0.6}$</span></th>
+                    <th><span style="color: crimson" aria-flowto=""> ${car.price*0.65}$</span></th>
                 </tr>
             </table>
         <br>
@@ -136,7 +136,7 @@
                        maxlength="20"
                        type="date"
                        min="${LocalDate.now()}"
-                       name="rental_date"
+                       name="rentalDate"
                        id="rental_date_id"
                        required/><br>
 
@@ -146,7 +146,7 @@
                        maxlength="20"
                        type="date"
                        min="${LocalDate.now()}"
-                       name="return_date"
+                       name="returnDate"
                        id="return_date_id"
                        required/><br>
 

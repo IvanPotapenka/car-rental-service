@@ -1,6 +1,7 @@
 package by.potapenko.web.config;
 
 import by.potapenko.service.config.ServiceConfig;
+import lombok.NonNull;
 import org.springframework.web.servlet.support.AbstractAnnotationConfigDispatcherServletInitializer;
 
 public class WebDispatcherInitializer extends AbstractAnnotationConfigDispatcherServletInitializer {
@@ -15,7 +16,7 @@ public class WebDispatcherInitializer extends AbstractAnnotationConfigDispatcher
     }
 
     @Override
-    protected String[] getServletMappings() {
+    protected String @NonNull [] getServletMappings() {
         return new String[]{"/"};
     }
 }

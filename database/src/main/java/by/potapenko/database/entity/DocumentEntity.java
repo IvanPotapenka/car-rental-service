@@ -1,15 +1,19 @@
 package by.potapenko.database.entity;
 
-import by.potapenko.database.entity.enam.SeriesPassport;
-import jakarta.persistence.*;
+import jakarta.persistence.Column;
+import jakarta.persistence.Entity;
+import jakarta.persistence.GeneratedValue;
+import jakarta.persistence.GenerationType;
+import jakarta.persistence.Id;
+import jakarta.persistence.JoinColumn;
+import jakarta.persistence.OneToOne;
+import jakarta.persistence.Table;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
 import lombok.EqualsAndHashCode;
 import lombok.NoArgsConstructor;
 import lombok.ToString;
-
-import java.time.LocalDate;
 
 @Data
 @Builder
@@ -25,12 +29,9 @@ public class DocumentEntity implements BaseIdEntity<Long> {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
-    @Column(name = "passport_serial", length = 2, nullable = false)
-    @Enumerated(EnumType.STRING)
-    private SeriesPassport series;
 
     @Column(name = "passport_No", nullable = false, unique = true)
-    private Integer number;
+    private String passport;
 
     @Column(name = "driver_license_No", nullable = false)
     private String driverLicense;
@@ -38,5 +39,4 @@ public class DocumentEntity implements BaseIdEntity<Long> {
     @OneToOne
     @JoinColumn(name = "client_id", referencedColumnName = "id")
     private ClientEntity client;
-
 }

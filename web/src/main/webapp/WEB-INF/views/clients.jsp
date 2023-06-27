@@ -78,26 +78,22 @@
                     <th>Client_id</th>
                     <th>First name</th>
                     <th>Last name</th>
-                    <th>Middle name</th>
                     <th>Date of birthday</th>
                     <th>Phone number</th>
                     <th>Address</th>
-                    <th>Passport</th>
                     <th>Date of creation</th>
                     <th>Edit</th>
                 </tr>
                 <c:forEach var="client" items="${clients}">
                     <tr>
-                        <td>${client.user.id}</td>
+                        <td>${client.id}</td>
                         <td>${client.firstName}</td>
                         <td>${client.lastName}</td>
-                        <td>${client.middleName}</td>
                         <td>${client.dateOfBirthday}</td>
-                        <td>${client.contact.phone}</td>
-                        <td>${client.contact.address}</td>
-                        <td>${client.passport}</td>
+                        <td>${client.phone}</td>
+                        <td>${client.address}</td>
                         <td>${client.dateOfCreation}</td>
-                        <td><a href="${pageContext.request.contextPath}/admin/clients/client?id=${client.user.id}"
+                        <td><a href="${pageContext.request.contextPath}/admin/clients/client/${client.id}"
                                class="w3-text-blue">EDIT</a></td>
                     </tr>
                 </c:forEach>

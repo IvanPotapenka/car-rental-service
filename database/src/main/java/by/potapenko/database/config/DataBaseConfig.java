@@ -1,8 +1,9 @@
 package by.potapenko.database.config;
 
 
-import jakarta.persistence.EntityManager;
-import jakarta.persistence.EntityManagerFactory;
+import org.modelmapper.ModelMapper;
+import org.modelmapper.convention.MatchingStrategies;
+import org.modelmapper.convention.NameTokenizers;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.ComponentScan;
@@ -14,16 +15,23 @@ import org.springframework.jdbc.datasource.DriverManagerDataSource;
 import org.springframework.orm.jpa.JpaTransactionManager;
 import org.springframework.orm.jpa.LocalContainerEntityManagerFactoryBean;
 import org.springframework.orm.jpa.vendor.HibernateJpaVendorAdapter;
+import org.springframework.transaction.PlatformTransactionManager;
+import org.springframework.transaction.annotation.EnableTransactionManagement;
 
 import javax.sql.DataSource;
 import java.io.IOException;
 import java.util.Properties;
 
+import static org.modelmapper.config.Configuration.AccessLevel.PRIVATE;
+
 @Configuration
 @ComponentScan("by.potapenko.database")
-@PropertySource({"classpath:datasource.properties", "classpath:hibernate.properties"})
-@EnableJpaRepositories(basePackages = "by.potapenko.database.repositpry")
+@EnableTransactionManagement
+@PropertySource(value = "classpath:datasource.properties")
+@PropertySource(value = "classpath:hibernate.properties")
+@EnableJpaRepositories(basePackages = "by.potapenko.database.repository")
 public class DataBaseConfig {
+
 
     @Bean
     public DataSource dataSource(
@@ -41,7 +49,7 @@ public class DataBaseConfig {
     }
 
     @Bean
-    public Properties hibernateProperties(@Value("${classpath:hibernate.properties}") Resource hibernateProperties) throws IOException {
+    public Properties hibernateProperties(@Value("classpath:hibernate.properties") Resource hibernateProperties) throws IOException {
         Properties properties = new Properties();
         properties.load(hibernateProperties.getInputStream());
         return properties;
@@ -49,19 +57,32 @@ public class DataBaseConfig {
 
     @Bean
     public LocalContainerEntityManagerFactoryBean entityManagerFactory(DataSource dataSource, Properties hibernateProperties) {
-        LocalContainerEntityManagerFactoryBean entityManagerFactory = new LocalContainerEntityManagerFactoryBean();
-        HibernateJpaVendorAdapter hibernateJpaVendorAdapter = new HibernateJpaVendorAdapter();
-        entityManagerFactory.setJpaVendorAdapter(hibernateJpaVendorAdapter);
-        entityManagerFactory.setJpaProperties(hibernateProperties);
+        final LocalContainerEntityManagerFactoryBean entityManagerFactory = new LocalContainerEntityManagerFactoryBean();
         entityManagerFactory.setDataSource(dataSource);
         entityManagerFactory.setPackagesToScan("by.potapenko.database.entity");
+
+        final HibernateJpaVendorAdapter hibernateJpaVendorAdapter = new HibernateJpaVendorAdapter();
+        entityManagerFactory.setJpaVendorAdapter(hibernateJpaVendorAdapter);
+        entityManagerFactory.setJpaProperties(hibernateProperties);
         return entityManagerFactory;
     }
 
     @Bean
-    public JpaTransactionManager transactionManager(LocalContainerEntityManagerFactoryBean entityManagerFactory) {
+    public PlatformTransactionManager transactionManager(LocalContainerEntityManagerFactoryBean entityManagerFactory) {
         JpaTransactionManager transactionManager = new JpaTransactionManager();
         transactionManager.setEntityManagerFactory(entityManagerFactory.getObject());
         return transactionManager;
+    }
+
+    @Bean
+    public ModelMapper modelMapper() {
+        ModelMapper mapper = new ModelMapper();
+        mapper.getConfiguration().setMatchingStrategy(MatchingStrategies.LOOSE)
+                .setFieldMatchingEnabled(true)
+                .setSkipNullEnabled(true)
+                .setFieldAccessLevel(PRIVATE)
+                .setSourceNameTokenizer(NameTokenizers.CAMEL_CASE)
+                .setDestinationNameTokenizer(NameTokenizers.CAMEL_CASE);
+        return mapper;
     }
 }

@@ -45,13 +45,13 @@
 
                 <c:if test="${create_user == null}">
             <h1>Registration</h1><br>
-            <label for="name">Login</label>
+            <label for="login_id">Login</label>
             <input class="w3-round-large"
                    type="text"
                    maxlength="20"
                    placeholder="Enter your login"
-                   name="name"
-                   id="name"
+                   name="login"
+                   id="login_id"
                    required/><br>
 
             <c:if test="${email_error == true}">
@@ -65,6 +65,15 @@
                    name="email"
                    id="email"
                    required/><br>
+
+            <label for="phone_id">Phone</label>
+            <input class="w3-round-large"
+                   maxlength="13"
+                   type="phone"
+                   placeholder="Enter your phone"
+                   name="phone"
+                   id="phone_id"
+                   required/></p><br>
 
             <label for="pwd">Password</label>
             <input class="w3-round-large"

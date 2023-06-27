@@ -59,21 +59,21 @@
 
             <c:if test="${create_user == null}">
                 <h1>User</h1><br>
-                <label for="name">Name</label>
+                <label for="login_id">Login</label>
                 <input class="w3-round-large"
                        type="text"
                        maxlength="20"
-                       placeholder="Enter your name"
-                       name="name"
-                       id="name"
+                       placeholder="Enter your login"
+                       name="login"
+                       id="login_id"
                        required/><br>
-                <label for="surname">Surname</label>
+                <label for="email_id">Email</label>
                 <input class="w3-round-large"
                        type="text"
                        maxlength="20"
-                       placeholder="Enter your surname"
-                       name="surname"
-                       id="surname"
+                       placeholder="Enter your email"
+                       name="email"
+                       id="email_id"
                        required/><br>
                 <label for="phone">Phone No.</label>
                 <input class="w3-round-large"
@@ -84,14 +84,6 @@
                        id="phone"
                        required/><br>
 
-                <label for="email">Email</label>
-                <input class="w3-round-large"
-                       type="email"
-                       maxlength="20"
-                       placeholder="Enter your email"
-                       name="email"
-                       id="email"
-                       required/><br>
                 <label for="pwd">Password</label>
                 <input class="w3-round-large"
                        maxlength="20"
@@ -110,7 +102,7 @@
                     </select><br>
                 <button class="w3-btn w3-white w3-round-large" type="submit">Create</button>
                 </br>
-                <p style="font-size: 16px"><a href="/admin/users">Back</a></p>
+                <p style="font-size: 16px"><a href="${pageContext.request.contextPath}/admin/users">Back</a></p>
             </c:if>
             <c:if test="${create_user == false}">
                 <p style="font-size: 20px" class="w3-text-red"> Sorry! Creating doesn't possible now, please try

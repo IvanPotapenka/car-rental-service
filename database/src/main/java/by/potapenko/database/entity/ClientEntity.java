@@ -43,18 +43,9 @@ public class ClientEntity extends CreatableEntity<Long>  {
     @OneToOne(mappedBy = "client", cascade = CascadeType.ALL)
     private DocumentEntity document;
 
-
     @Builder.Default
     @OneToMany(mappedBy = "client")
     private List<RentalEntity> orders = new ArrayList<>();
-
-    @Builder.Default
-    @ManyToMany
-    @JoinTable(
-            name = "car_client",
-            joinColumns = @JoinColumn(name = "client_id"),
-            inverseJoinColumns = @JoinColumn(name = "car_id"))
-    private List<CarEntity> cars = new ArrayList<>();
 
     public void setDocument(DocumentEntity document) {
         this.document = document;
@@ -64,10 +55,5 @@ public class ClientEntity extends CreatableEntity<Long>  {
     public void addOrder(RentalEntity rental) {
         this.getOrders().add(rental);
         rental.setClient(this);
-    }
-
-    public void addCar(CarEntity car) {
-        this.getCars().add(car);
-        car.setClients(Collections.singletonList(this));
     }
 }

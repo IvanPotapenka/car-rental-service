@@ -56,15 +56,11 @@
 </head>
 <body>
 <%@include file="headerAdmin.jsp" %>
-<div><a href="/admin">Home </a><a href="${pageContext.request.contextPath}/admin/clients/client?id=${client.id}">/ edit</a>
+<div><a href="/admin">Home </a><a href="${pageContext.request.contextPath}/admin/clients/client/${client.id}">/ edit</a>
 </div>
 <box>
     <form method="post" class="w3-card-4 w3-blue-grey w3-round-large w3-padding" style="width: 90%">
         <flex>
-            <c:if test="${client_id == false}">
-                <p class="w3-text-green"> This user ID doesn't exist</p>
-            </c:if>
-            <c:if test="${client_id == true || create_client == true}">
                 <p style="font-size: 16px">
                 <h1>${client.firstName} ${client.lastName}</h1>
                 <table style="font-size: 10px">
@@ -72,33 +68,28 @@
                         <th>Client_id</th>
                         <th>First name</th>
                         <th>Last name</th>
-                        <th>Middle name</th>
                         <th>Date of birthday</th>
                         <th>Phone number</th>
                         <th>Address</th>
-                        <th>Passport</th>
                         <th>Delete</th>
                         <th>Edit</th>
 
                     </tr>
                     <tr>
-                        <td>${client.user.id}</td>
+                        <td>${client.id}</td>
                         <td>${client.firstName}</td>
                         <td>${client.lastName}</td>
-                        <td>${client.middleName}</td>
                         <td>${client.dateOfBirthday}</td>
-                        <td>${client.contact.phone}</td>
-                        <td>${client.contact.address}</td>
-                        <td>${client.passport}</td>
-                        <td><a href="${pageContext.request.contextPath}/admin/clients/client/delete_client?id=${client.user.id}"
+                        <td>${client.phone}</td>
+                        <td>${client.address}</td>
+                        <td><a href="${pageContext.request.contextPath}/admin/clients/client/delete_client/${client.id}"
                                class="w3-text-red">DELETE</a></td>
-                        <td><a href="${pageContext.request.contextPath}/admin/clients/client/update_client?id=${client.user.id}"
+                        <td><a href="${pageContext.request.contextPath}/admin/clients/client/update_client/${client.id}"
                                class="w3-text-blue">EDIT</a></td>
                     </tr>
                 </table>
                 </br>
-                <p style="font-size: 16px"><a href="/admin/clients">Back</a></p>
-            </c:if>
+                <p style="font-size: 16px"><a href="${pageContext.request.contextPath}/admin/clients">Back</a></p>
         </flex>
     </form>
 </box>

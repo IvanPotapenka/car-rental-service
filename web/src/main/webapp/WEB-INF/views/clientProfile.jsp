@@ -93,7 +93,7 @@
     <div class="w3-card-4 w3-round-large w3-padding" style="width: 50%"><br>
         <h4> ${user.role}:</h4><h4 class="w3-text-blue"> ${user.login} </h4><br>
         <h6>Email:</h6><h6 class="w3-text-blue"> ${user. email}</h6><br>
-        <h6>Password: </h6> <h6 class="w3-text-blue"> ${user. password}</h6><br>
+        <h6>Phone: </h6> <h6 class="w3-text-blue"> ${user.phone}</h6><br>
     </div> <br><br>
 </box><br>
 <%@include file="footer.jsp" %>

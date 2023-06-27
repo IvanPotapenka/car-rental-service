@@ -112,7 +112,7 @@
                         <select class="w3-round-large"
                                 id="year_id"
                                 maxlength="4"
-                                name="year_of_release"
+                                name="year"
                                 required>
                             <option value="">--Year--</option>
                             <c:forEach var="i"
@@ -139,19 +139,19 @@
                     <td><label for="fuel_id"></label>
                         <select class="w3-round-large"
                                 id="fuel_id"
-                                name="fuel"
+                                name="fuelType"
                                 required>
                             <option value="">--Fuel type--</option>
                             <option value="GASOLINE">Gasoline</option>
                             <option value="GAS">Gas</option>
                             <option value="DIESEL">Diesel</option>
-                            <option value="ELECTRIC">Electric</option>
+<%--                            <option value="ELECTRIC">Electric</option>--%>
                         </select><br></td>
 
                     <td><label for="engine_id"></label>
                         <select class="w3-round-large"
                                 id="engine_id"
-                                name="engine_capacity"
+                                name="engineCapacity"
                                 required>
                             <option value="">--Engine capacity, l--</option>
                             <c:forEach var="i" items="${[1.4,1.5,1.6,1.7,1.8,1.9,2.0,2.1,2.2,2.3,2.5]}">
@@ -164,7 +164,7 @@
                                maxlength="3"
                                type="number"
                                placeholder="Enter horse power"
-                               name="horse_power"
+                               name="horsePower"
                                id="power_id"
                                required/><br></td>
 
@@ -193,7 +193,7 @@
                     <td><label for="consumption_id"></label>
                         <select class="w3-round-large"
                                 id="consumption_id"
-                                name="fuel_consumption"
+                                name="fuelConsumption"
                                 required>
                             <option value="">--Fuel consumption--</option>
                             <c:forEach var="i" items="${[6.4,6.5,6.6,6.7,6.8,6.9,7.0,7.1,7.2,7.3,7.5]}">
@@ -204,7 +204,7 @@
                     <td><label for="places_id"></label>
                         <select class="w3-round-large"
                                 id="places_id"
-                                name="quantity_places"
+                                name="placeQuantity"
                                 required>
                             <option value="">--Places quantity--</option>
                             <option value="4">4</option>
@@ -214,7 +214,7 @@
                     <td><label for="doors_id"></label>
                         <select class="w3-round-large"
                                 id="doors_id"
-                                name="quantity_doors"
+                                name="doorQuantity"
                                 required>
                             <option value="">--Doors quantity--</option>
                             <option value="3">3</option>
@@ -227,17 +227,17 @@
                                maxlength="3"
                                type="number"
                                placeholder="Enter trunk volume"
-                               name="trunk_volume"
+                               name="trunkVolume"
                                id="trunk_id"
                                required/><br></td>
 
-                    <td><label for="vin_code_id"></label>
+                    <td><label for="vinCode_id"></label>
                         <input class="w3-round-large"
                                maxlength="17"
                                type="text"
                                placeholder="Enter VIN-code"
-                               name="vin_code"
-                               id="vin_code_id"
+                               name="vinCode"
+                               id="vinCode_id"
                                required/>
                         </input><br></td>
 
@@ -264,7 +264,7 @@
                 <button class="w3-btn w3-white w3-round-large" type="submit">Create</button>
                 </br>
 
-                <p style="font-size: 12px"><a href="/admin/cars">Back</a></p>
+                <p style="font-size: 12px"><a href="${pageContext.request.contextPath}/admin/cars">Back</a></p>
             </c:if>
             <c:if test="${create_car == false}">
                 <p style="font-size: 20px" class="w3-text-red"> Sorry! Creating doesn't possible now, please try

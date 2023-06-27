@@ -58,15 +58,15 @@
     <box class="w3-card-4 w3-round-large w3-padding" style="width: 50%"><br>
         <h2 class="w3-text-blue"> ${car.brand} ${car.model} ${car.year}</a></h2>
         <flex>
-            <h7>&#9989; ${car.body.placeQuantity} places</h7>
-            <h7>&#9989; ${car.body.color}</h7>
-            <h7>&#9989;${car.body.doorQuantity} doors</h7>
-            <h7>&#9989;Trunk volume ${car.body.trunkVolume} l</h7>
-            <h7>&#9989; ${car.engine.transmission}</h7>
+            <h7>&#9989; ${car.placeQuantity} places</h7>
+            <h7>&#9989; ${car.color}</h7>
+            <h7>&#9989;${car.doorQuantity} doors</h7>
+            <h7>&#9989;Trunk volume ${car.trunkVolume} l</h7>
+            <h7>&#9989; ${car.transmission}</h7>
             <h7>&#9989;Fuel consumption ${car.fuelConsumption}l on 100 km</h7>
-            <h7>&#9989; Engine capacity ${car.engine.engineCapacity}l</h7>
-            <h7>&#9989; Engine power ${car.engine.horsePower} h/p</h7>
-            <h7>&#9989; Engine fuel type ${car.engine.fuelType}</h7>
+            <h7>&#9989; Engine capacity ${car.engineCapacity}l</h7>
+            <h7>&#9989; Engine power ${car.horsePower} h/p</h7>
+            <h7>&#9989; Engine fuel type ${car.fuelType}</h7>
         </flex>
         <table>
             <tr>
@@ -83,7 +83,7 @@
             </tr>
         </table>
         <br>
-        <button class="w3-btn w3-round-large w3-red" onclick="location.href='/order?id=${car.id}'">Order
+        <button class="w3-btn w3-round-large w3-red" onclick="location.href='/order/${car.id}'">Order
         </button>
         </br>
     </box>

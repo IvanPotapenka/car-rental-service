@@ -64,7 +64,7 @@
         <flex>
             <c:if test="${car_delete_success==true}">
                 <p style="font-size: 20px" class="w3-text-green"> The car was successfully deleted</p>
-                <p style="font-size: 12px"><a href="/admin/cars">Back</a></p><br></box>
+                <p style="font-size: 12px"><a href="${pageContext.request.contextPath}/admin/cars">Back</a></p><br></box>
             </c:if>
             <c:if test="${car_delete_success==null}">
 
@@ -95,19 +95,19 @@
                         <td>${car.brand}</td>
                         <td>${car.model}</td>
                         <td>${car.year}</td>
-                        <td>${car.body.color}</td>
-                        <td>${car.engine.fuelType}</td>
-                        <td>${car.engine.engineCapacity}</td>
-                        <td>${car.engine.horsePower}</td>
-                        <td>${car.engine.transmission}</td>
+                        <td>${car.color}</td>
+                        <td>${car.fuelType}</td>
+                        <td>${car.engineCapacity}</td>
+                        <td>${car.horsePower}</td>
+                        <td>${car.transmission}</td>
 <%--                        <td>${car.fuelConsumption}</td>--%>
-                        <td>${car.body.placeQuantity}</td>
-                        <td>${car.body.doorQuantity}</td>
-                        <td>${car.body.trunkVolume}</td>
-                        <td>${car.body.vinCode}</td>
-                        <td>${car.body.number}</td>
+                        <td>${car.placeQuantity}</td>
+                        <td>${car.doorQuantity}</td>
+                        <td>${car.trunkVolume}</td>
+                        <td>${car.vinCode}</td>
+                        <td>${car.number}</td>
                         <td>${car.price}</td>
-                        <td><b><a href="${pageContext.request.contextPath}/admin/cars/car?id=${car.id}"
+                        <td><b><a href="${pageContext.request.contextPath}/admin/cars/car/${car.id}"
                                   class="w3-text-blue">EDIT</a></b></td>
                     </tr></p>
                 </c:forEach>

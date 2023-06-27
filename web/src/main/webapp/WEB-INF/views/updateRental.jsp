@@ -71,11 +71,11 @@
     <form method="post" class="w3-card-4 w3-blue-grey w3-round-large w3-padding" style="width: 90%">
         <flex>
             <h1>Order No.${rental.id} </h1><br>
-            <c:if test="${update_rental_error == false}">
+            <c:if test="${update_rental == false}">
                 <p style="font-size: 20px" class="w3-text-green"> Order No.${rental.id} save successfully!</p>
-                <p style="font-size: 16px"><a href="/admin/rantals/rental?id=${rental.id}">Back</a></p>
+                <p style="font-size: 16px"><a href="/admin/rantals/rental/${rental.id}">Back</a></p>
             </c:if><br>
-            <c:if test="${update_rental_error == null}">
+            <c:if test="${update_rental == null}">
                 <p style="font-size: 16px">
                 <table style="font-size: 10px">
                     <tr>
@@ -104,7 +104,7 @@
                             <option value="Ford">Ford</option>
                             <option value="Renault">Renault</option>
                             <option value="Hyundai">Hyundai</option>
-                            <option selected>${rental.car.brand}</option>
+                            <option selected>${rental.carDto.brand}</option>
                         </select><br></td>
 
                     <td><label for="model"></label>
@@ -114,14 +114,14 @@
                                placeholder="Enter model car"
                                name="model"
                                id="model"
-                               value="${rental.car.model}"
+                               value="${rental.carDto.model}"
                                required/><br></td>
 
                     <td><label for="client_id"></label>
                         <input class="w3-round-large"
                                name="client"
                                id="client_id"
-                               value=" ${rental.client.firstName} "
+                               value=" ${rental.clientDto.firstName} "
                                readonly/><br></td>
 
                     <td><label for="rental_date_id"></label>
@@ -146,7 +146,7 @@
                         <th>Rental days</th>
                         <th>Price</th>
                         <th>Status</th>
-                        <th>Creator rental</th>
+<%--                        <th>Creator rental</th>--%>
                         <th>Date of creation</th>
                     </tr>
                             <td><label for="rental_days_id"></label>
@@ -170,12 +170,12 @@
                                        value="${rental.status}"
                                        readonly/><br></td>
 
-                            <td><label for="creator_rental_id"></label>
-                                <input class="w3-round-large"
-                                       name="creator"
-                                       id="creator_rental_id"
-                                       value="${rental.client.user.role}"
-                                       readonly/><br></td>
+<%--                            <td><label for="creator_rental_id"></label>--%>
+<%--                                <input class="w3-round-large"--%>
+<%--                                       name="creator"--%>
+<%--                                       id="creator_rental_id"--%>
+<%--                                       value="${rental.client.user.role}"--%>
+<%--                                       readonly/><br></td>--%>
 
                             <td><label for="date_of_creation_id"></label>
                                 <input class="w3-round-large"
@@ -192,7 +192,7 @@
 
                     <p style="font-size: 12px"><a href="/admin/rentals/rental/update_rental">Back</a></p>
             </c:if>
-            <c:if test="${update_rental_error == true}">
+            <c:if test="${update_rental == true}">
                 <p class="w3-text-red"> Order No. ${rental.id} wasn't saved!</p>
                 <a href="/admin/rentals/rental" class="w3-text-blue">Try again</a></p>
             </c:if><br>
